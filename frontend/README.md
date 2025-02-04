@@ -20,6 +20,8 @@ npm install
 
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs/ -sSf | sh
 
+npm install vue-router@4
+
 Restart IDE
 
 npm run tauri dev
