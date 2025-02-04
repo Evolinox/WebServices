@@ -19,7 +19,7 @@ import { theme, toggleTheme } from '../themes'
 }
 .themeSwitch {
   height: 20px;
-  border: 1px solid black;
+  border: 1px solid var(--text-color);
   border-radius: 10px;
 }
 </style>
