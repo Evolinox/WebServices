@@ -1,4 +1,4 @@
-package nutritionAPI;
+package org.acme;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -24,7 +24,7 @@ public class ProductResource {
 
     @GET
     @Path("/{name}")
-    public Response getByName(@PathParam("name") String name) {
+    public Response getProduct(@PathParam("name") String name) {
         return  repository.find("name", name)
                 .singleResultOptional()
                 .map(product -> Response.ok(product).build())
@@ -41,13 +41,13 @@ public class ProductResource {
     @DELETE
     @Path("/{name}")
     @Transactional
-    public Response delete(@PathParam("name") String name) {
+    public Response deleteProduct(@PathParam("name") String name) {
         Optional<Product> food = repository.findByName(name);
         if (food.isPresent()) {
             repository.delete(food.get());
             return Response.noContent().build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Food not found").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Product not found").build();
         }
     }
 }
