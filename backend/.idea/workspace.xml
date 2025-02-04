@@ -4,33 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/productApi/src/main/java/org/acme/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/productApi/src/main/java/org/acme/ProductRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/productApi/src/main/java/org/acme/ProductResource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trackerApi/src/main/java/org/acme/ProductDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trackerApi/src/main/java/org/acme/ProductService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trackerApi/src/main/java/org/acme/TrackerResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/docker/Dockerfile.jvm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/docker/Dockerfile.legacy-jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/docker/Dockerfile.native" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/docker/Dockerfile.native-micro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nutritionAPI/Product.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nutritionAPI/ProductRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nutritionAPI/ProductResource.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="creating productAPi and try to consume it with trackerApi">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/productApi/src/main/java/org/acme/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/productApi/src/main/java/org/acme/Product.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -265,11 +241,24 @@
       <updated>1738594896672</updated>
       <workItem from="1738594897688" duration="3359000" />
       <workItem from="1738606102884" duration="2059000" />
-      <workItem from="1738654115553" duration="1807000" />
+      <workItem from="1738654115553" duration="2917000" />
     </task>
+    <task id="LOCAL-00001" summary="creating productAPi and try to consume it with trackerApi">
+      <option name="closed" value="true" />
+      <created>1738656165372</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738656165372</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="creating productAPi and try to consume it with trackerApi" />
+    <option name="LAST_COMMIT_MESSAGE" value="creating productAPi and try to consume it with trackerApi" />
   </component>
 </project>
