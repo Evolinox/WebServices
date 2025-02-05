@@ -24,7 +24,7 @@ func ToProductDTO(product entity.Product) entity.ProductDTO {
 }
 
 func ToProductEntity(dto entity.ProductDTO) entity.Product {
-	return dto.Product{
+	return entity.Product{
 		ID:                  dto.ID,
 		Name:                dto.Name,
 		Brand:               dto.Brand,
