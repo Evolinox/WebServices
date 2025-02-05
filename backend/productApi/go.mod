@@ -1,6 +1,6 @@
 module productApi
 
-go 1.21.4
+go 1.23.6
 
 require (
 	github.com/gin-gonic/gin v1.10.0
