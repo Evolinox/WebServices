@@ -1036,7 +1036,7 @@ tracker\\_db|schema||user||UPDATE|G</Grants>
     </schema>
     <schema id="325" parent="1" name="tracker_db">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-02-05.13:17:23</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-02-05.13:53:23</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_general_ci</CollationName>
     </schema>
     <user id="326" parent="1" name="user"/>

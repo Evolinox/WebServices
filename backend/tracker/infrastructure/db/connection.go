@@ -61,5 +61,19 @@ func NewDBConnectionFromDSN(dsn string, maxOpenConns int) *DbConnection {
 }
 
 func fillDbWithData(db *gorm.DB) {
-	db.Create(data.Settings)
+	var count int64
+
+	// Check if the table is empty
+	if err := db.Model(&entity.Settings{}).Count(&count).Error; err != nil {
+		fmt.Println("Error checking settings table:", err)
+		return
+	}
+
+	// Insert data only if no records exist
+	if count == 0 {
+		fmt.Println("Seeding default settings data...")
+		db.Create(data.Settings)
+	} else {
+		fmt.Println("Settings table is not empty, skipping seeding.")
+	}
 }

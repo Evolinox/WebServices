@@ -28,12 +28,8 @@ func (r *SettingsRepository) GetSettings() (*entity.Settings, error) {
 func (r *SettingsRepository) UpdateSettings(updatedSettings *entity.Settings) error {
 	var settings entity.Settings
 	if err := r.db.First(&settings).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			// Create new settings if none exist
-			return r.db.Create(updatedSettings).Error
-		}
 		return err
 	}
-
-	return r.db.Model(&settings).Updates(updatedSettings).Error
+	//Query 1=1 is used because theres only one record in the table
+	return r.db.Model(&entity.Settings{}).Where("1 = 1").Updates(updatedSettings).Error
 }
