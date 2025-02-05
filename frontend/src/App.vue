@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { watch, onMounted } from 'vue'
 import NavBar from './components/NavBar.vue'
+import WeekKalender from './components/WeekKalender.vue'
 import { RouterView } from 'vue-router'
 import { theme } from './themes'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 watch(
   () => theme.value,
@@ -18,16 +22,19 @@ onMounted(() => {
 </script>
 
 <template>
+  <WeekKalender v-if="route.name !== 'settings'" class="week-kalender"/>
   <RouterView class="view"/>
   <NavBar class="nav-bar"/>
 </template>
 
 <style>
 :root {
+  --nav-bar__height: 50px;
+  --week-kalender__height: 50px;
+
   --background-color: #f6f6f6;
   --text-color: #0f0f0f;
 
-  --nav-bar__height: 50px;
   --nav-bar__background-color: #8fbcff;
   --nav-bar__icon-color: invert(0);
 }
@@ -44,8 +51,11 @@ body {
   color: var(--text-color);
 }
 
+.week-kalender {
+  height: var(--week-kalender__height);
+}
 .view {
-  height: calc(100vh - var(--nav-bar__height));
+  height: calc(100vh - var(--nav-bar__height) - var(--week-kalender__height));
 }
 .nav-bar {
   height: var(--nav-bar__height);

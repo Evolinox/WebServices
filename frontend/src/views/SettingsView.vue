@@ -3,7 +3,7 @@ import { theme, toggleTheme } from '../themes'
 </script>
 
 <template>
-  <div class="settingsView">
+  <div class="settings-view">
     <h1>Einstellungen</h1>
     <button class="themeSwitch" @click="toggleTheme">
       {{ theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode' }}
@@ -12,7 +12,8 @@ import { theme, toggleTheme } from '../themes'
 </template>
 
 <style>
-.settingsView {
+.settings-view {
+  height: calc(100vh - var(--nav-bar__height));
   display: flex;
   flex-direction: column;
   align-items: center;
