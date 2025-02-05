@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="Added tracker API V1.0">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="updated ReadMe for tracker API">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/productApi/.env/env" beforeDir="false" afterPath="$PROJECT_DIR$/productApi/.env/env.local" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -302,7 +298,9 @@
     <MESSAGE value="Refactoring Backend from Java-Quarkus to Go" />
     <MESSAGE value="Added Product API V1.0" />
     <MESSAGE value="Added tracker API V1.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tracker API V1.0" />
+    <MESSAGE value="Adjustments made to read env.local file" />
+    <MESSAGE value="updated ReadMe for tracker API" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated ReadMe for tracker API" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
