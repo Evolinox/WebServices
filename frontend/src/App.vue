@@ -19,7 +19,7 @@ onMounted(() => {
 
 <template>
   <RouterView class="view"/>
-  <NavBar class="navBar"/>
+  <NavBar class="nav-bar"/>
 </template>
 
 <style>
@@ -44,7 +44,7 @@ body {
   height: calc(100vh - var(--navBar__height));
   overflow-y: auto;
 }
-.navBar {
+.nav-bar {
   height: var(--navBar__height);
 }
 .view > div, .view, .navBar {

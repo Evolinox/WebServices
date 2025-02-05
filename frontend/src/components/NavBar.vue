@@ -14,20 +14,31 @@ watch(
 </script>
 
 <template>
-  <div class="navBar">
-    <button @click="router.push({ name: 'dashboard' })">Übersicht</button>
-    <button @click="router.push({ name: 'diary' })">Tagebuch</button>
-    <button>+</button>
-    <button @click="router.push({ name: 'shoppingList' })">Einkaufsliste</button>
-    <button @click="router.push({ name: 'settings' })">Einstellungen</button>
+  <div class="nav-bar">
+    <button class="nav-bar__item" @click="router.push({ name: 'dashboard' })"><img src="../assets/dashboard.svg" alt=""></button>
+    <button class="nav-bar__item" @click="router.push({ name: 'diary' })"><img src="../assets/diary.svg" alt=""></button>
+    <button class="nav-bar__item"><img src="../assets/plus.svg" alt=""></button>
+    <button class="nav-bar__item" @click="router.push({ name: 'shoppingList' })"><img src="../assets/shoppingList.svg" alt=""></button>
+    <button class="nav-bar__item" @click="router.push({ name: 'settings' })"><img src="../assets/settings.svg" alt=""></button>
   </div>
 </template>
 
 <style>
-.navBar {
+.nav-bar {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 30px;
+}
+.nav-bar__item {
+  height: 45px;
+  width: 45px;
+  border-radius: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+img {
+  height: 25px;
+  width: auto;
 }
 </style>
