@@ -1,4 +1,4 @@
-package dto
+package entity
 
 type ProductDTO struct {
 	ID                  string  `json:"id"`

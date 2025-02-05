@@ -1,8 +1,7 @@
 package mapper
 
 import (
-	"tracker/infrastructure/dto"
-	"tracker/infrastructure/entity"
+	"tracker/infrastructure/dto/entity"
 )
 
 /*
@@ -11,8 +10,8 @@ import (
 	- This way, if the structure of the Product entity changes, only the conversion logic in the mapper package needs to be updated.
 */
 
-func ToProductDTO(product entity.Product) dto.ProductDTO {
-	return dto.ProductDTO{
+func ToProductDTO(product entity.Product) entity.ProductDTO {
+	return entity.ProductDTO{
 		ID:                  product.ID,
 		Name:                product.Name,
 		Brand:               product.Brand,
@@ -24,8 +23,8 @@ func ToProductDTO(product entity.Product) dto.ProductDTO {
 	}
 }
 
-func ToProductEntity(dto dto.ProductDTO) entity.Product {
-	return entity.Product{
+func ToProductEntity(dto entity.ProductDTO) entity.Product {
+	return dto.Product{
 		ID:                  dto.ID,
 		Name:                dto.Name,
 		Brand:               dto.Brand,
