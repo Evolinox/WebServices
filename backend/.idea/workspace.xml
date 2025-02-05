@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="Added Product API V1.0" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="Added tracker API V1.0">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/productApi/.env/env" beforeDir="false" afterPath="$PROJECT_DIR$/productApi/.env/env.local" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.sum" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,6 +72,7 @@
     "Quarkus.backend.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
@@ -74,7 +81,7 @@
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/timkerl/DHBW-AI/4. Semester/Web-Services/Repo/WebServices/backend/productApi",
+    "last_opened_file_path": "/Users/timkerl/DHBW-AI/4. Semester/Web-Services/Repo/WebServices/backend/tracker/infrastructure/mapper",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -84,6 +91,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -94,11 +102,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/productApi" />
-      <recent name="$PROJECT_DIR$/productApi/infrastructure/entity" />
-      <recent name="$PROJECT_DIR$/productApi/infrastructure/db" />
-      <recent name="$PROJECT_DIR$/productApi/controller" />
-      <recent name="$PROJECT_DIR$/productApi/controller/handler" />
+      <recent name="$PROJECT_DIR$/tracker/infrastructure/mapper" />
+      <recent name="$PROJECT_DIR$/tracker/infrastructure/entity" />
+      <recent name="$PROJECT_DIR$/tracker/infrastructure/dto" />
+      <recent name="$PROJECT_DIR$/tracker/controller" />
+      <recent name="$PROJECT_DIR$/tracker/controller/repositories" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/productApi/controller/repositories" />
@@ -246,7 +254,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-gosdk-467a64f6063b-ee0e143f3e2b-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-233.11799.286" />
+        <option value="bundled-gosdk-d297c17c1fbd-85c80fddc9a6-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-243.23654.166" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-GO-243.23654.166" />
       </set>
     </attachedChunks>
   </component>
@@ -292,7 +301,8 @@
     <MESSAGE value="adjusted names in Entity Product" />
     <MESSAGE value="Refactoring Backend from Java-Quarkus to Go" />
     <MESSAGE value="Added Product API V1.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Product API V1.0" />
+    <MESSAGE value="Added tracker API V1.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added tracker API V1.0" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
