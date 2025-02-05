@@ -16,7 +16,10 @@ watch(
 <template>
   <div class="nav-bar">
     <button class="nav-bar__item" @click="router.push({ name: 'dashboard' })"><img src="../assets/dashboard.svg" alt=""></button>
-    <button class="nav-bar__item" @click="router.push({ name: 'diary' })"><img src="../assets/diary.svg" alt=""></button>
+    <button class="nav-bar__item" @click="router.push({ name: 'diary' })"><img src="../assets/diary.svg" alt="" style="
+    position: relative;
+    left: 2px;"
+></button>
     <button class="nav-bar__item"><img src="../assets/plus.svg" alt=""></button>
     <button class="nav-bar__item" @click="router.push({ name: 'shoppingList' })"><img src="../assets/shoppingList.svg" alt=""></button>
     <button class="nav-bar__item" @click="router.push({ name: 'settings' })"><img src="../assets/settings.svg" alt=""></button>
@@ -40,5 +43,6 @@ watch(
 img {
   height: 25px;
   width: auto;
+  filter: var(--nav-bar__icon-color);
 }
 </style>

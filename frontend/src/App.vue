@@ -27,12 +27,16 @@ onMounted(() => {
   --background-color: #f6f6f6;
   --text-color: #0f0f0f;
 
-  --navBar__height: 50px;
+  --nav-bar__height: 50px;
+  --nav-bar__background-color: #8fbcff;
+  --nav-bar__icon-color: invert(0);
 }
 
 [data-theme='dark'] {
   --background-color: #2f2f2f;
   --text-color: #f6f6f6;
+  --nav-bar__background-color: #0066ff;
+  --nav-bar__icon-color: invert(1);
 }
 
 body {
@@ -41,17 +45,20 @@ body {
 }
 
 .view {
-  height: calc(100vh - var(--navBar__height));
-  overflow-y: auto;
+  height: calc(100vh - var(--nav-bar__height));
 }
 .nav-bar {
-  height: var(--navBar__height);
+  height: var(--nav-bar__height);
 }
 .view > div, .view, .navBar {
   width: 100%;
-  display: flex;
 }
 
+
+h1 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
 button {
   background-color: var(--background-color);
   color: var(--text-color);
