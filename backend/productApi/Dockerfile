@@ -5,6 +5,6 @@ ENV MYSQL_USER=user
 ENV MYSQL_PASSWORD=password
 ENV MYSQL_DATABASE=product_db
 
-EXPOSE 3306
+EXPOSE 3405
 
 CMD ["mysqld"]
