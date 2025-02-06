@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Theme Toggle</title>
+    <style>
+        :root {
+            --nav-bar__height: 50px;
+            --week-kalender__height: 50px;
+
+            
+            --background-color--primary: #f8fafd;
+            --background-color--secondary: #fefeff;
+            --background-color--tertiary: #f1f3f5;
+
+            --text-color--primary: #37474f;
+            --text-color--secondary: #747c80;
+
+            --accent-color--primary: #0489d7; /* Mehr */
+            --accent-color--secondary: #58bdf6; /* Statistik */
+
+            --nav__background-color: #fefeff;
+
+            --button__text-color: #f6f6f6;
+            --button__background-color: #0588d6;
+
+            --icon-color: #36464e;
+        }
+
+        [data-theme='dark'] {
+            --background-color--primary: #111926;
+            --background-color--secondary: #1c2431;
+            --background-color--tertiary: #323847;
+
+            --text-color--primary: #f6f6f6;
+            --text-color--secondary: #727880;
+
+            --accent-color__primary: #0787d4; /* Mehr */
+            --accent-color__scondary: #58bdf9; /* Statistik */
+
+            --nav__background-color: #1f2b36;
+
+            --button__text-color: #f6f6f6;
+            --button__background-color: #0588d6; /* Plus */
+
+            --icon-color: #727880;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: var(--background-color--primary);
+            color: var(--text-color--primary);
+            box-shadow: none;
+            font-size: large;
+        }
+        .container {
+            padding: 20px;
+        }
+        .theme-toggle-btn {
+            margin-bottom: 20px;
+        }
+        div > div {
+            display: flex;
+            flex-direction: column;
+
+            width: 95%; 
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background-color: var(--background-color--secondary);
+        }
+        
+        ul {
+            color: var(--text-color);
+        }
+
+        button {
+            background-color: var(--button__background-color);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: var(--button__text-color);
+            cursor: pointer;
+        }
+
+        nav {
+            background-color: var(--nav__background-color);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 30px 0px;
+
+            color: var(--icon-color);
+        }
+        nav > button {
+            background-color: transparent;
+            font-size: 4rem;
+        }
+        .secondary {
+            color: var(--text-color--secondary);
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="container">
+        <div>
+            <button class="theme-toggle-btn" onclick="toggleTheme()">Toggle Theme</button>
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+            </ul>
+            <button style="margin-bottom: 15px;">Loooooool</button>
+            Normaler Text
+            <p class="secondary">secondary Text</p>
+        </div>
+    </div>
+
+    <nav style="width: 100vw;">
+        <button>+</button>
+        <button>-</button>
+        <button>+</button>
+    </nav>
+
+    <script>
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', newTheme);
+        }
+    </script>
+</body>
+</html>
