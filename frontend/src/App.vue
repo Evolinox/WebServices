@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { watch, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
+import AddComponent from './components/AddComponent.vue'
 import NavBar from './components/NavBar.vue'
 import WeekKalender from './components/WeekKalender.vue'
 import { RouterView } from 'vue-router'
 import { theme } from './themes'
 import { useRoute } from 'vue-router'
 
+// Router
 const route = useRoute()
 
+// Theme
 watch(
   () => theme.value,
   (newTheme) => {
@@ -19,12 +22,20 @@ watch(
 onMounted(() => {
   document.documentElement.setAttribute('data-theme', theme.value)
 })
+
+// AddComponent
+const showAddComponent = ref(false)
+
+function toggleAddComponent() {
+  showAddComponent.value = !showAddComponent.value
+}
 </script>
 
 <template>
-  <WeekKalender v-if="route.name !== 'settings'" class="week-kalender"/>
+  <WeekKalender v-if="route.name == 'dashboard' || route.name=='diary' || route.name=='shoppingList'" class="week-kalender"/>
   <RouterView class="view"/>
-  <NavBar class="nav-bar"/>
+  <NavBar class="nav-bar" @toggle-add-component="toggleAddComponent"/>
+  <AddComponent v-if="showAddComponent" @close="toggleAddComponent" />
 </template>
 
 <style>
@@ -32,23 +43,45 @@ onMounted(() => {
   --nav-bar__height: 50px;
   --week-kalender__height: 50px;
 
-  --background-color: #f6f6f6;
-  --text-color: #0f0f0f;
+  
+  --background-color--primary: #f8fafd;
+  --background-color--secondary: #fefeff;
+  --background-color--tertiary: #f1f3f5;
 
-  --nav-bar__background-color: #8fbcff;
-  --nav-bar__icon-color: invert(0);
+  --text-color--primary: #37474f;
+  --text-color--secondary: #747c80;
+
+  --accent-color--primary: #0489d7; /* Mehr */
+  --accent-color--secondary: #58bdf6; /* Statistik */
+
+  --nav__background-color: #fefeff;
+
+  --button__background-color: #0588d6;
+
+  --icon-color: #36464e;
 }
 
 [data-theme='dark'] {
-  --background-color: #2f2f2f;
-  --text-color: #f6f6f6;
-  --nav-bar__background-color: #0066ff;
-  --nav-bar__icon-color: invert(1);
+  --background-color--primary: #111926;
+  --background-color--secondary: #1c2431;
+  --background-color--tertiary: #323847;
+
+  --text-color--primary: #f6f6f6;
+  --text-color--secondary: #727880;
+
+  --accent-color__primary: #0787d4; /* Mehr */
+  --accent-color__scondary: #58bdf9; /* Statistik */
+
+  --nav__background-color: #1f2b36;
+
+  --button__background-color: #0588d6; /* Plus */
+
+  --icon-color: #727880;
 }
 
 body {
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: var(--background-color--primary);
+  color: var(--text-color--primary);
 }
 
 .week-kalender {
@@ -70,10 +103,10 @@ h1 {
   margin-block-end: 0;
 }
 button {
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: var(--button__background-color);
+  color: var(--text-color--primary);
 
-  border: 1px solid var(--text-color);
+  border: none;
   border-radius: 10px;
 
   cursor: pointer;
