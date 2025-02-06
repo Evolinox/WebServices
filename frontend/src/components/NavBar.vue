@@ -2,6 +2,12 @@
 import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import dashboardSvg from '../assets/dashboard.svg?raw'
+import diarySvg from '../assets/diary.svg?raw'
+import plusSvg from '../assets/plus.svg?raw'
+import shoppingListSvg from '../assets/shoppingList.svg?raw'
+import settingsSvg from '../assets/settings.svg?raw'
+
 const route = useRoute()
 const router = useRouter()
 
@@ -15,14 +21,11 @@ watch(
 
 <template>
   <div class="nav-bar">
-    <button class="nav-bar__item" @click="router.push({ name: 'dashboard' })"><img src="../assets/dashboard.svg" alt=""></button>
-    <button class="nav-bar__item" @click="router.push({ name: 'diary' })"><img src="../assets/diary.svg" alt="" style="
-    position: relative;
-    left: 2px;"
-></button>
-    <button class="nav-bar__item"><img src="../assets/plus.svg" alt=""></button>
-    <button class="nav-bar__item" @click="router.push({ name: 'shoppingList' })"><img src="../assets/shoppingList.svg" alt=""></button>
-    <button class="nav-bar__item" @click="router.push({ name: 'settings' })"><img src="../assets/settings.svg" alt=""></button>
+    <button class="nav-bar__item" v-html="dashboardSvg" @click="router.push({ name: 'dashboard' })"></button>
+    <button class="nav-bar__item" v-html="diarySvg" @click="router.push({ name: 'diary' })"></button>
+    <button class="nav-bar__item" v-html="plusSvg" @click="$emit('toggle-add-component')"></button>
+    <button class="nav-bar__item" v-html="shoppingListSvg" @click="router.push({ name: 'shoppingList' })"></button>
+    <button class="nav-bar__item" v-html="settingsSvg" @click="router.push({ name: 'settings' })"></button>
   </div>
 </template>
 
@@ -36,13 +39,15 @@ watch(
   height: 45px;
   width: 45px;
   border-radius: 90px;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: transparent;
 }
-img {
-  height: 25px;
-  width: auto;
-  filter: var(--nav-bar__icon-color);
+.nav-bar__item > svg {
+  height: 50px;
+  width: 50px;
+  fill: var(--icon-color);
 }
 </style>
