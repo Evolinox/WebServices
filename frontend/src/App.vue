@@ -56,7 +56,8 @@ function toggleAddComponent() {
 
   --nav__background-color: #fefeff;
 
-  --button__background-color: #0588d6;
+  --button__text-color: #f6f6f6;
+  --button__background-color: #0588d6; /* Plus */
 
   --icon-color: #36464e;
 }
@@ -74,6 +75,7 @@ function toggleAddComponent() {
 
   --nav__background-color: #1f2b36;
 
+  --button__text-color: #f6f6f6;
   --button__background-color: #0588d6; /* Plus */
 
   --icon-color: #727880;
