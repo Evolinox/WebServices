@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { watch } from 'vue'
+import { watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import dashboardSvg from '../assets/dashboard.svg?raw'
@@ -11,8 +11,10 @@ import settingsSvg from '../assets/settings.svg?raw'
 const route = useRoute()
 const router = useRouter()
 
+const isActive = (path: string) => computed(() => route.name === path)
+
 watch(
-  () => route.path,
+  () => route.name,
   (newPath) => {
     console.log('Route changed to: ', newPath)
   }
@@ -21,11 +23,11 @@ watch(
 
 <template>
   <div class="nav-bar">
-    <button class="nav-bar__item" v-html="dashboardSvg" @click="router.push({ name: 'dashboard' })"></button>
-    <button class="nav-bar__item" v-html="diarySvg" @click="router.push({ name: 'diary' })"></button>
-    <button class="nav-bar__item" v-html="plusSvg" @click="$emit('toggle-add-component')"></button>
-    <button class="nav-bar__item" v-html="shoppingListSvg" @click="router.push({ name: 'shoppingList' })"></button>
-    <button class="nav-bar__item" v-html="settingsSvg" @click="router.push({ name: 'settings' })"></button>
+    <button :class="['nav-bar__item', { 'nav-bar__item--active': isActive('dashboard').value }]" v-html="dashboardSvg" @click="router.push({ name: 'dashboard' })"></button>
+    <button :class="['nav-bar__item', { 'nav-bar__item--active': isActive('diary').value }, 'rightShift']" v-html="diarySvg" @click="router.push({ name: 'diary' })"></button>
+    <button :class="['nav-bar__item', { 'nav-bar__item--active': isActive('plus').value }]" v-html="plusSvg" @click="$emit('toggle-add-component')"></button>
+    <button :class="['nav-bar__item', { 'nav-bar__item--active': isActive('shoppingList').value }]" v-html="shoppingListSvg" @click="router.push({ name: 'shoppingList' })"></button>
+    <button :class="['nav-bar__item', { 'nav-bar__item--active': isActive('settings').value }]" v-html="settingsSvg" @click="router.push({ name: 'settings' })"></button>
   </div>
 </template>
 
@@ -49,5 +51,12 @@ watch(
   height: 50px;
   width: 50px;
   fill: var(--icon-color);
+}
+.nav-bar__item--active > svg {
+  fill: var(--accent-color--primary);
+}
+.rightShift > svg {
+  position: relative;
+  left: 2px;
 }
 </style>
