@@ -1,5 +1,25 @@
 <script lang="ts" setup>
 import { theme, toggleTheme } from '../themes'
+
+var weight = "";
+const handleWeightInput = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  if (input?.value == "") {
+    input.value = weight;
+  } else {
+    weight = input.value;
+  }
+}
+
+var dailyCalories = "";
+const handleCaloriesInput = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  if (input?.value == "") {
+    input.value = dailyCalories;
+  } else {
+    dailyCalories = input.value;
+  }
+}
 </script>
 
 <template>
@@ -25,11 +45,11 @@ import { theme, toggleTheme } from '../themes'
       </div>
       <div class="settings-view__item">
         <span class="settings-view__label">Gewicht [kg]</span>
-        <input type="number" class="settings-view__input" min="0"/>
+        <input type="number" class="settings-view__input" min="0" @input="handleWeightInput"/>
       </div>
       <div class="settings-view__item">
         <span class="settings-view__label">Kalorientagesziel [kcal]</span>
-        <input type="number" class="settings-view__input" min="0" />
+        <input type="number" class="settings-view__input" min="0" @input="handleCaloriesInput"/>
       </div>
       
     </div>
@@ -37,6 +57,11 @@ import { theme, toggleTheme } from '../themes'
 </template>
 
 <style scoped>
+select, input {
+  border-radius: 6px;
+  box-shadow: none;
+  border: solid var(--text-color--secondary);
+}
 /* Container für die Einstellungen */
 .settings-view {
   height: calc(100vh - var(--nav-bar__height));
