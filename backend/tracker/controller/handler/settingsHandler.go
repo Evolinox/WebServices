@@ -4,7 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"tracker/controller/repositories"
-	"tracker/infrastructure/entity"
+	"tracker/infrastructure/dto/mapper"
+	"tracker/infrastructure/dto/model"
 )
 
 type SettingsHandler struct {
@@ -29,7 +30,8 @@ func (h *SettingsHandler) GetSettings(c *gin.Context) {
 }
 
 func (h *SettingsHandler) UpdateSettings(c *gin.Context) {
-	var updatedSettings entity.Settings
+	var receivedSettings model.SettingsDTO
+	updatedSettings := mapper.CalculateSettingsData(receivedSettings)
 
 	if err := c.ShouldBindJSON(&updatedSettings); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

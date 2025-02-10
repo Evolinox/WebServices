@@ -1,37 +1,25 @@
 package mapper
 
 import (
-	"tracker/infrastructure/dto/entity"
+	"tracker/infrastructure/dto/model"
+	entity2 "tracker/infrastructure/entity"
 )
 
-/*
-	Flexibility for Future Changes
-	- The mapper package is created to separate the conversion logic from the rest of the code.
-	- This way, if the structure of the Product entity changes, only the conversion logic in the mapper package needs to be updated.
-*/
+func CalculateNutritionValues(productData model.ReceiveProductDTO) entity2.ConsumedProduct {
+	// Calculate weight factor
+	weightFactor := float64(productData.Weight) / 100.0
 
-func ToProductDTO(product entity.Product) entity.ProductDTO {
-	return entity.ProductDTO{
-		ID:                  product.ID,
-		Name:                product.Name,
-		Brand:               product.Brand,
-		PortionSizeInGrams:  product.PortionSizeInGrams,
-		CaloriesPer100Grams: product.CaloriesPer100Grams,
-		ProteinsInGrams:     product.ProteinsInGrams,
-		FatsInGrams:         product.FatsInGrams,
-		CarbsInGrams:        product.CarbsInGrams,
+	// Create a new ConsumedProduct
+	consumedProduct := entity2.ConsumedProduct{
+		ProductID:       productData.Product.ID,
+		Category:        productData.Category,
+		WeightInGrams:   productData.Weight,
+		Calories:        int(float64(productData.Product.CaloriesPer100Grams) * weightFactor),
+		ProteinsInGrams: productData.Product.ProteinsInGrams * weightFactor,
+		FatsInGrams:     productData.Product.FatsInGrams * weightFactor,
+		CarbsInGrams:    productData.Product.CarbsInGrams * weightFactor,
 	}
-}
 
-func ToProductEntity(dto entity.ProductDTO) entity.Product {
-	return entity.Product{
-		ID:                  dto.ID,
-		Name:                dto.Name,
-		Brand:               dto.Brand,
-		PortionSizeInGrams:  dto.PortionSizeInGrams,
-		CaloriesPer100Grams: dto.CaloriesPer100Grams,
-		ProteinsInGrams:     dto.ProteinsInGrams,
-		FatsInGrams:         dto.FatsInGrams,
-		CarbsInGrams:        dto.CarbsInGrams,
-	}
+	// Return the ConsumedProduct struct
+	return consumedProduct
 }
