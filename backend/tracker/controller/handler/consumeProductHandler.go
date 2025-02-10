@@ -21,7 +21,7 @@ func NewConsumeProductHandler(repo *repositories.ConsumeProductRepository) *Cons
 }
 
 func (h *ConsumeProductHandler) ConsumeProduct(c *gin.Context) {
-	var receivedProductData model.ReceiveProductDTO
+	var receivedProductData model.ExpectedProductDTO
 
 	// Bind JSON request body
 	if err := c.ShouldBindJSON(&receivedProductData); err != nil {

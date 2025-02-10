@@ -1,11 +1,11 @@
 package model
 
 type ProductDTO struct {
-	ID                  uint    `json:"id"`
-	Name                string  `json:"name"`
-	Brand               string  `json:"brand"`
-	CaloriesPer100Grams int     `json:"caloriesPer100Grams"`
-	ProteinsInGrams     float64 `json:"proteinsInGrams"`
-	FatsInGrams         float64 `json:"fatsInGrams"`
-	CarbsInGrams        float64 `json:"carbsInGrams"`
+	ID                  uint    `json:"ID"`
+	Name                string  `json:"Name"`
+	Brand               string  `json:"Brand"`
+	CaloriesPer100Grams int     `json:"CaloriesPer100Grams"`
+	ProteinsInGrams     float64 `json:"ProteinsInGrams"`
+	FatsInGrams         float64 `json:"FatsInGrams"`
+	CarbsInGrams        float64 `json:"CarbsInGrams"`
 }

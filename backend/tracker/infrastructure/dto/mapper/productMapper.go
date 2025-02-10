@@ -5,7 +5,7 @@ import (
 	entity2 "tracker/infrastructure/entity"
 )
 
-func CalculateNutritionValues(productData model.ReceiveProductDTO, dailyRecordID uint) *entity2.ConsumedProduct {
+func CalculateNutritionValues(productData model.ExpectedProductDTO, dailyRecordID uint) *entity2.ConsumedProduct {
 	weightFactor := float64(productData.Weight) / 100.0
 
 	return &entity2.ConsumedProduct{

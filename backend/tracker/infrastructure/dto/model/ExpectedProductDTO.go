@@ -1,6 +1,6 @@
 package model
 
-type ReceiveProductDTO struct {
+type ExpectedProductDTO struct {
 	Product  ProductDTO `json:"Product"`
 	Date     string     `json:"Date"`
 	Weight   int        `json:"Weight"`
