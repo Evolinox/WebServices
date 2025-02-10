@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"productApi/infrastructure/entity"
+	"productApi/infrastructure/entity/data"
 )
 
 type DbConnection struct {
@@ -54,5 +55,25 @@ func NewDBConnectionFromDSN(dsn string, maxOpenConns int) *DbConnection {
 	}
 	fmt.Printf("DB Migration successful!\n")
 
+	fillDbWithData(db)
+
 	return &DbConnection{Db: db}
+}
+
+func fillDbWithData(db *gorm.DB) {
+	var count int64
+
+	// Check if the table is empty
+	if err := db.Model(&entity.Product{}).Count(&count).Error; err != nil {
+		fmt.Println("Error checking settings table:", err)
+		return
+	}
+
+	// Insert data only if no records exist
+	if count == 0 {
+		fmt.Println("Seeding default settings data...")
+		db.Create(data.Products)
+	} else {
+		fmt.Println("Settings table is not empty, skipping seeding.")
+	}
 }

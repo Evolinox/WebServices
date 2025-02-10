@@ -15,10 +15,9 @@ The data retrieved from the database is in the following format:  <br>
 for example:
 ```json
 {
-  "ID": "15348",
+  "ID": 15348,
   "Name": "Skyr",
   "Brand": "K-Classic",
-  "PortionSizeInGrams": 50,
   "CaloriesPer100Grams": 400,
   "ProteinsInGrams": 20.5,
   "FatsInGrams": 15.2,
@@ -38,7 +37,7 @@ docker build -t custom-mariadb .
 
 ### Start the Docker container
 ```shell script
-docker run -d --name product_db_mariadb -p 3306:3306 custom-mariadb
+docker run -d --name product_db_mariadb -p 3405:3306 custom-mariadb
 ```
 
 ## Starting the API

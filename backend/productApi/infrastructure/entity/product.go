@@ -1,7 +1,7 @@
 package entity
 
 type Product struct {
-	ID                  string  `json:"ID" gorm:"primaryKey"`
+	ID                  uint    `json:"ID" gorm:"primaryKey"`
 	Name                string  `json:"Name"`
 	Brand               string  `json:"Brand"`
 	CaloriesPer100Grams int     `json:"CaloriesPer100Grams"`
