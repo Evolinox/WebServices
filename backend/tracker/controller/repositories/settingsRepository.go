@@ -30,6 +30,6 @@ func (r *SettingsRepository) UpdateSettings(updatedSettings *entity.Settings) er
 	if err := r.db.First(&settings).Error; err != nil {
 		return err
 	}
-	//Query 1=1 is used because theres only one record in the table
+	//Query 1=1 is used because there is only one record in the table
 	return r.db.Model(&entity.Settings{}).Where("1 = 1").Updates(updatedSettings).Error
 }
