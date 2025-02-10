@@ -6,12 +6,12 @@ import (
 )
 
 func CalculateNutritionValues(productData model.ReceiveProductDTO) entity2.ConsumedProduct {
-	// Calculate weight factor
 	weightFactor := float64(productData.Weight) / 100.0
 
 	// Create a new ConsumedProduct
 	consumedProduct := entity2.ConsumedProduct{
 		ProductID:       productData.Product.ID,
+		Date:            productData.Date,
 		Category:        productData.Category,
 		WeightInGrams:   productData.Weight,
 		Calories:        int(float64(productData.Product.CaloriesPer100Grams) * weightFactor),
