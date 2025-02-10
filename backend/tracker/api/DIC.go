@@ -1,9 +1,57 @@
 package api
 
-import "tracker/controller/repositories"
+import (
+	"os"
+	"tracker/controller/repositories"
+	"tracker/infrastructure/db"
+)
 
 type DIC struct {
-	productAPIRepo *repositories.ProductAPIRepository
+	dbConnection                 *db.DbConnection
+	consumeProductRepo           *repositories.ConsumeProductRepository
+	dailyNutritionStatisticsRepo *repositories.NutritionStatisticsRepository
+	diaryRepo                    *repositories.DiaryRepository
+	settingsRepo                 *repositories.SettingsRepository
+	productAPIRepo               *repositories.ProductAPIRepository
+}
+
+func (d *DIC) GetDbConnection() *db.DbConnection {
+	if d.dbConnection == nil {
+		maxOpenConns := 100
+		if "" == os.Getenv("ENV_ENVIRONMENT") {
+			maxOpenConns = 25
+		}
+		d.dbConnection = db.NewDBConnection(os.Getenv("DATABASE_URI"), maxOpenConns)
+	}
+	return d.dbConnection
+}
+
+func (d *DIC) GetConsumeProductRepository() *repositories.ConsumeProductRepository {
+	if d.consumeProductRepo == nil {
+		d.consumeProductRepo = repositories.NewConsumeProductRepository(d.GetDbConnection().Db)
+	}
+	return d.consumeProductRepo
+}
+
+func (d *DIC) GetNutritionStatisticsRepository() *repositories.NutritionStatisticsRepository {
+	if d.dailyNutritionStatisticsRepo == nil {
+		d.dailyNutritionStatisticsRepo = repositories.NewNutritionStatisticsRepository(d.GetDbConnection().Db)
+	}
+	return d.dailyNutritionStatisticsRepo
+}
+
+func (d *DIC) GetDiaryRepository() *repositories.DiaryRepository {
+	if d.diaryRepo == nil {
+		d.diaryRepo = repositories.NewDiaryRepository(d.GetDbConnection().Db)
+	}
+	return d.diaryRepo
+}
+
+func (d *DIC) GetSettingsRepository() *repositories.SettingsRepository {
+	if d.settingsRepo == nil {
+		d.settingsRepo = repositories.NewSettingsRepository(d.GetDbConnection().Db)
+	}
+	return d.settingsRepo
 }
 
 func (d *DIC) GetProductAPIRepository() *repositories.ProductAPIRepository {

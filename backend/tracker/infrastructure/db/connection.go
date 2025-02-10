@@ -8,8 +8,8 @@ import (
 	"log"
 	"net/url"
 	"os"
-	"productApi/infrastructure/entity"
-	"productApi/infrastructure/entity/data"
+	"tracker/infrastructure/entity"
+	"tracker/infrastructure/entity/data"
 )
 
 type DbConnection struct {
@@ -48,7 +48,10 @@ func NewDBConnectionFromDSN(dsn string, maxOpenConns int) *DbConnection {
 	fmt.Printf("DB Connection successful!\n")
 
 	if autoMigrateError := db.AutoMigrate(
-		&entity.Product{},
+		&entity.Settings{},
+		&entity.DailyProductsConsumed{},
+		&entity.ConsumedProduct{},
+		&entity.NutritionStatistics{},
 	); autoMigrateError != nil {
 		fmt.Printf("Error migrate table: %s", autoMigrateError.Error())
 		os.Exit(4)
@@ -64,7 +67,7 @@ func fillDbWithData(db *gorm.DB) {
 	var count int64
 
 	// Check if the table is empty
-	if err := db.Model(&entity.Product{}).Count(&count).Error; err != nil {
+	if err := db.Model(&entity.Settings{}).Count(&count).Error; err != nil {
 		fmt.Println("Error checking settings table:", err)
 		return
 	}
@@ -72,7 +75,7 @@ func fillDbWithData(db *gorm.DB) {
 	// Insert data only if no records exist
 	if count == 0 {
 		fmt.Println("Seeding default settings data...")
-		db.Create(data.Products)
+		db.Create(data.Settings)
 	} else {
 		fmt.Println("Settings table is not empty, skipping seeding.")
 	}
