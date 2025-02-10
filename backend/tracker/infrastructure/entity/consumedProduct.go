@@ -2,8 +2,9 @@ package entity
 
 type ConsumedProduct struct {
 	ID                      uint    `json:"ID" gorm:"primaryKey"`
-	DailyProductsConsumedID uint    `json:"DailyProductsConsumedID"` // Foreign Key
+	DailyProductsConsumedID uint    `json:"DailyProductsConsumedID"`
 	ProductID               uint    `json:"ProductID"`
+	ProductName             string  `json:"ProductName"`
 	Category                string  `json:"Category" gorm:"type:enum('Frühstück', 'Mittagessen', 'Abendessen', 'Snack')"`
 	WeightInGrams           int     `json:"WeightInGrams"`
 	Calories                int     `json:"Calories"`

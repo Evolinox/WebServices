@@ -4,22 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="added Date to consumedProduct, ReceivedProductDTO and Mapper func for api requests with paramater date">
-      <change afterPath="$PROJECT_DIR$/productApi/infrastructure/entity/data/productData.go" afterDir="false" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fix db bug with gorm">
+      <change afterPath="$PROJECT_DIR$/tracker/Endpoints.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/ea70dd79-e08a-4377-bfb3-723f0a61408e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ea70dd79-e08a-4377-bfb3-723f0a61408e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/productApi/ReadMe.md" beforeDir="false" afterPath="$PROJECT_DIR$/productApi/ReadMe.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/productApi/infrastructure/db/connection.go" beforeDir="false" afterPath="$PROJECT_DIR$/productApi/infrastructure/db/connection.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/productApi/infrastructure/entity/product.go" beforeDir="false" afterPath="$PROJECT_DIR$/productApi/infrastructure/entity/product.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/controller/handler/consumeProductHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/handler/consumeProductHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/controller/repositories/consumeProductRepository.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/repositories/consumeProductRepository.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tracker/controller/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/infrastructure/db/connection.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/db/connection.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tracker/infrastructure/dto/mapper/productMapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/dto/mapper/productMapper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/infrastructure/dto/model/productDTO.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/dto/model/productDTO.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tracker/infrastructure/entity/consumedProduct.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/entity/consumedProduct.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/infrastructure/entity/data/settingsData.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/entity/data/settingsData.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/infrastructure/entity/diary.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/entity/diary.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -353,7 +344,8 @@
     <MESSAGE value="added the routes to the router. Create instances in the DIC and call them in the main" />
     <MESSAGE value="fixed bug with the Validator" />
     <MESSAGE value="added Date to consumedProduct, ReceivedProductDTO and Mapper func for api requests with paramater date" />
-    <option name="LAST_COMMIT_MESSAGE" value="added Date to consumedProduct, ReceivedProductDTO and Mapper func for api requests with paramater date" />
+    <MESSAGE value="fix db bug with gorm" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix db bug with gorm" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
