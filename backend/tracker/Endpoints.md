@@ -125,13 +125,13 @@ Zusätzlich kommen Datum, Gewicht in Gramm und Kategorie dazu)
 ```json
 {
   "Product": {
-    "id": 6,
-    "name": "Hähnchenbrustfilet",
-    "brand": "Landjunker",
-    "caloriesPer100Grams": 107,
-    "proteinsInGrams": 23,
-    "fatsInGrams": 2.6,
-    "carbsInGrams": 0.5
+    "ID": 6,
+    "Name": "Hähnchenbrustfilet",
+    "Brand": "Landjunker",
+    "CaloriesPer100Grams": 107,
+    "ProteinsInGrams": 23,
+    "FatsInGrams": 2.6,
+    "CarbsInGrams": 0.5
   },
   "Date": "2025-02-10",
   "Weight": 200,
@@ -149,8 +149,8 @@ Get the products that are consumed on a specific date.
 Is the standard view when open the diary(tagebuch) tab.
 ```json
 {
-  "date": "2025-02-10",
-  "products": [
+  "Date": "2025-02-10",
+  "Products": [
     {
       "ID": 1,
       "DailyProductsConsumedID": 1,
