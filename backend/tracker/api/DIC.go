@@ -7,9 +7,12 @@ import (
 )
 
 type DIC struct {
-	dbConnection   *db.DbConnection
-	settingsRepo   *repositories.SettingsRepository
-	productAPIRepo *repositories.ProductAPIRepository
+	dbConnection                 *db.DbConnection
+	consumeProductRepo           *repositories.ConsumeProductRepository
+	dailyNutritionStatisticsRepo *repositories.NutritionStatisticsRepository
+	diaryRepo                    *repositories.DiaryRepository
+	settingsRepo                 *repositories.SettingsRepository
+	productAPIRepo               *repositories.ProductAPIRepository
 }
 
 func (d *DIC) GetDbConnection() *db.DbConnection {
@@ -23,11 +26,25 @@ func (d *DIC) GetDbConnection() *db.DbConnection {
 	return d.dbConnection
 }
 
-func (d *DIC) GetProductAPIRepository() *repositories.ProductAPIRepository {
-	if d.productAPIRepo == nil {
-		d.productAPIRepo = repositories.NewProductAPIRepository("http://localhost:8081")
+func (d *DIC) GetConsumeProductRepository() *repositories.ConsumeProductRepository {
+	if d.consumeProductRepo == nil {
+		d.consumeProductRepo = repositories.NewConsumeProductRepository(d.GetDbConnection().Db)
 	}
-	return d.productAPIRepo
+	return d.consumeProductRepo
+}
+
+func (d *DIC) GetNutritionStatisticsRepository() *repositories.NutritionStatisticsRepository {
+	if d.dailyNutritionStatisticsRepo == nil {
+		d.dailyNutritionStatisticsRepo = repositories.NewNutritionStatisticsRepository(d.GetDbConnection().Db)
+	}
+	return d.dailyNutritionStatisticsRepo
+}
+
+func (d *DIC) GetDiaryRepository() *repositories.DiaryRepository {
+	if d.diaryRepo == nil {
+		d.diaryRepo = repositories.NewDiaryRepository(d.GetDbConnection().Db)
+	}
+	return d.diaryRepo
 }
 
 func (d *DIC) GetSettingsRepository() *repositories.SettingsRepository {
@@ -35,4 +52,11 @@ func (d *DIC) GetSettingsRepository() *repositories.SettingsRepository {
 		d.settingsRepo = repositories.NewSettingsRepository(d.GetDbConnection().Db)
 	}
 	return d.settingsRepo
+}
+
+func (d *DIC) GetProductAPIRepository() *repositories.ProductAPIRepository {
+	if d.productAPIRepo == nil {
+		d.productAPIRepo = repositories.NewProductAPIRepository("http://localhost:8081")
+	}
+	return d.productAPIRepo
 }

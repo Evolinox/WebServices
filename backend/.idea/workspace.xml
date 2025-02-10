@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="updated ReadMe for tracker API">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fixed bug in update settings" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +15,8 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Go File" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -63,6 +63,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultGoTemplateProperty": "Go File",
     "HTTP Request.generated-requests | #2.executor": "Run",
     "HTTP Request.generated-requests | #3.executor": "Run",
     "Quarkus.backend.executor": "Debug",
@@ -77,7 +78,7 @@
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/timkerl/DHBW-AI/4. Semester/Web-Services/Repo/WebServices/backend/tracker/infrastructure/mapper",
+    "last_opened_file_path": "/Users/timkerl/DHBW-AI/4. Semester/Web-Services/Repo/WebServices/backend/tracker/infrastructure/db",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -92,23 +93,25 @@
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
-      "postgresql"
+      "postgresql",
+      "mariadb"
     ]
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tracker/infrastructure/db" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/mapper" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/entity" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto" />
       <recent name="$PROJECT_DIR$/tracker/controller" />
-      <recent name="$PROJECT_DIR$/tracker/controller/repositories" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tracker/infrastructure/dto/mapper" />
+      <recent name="$PROJECT_DIR$/tracker/infrastructure/dto/entity" />
+      <recent name="$PROJECT_DIR$/tracker/infrastructure/dto" />
       <recent name="$PROJECT_DIR$/productApi/controller/repositories" />
       <recent name="$PROJECT_DIR$/trackerApi" />
-      <recent name="$PROJECT_DIR$/calenderApi" />
-      <recent name="$PROJECT_DIR$/productApi" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.acme" />
@@ -300,7 +303,14 @@
     <MESSAGE value="Added tracker API V1.0" />
     <MESSAGE value="Adjustments made to read env.local file" />
     <MESSAGE value="updated ReadMe for tracker API" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated ReadMe for tracker API" />
+    <MESSAGE value="structured Router for tracker Api with router groups" />
+    <MESSAGE value="Added MariaDb to tracker Api.&#10;Added sable settings.&#10;Added Api routes for settings and created repository and handler" />
+    <MESSAGE value="Fixed bug in productMapper" />
+    <MESSAGE value="added reader for env.local file to main" />
+    <MESSAGE value="added Dockerfile to trackerApi and updated the ReadMe" />
+    <MESSAGE value="changed the db port for productApi" />
+    <MESSAGE value="fixed bug in update settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed bug in update settings" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

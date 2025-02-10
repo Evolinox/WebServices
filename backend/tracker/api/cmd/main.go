@@ -10,10 +10,18 @@ import (
 func main() {
 	config.LoadConfig(".env")
 	dic := api.DIC{}
-	productAPIRepo := dic.GetProductAPIRepository()
-	settingsRepo := dic.GetSettingsRepository()
-	productHandler := handler.NewProductHandler(productAPIRepo)
-	settingsHandler := handler.NewSettingsHandler(settingsRepo)
 
-	controller.RouteController(productHandler, settingsHandler)
+	consumeProductRepo := dic.GetConsumeProductRepository()
+	nutritionStatistics := dic.GetNutritionStatisticsRepository()
+	diaryRepo := dic.GetDiaryRepository()
+	settingsRepo := dic.GetSettingsRepository()
+	productAPIRepo := dic.GetProductAPIRepository()
+
+	consumeProductHandler := handler.NewConsumeProductHandler(consumeProductRepo)
+	nutritionStatisticsHandler := handler.NewNutritionStatisticsHandler(nutritionStatistics)
+	diaryHandler := handler.NewDiaryHandler(diaryRepo)
+	settingsHandler := handler.NewSettingsHandler(settingsRepo)
+	productHandler := handler.NewProductHandler(productAPIRepo)
+
+	controller.RouteController(productHandler, consumeProductHandler, diaryHandler, nutritionStatisticsHandler, settingsHandler)
 }

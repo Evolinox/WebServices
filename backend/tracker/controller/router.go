@@ -5,7 +5,12 @@ import (
 	"tracker/controller/handler"
 )
 
-func RouteController(productHandler *handler.ProductHandler, settingsHandler *handler.SettingsHandler) {
+func RouteController(
+	productHandler *handler.ProductHandler,
+	consumeProductHandler *handler.ConsumeProductHandler,
+	diaryHandler *handler.DiaryHandler,
+	nutritionStatisticsHandler *handler.NutritionStatisticsHandler,
+	settingsHandler *handler.SettingsHandler) {
 	router := gin.Default()
 
 	tracker := router.Group("/tracker")
@@ -15,9 +20,23 @@ func RouteController(productHandler *handler.ProductHandler, settingsHandler *ha
 	productRouter.GET("/:id", productHandler.GetProductByID)
 	productRouter.GET("/name/:name", productHandler.GetProductByName)
 
+	trackProductRouter := tracker.Group("/consume")
+	trackProductRouter.POST("/", consumeProductHandler.ConsumeProduct)
+
+	diaryRouter := tracker.Group("/diary")
+	diaryRouter.GET("/:date", diaryHandler.GetDiaryByDate)
+	diaryRouter.GET("/:id", diaryHandler.GetConsumedProductByID)
+	diaryRouter.DELETE("/:id", consumeProductHandler.DeleteConsumedProduct)
+
+	nutritionStaticsRouter := tracker.Group("/nutrition")
+	nutritionStaticsRouter.GET("/:date", nutritionStatisticsHandler.GetNutritionStatisticsByDate)
+
 	settingsRouter := tracker.Group("/settings")
 	settingsRouter.GET("/", settingsHandler.GetSettings)
 	settingsRouter.PATCH("/", settingsHandler.UpdateSettings)
 
-	router.Run("localhost:8082")
+	err := router.Run("localhost:8082")
+	if err != nil {
+		return
+	}
 }
