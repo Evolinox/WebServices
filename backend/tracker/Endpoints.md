@@ -179,15 +179,16 @@ Is the standard view when open the diary(tagebuch) tab.
 }
 ```
 ---
-GET http://localhost:8082/tracker/diary/5
+GET http://localhost:8082/tracker/diary/date/2025-02-10/3
 
-Get a product by the ID (ID is from ConsumedProduct Table).
+Get a product from a specific date by the ID (ID is from ConsumedProduct Table).
 
 ```json
 {
-  "ID": 5,
-  "DailyProductsConsumedID": 2,
+  "ID": 3,
+  "DailyProductsConsumedID": 1,
   "ProductID": 6,
+  "ProductName": "Hähnchenbrustfilet",
   "Category": "Abendessen",
   "WeightInGrams": 500,
   "Calories": 535,
@@ -197,7 +198,7 @@ Get a product by the ID (ID is from ConsumedProduct Table).
 }
 ```
 ---
-DELETE http://localhost:8082/tracker/diary/2
+DELETE http://localhost:8082/tracker/diary/date/2025-02-10/1
 
 Delete a product by the ID (ID is from ConsumedProduct Table).
 We can get the id when picking a product from the diary list (the first get call from diary)

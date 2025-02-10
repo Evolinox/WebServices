@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fix db bug with gorm">
-      <change afterPath="$PROJECT_DIR$/tracker/Endpoints.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ea70dd79-e08a-4377-bfb3-723f0a61408e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ea70dd79-e08a-4377-bfb3-723f0a61408e.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/controller/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/router.go" afterDir="false" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fix bug. Added descritpon for endpoints">
       <change beforePath="$PROJECT_DIR$/tracker/infrastructure/dto/mapper/productMapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/dto/mapper/productMapper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/infrastructure/entity/consumedProduct.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/entity/consumedProduct.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -345,7 +340,8 @@
     <MESSAGE value="fixed bug with the Validator" />
     <MESSAGE value="added Date to consumedProduct, ReceivedProductDTO and Mapper func for api requests with paramater date" />
     <MESSAGE value="fix db bug with gorm" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix db bug with gorm" />
+    <MESSAGE value="fix bug. Added descritpon for endpoints" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug. Added descritpon for endpoints" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

@@ -8,7 +8,6 @@ import (
 func CalculateNutritionValues(productData model.ReceiveProductDTO, dailyRecordID uint) *entity2.ConsumedProduct {
 	weightFactor := float64(productData.Weight) / 100.0
 
-	// Create the ConsumedProduct with the correct foreign key
 	return &entity2.ConsumedProduct{
 		DailyProductsConsumedID: dailyRecordID, // Assign the ID from the DailyProductsConsumed record
 		ProductID:               productData.Product.ID,
