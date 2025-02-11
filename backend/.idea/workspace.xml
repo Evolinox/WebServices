@@ -5,7 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fix bug. Added descritpon for endpoints">
-      <change beforePath="$PROJECT_DIR$/tracker/infrastructure/dto/mapper/productMapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/dto/mapper/productMapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/ReadMe.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/api/cmd/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/api/dic.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/controller/handler/calendarHandler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/controller/repositories/calendarRepository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/controller/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/infrastructure/db/connection.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/infrastructure/entity/calendar.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/calendarApi/infrastructure/entity/data/calendarData.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shoppingListApi/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +36,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file:///usr/local/go" />
+  <component name="GOROOT" url="file://$USER_HOME$/sdk/go1.23.6" />
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -39,8 +53,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:Evolinox/WebServices.git&quot;,
-    &quot;accountId&quot;: &quot;5af98e65-b802-4c3b-a675-c007e0dd0e15&quot;
+    &quot;url&quot;: &quot;https://github.com/Evolinox/WebServices.git&quot;,
+    &quot;accountId&quot;: &quot;d8b95d03-d144-4b8c-8077-a77aee8ae83e&quot;
   }
 }</component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -65,58 +79,58 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;HTTP Request.generated-requests | #2.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #3.executor&quot;: &quot;Run&quot;,
-    &quot;Quarkus.backend.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/trackerApi&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/timkerl/DHBW-AI/4. Semester/Web-Services/Repo/WebServices/backend/tracker/infrastructure/db&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultGoTemplateProperty": "Go File",
+    "HTTP Request.generated-requests | #2.executor": "Run",
+    "HTTP Request.generated-requests | #3.executor": "Run",
+    "Quarkus.backend.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/pascal/Repositories/WebServices/backend/calendarApi",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;,
-      &quot;mariadb&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql",
+      "mariadb"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/calendarApi" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/db" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/mapper" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/entity" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto" />
-      <recent name="$PROJECT_DIR$/tracker/controller" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/calendarApi/api" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/entity" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto/mapper" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto/entity" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto" />
-      <recent name="$PROJECT_DIR$/productApi/controller/repositories" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.acme" />
