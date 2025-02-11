@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="changed location of env file" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="update required JSON Data for settings Patch request">
+      <change afterPath="$PROJECT_DIR$/.idea/swagger-settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tracker/controller/docs/docs.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tracker/controller/docs/swagger.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tracker/controller/docs/swagger.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tracker/docs/docs.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tracker/docs/swagger.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tracker/docs/swagger.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/controller/handler/productHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/handler/productHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/controller/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.sum" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -315,7 +328,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Added Product API V1.0" />
     <MESSAGE value="Added tracker API V1.0" />
     <MESSAGE value="Adjustments made to read env.local file" />
     <MESSAGE value="updated ReadMe for tracker API" />
@@ -340,7 +352,8 @@
     <MESSAGE value="Updated JSON Annotations for DTOs" />
     <MESSAGE value="Updated Documentation" />
     <MESSAGE value="changed location of env file" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed location of env file" />
+    <MESSAGE value="update required JSON Data for settings Patch request" />
+    <option name="LAST_COMMIT_MESSAGE" value="update required JSON Data for settings Patch request" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

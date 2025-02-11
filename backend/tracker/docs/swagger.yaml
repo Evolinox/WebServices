@@ -1,0 +1,16 @@
+basePath: /tracker/
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8082
+info:
+  contact:
+    email: tim.kerl.23@lehre.mosbach.dhbw.de
+    name: Tim Kerl
+  description: This is the Documentation of the Nutrition Tracker API, which contains
+    3 external APIs. The main Goal of the API is to get insights in your nutrition
+    and helps you to organize your shopping and your meetings.
+  title: Nutrition Tracker API
+  version: "1.0"
+paths: {}
+swagger: "2.0"
