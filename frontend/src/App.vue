@@ -25,7 +25,6 @@ onMounted(() => {
 
 // AddComponent
 const showAddComponent = ref(false)
-
 function toggleAddComponent() {
   showAddComponent.value = !showAddComponent.value
 }
