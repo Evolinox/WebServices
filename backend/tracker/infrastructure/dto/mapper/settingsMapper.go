@@ -6,8 +6,6 @@ import (
 	"tracker/infrastructure/entity"
 )
 
-//ToDo Rechnung für die Values außeer calories funzt net
-
 func CalculateSettingsData(settingsData model.SettingsDTO) entity.Settings {
 	proteinsPercentage := 0.35
 	fatsPercentage := 0.25
