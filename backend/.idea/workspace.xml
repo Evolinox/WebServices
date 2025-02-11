@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fix bug. Added descritpon for endpoints">
-      <change beforePath="$PROJECT_DIR$/tracker/infrastructure/dto/mapper/productMapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/dto/mapper/productMapper.go" afterDir="false" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="Updated Documentation">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,8 +317,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="creating productAPi and try to consume it with trackerApi" />
-    <MESSAGE value="adjusted names in Entity Product" />
     <MESSAGE value="Refactoring Backend from Java-Quarkus to Go" />
     <MESSAGE value="Added Product API V1.0" />
     <MESSAGE value="Added tracker API V1.0" />
@@ -341,7 +339,10 @@
     <MESSAGE value="added Date to consumedProduct, ReceivedProductDTO and Mapper func for api requests with paramater date" />
     <MESSAGE value="fix db bug with gorm" />
     <MESSAGE value="fix bug. Added descritpon for endpoints" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug. Added descritpon for endpoints" />
+    <MESSAGE value="improved the router and updated the endpoints documentation" />
+    <MESSAGE value="Updated JSON Annotations for DTOs" />
+    <MESSAGE value="Updated Documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Documentation" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

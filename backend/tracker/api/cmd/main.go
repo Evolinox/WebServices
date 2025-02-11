@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	config.LoadConfig(".env")
+	config.LoadConfig("")
 	dic := api.DIC{}
 
 	consumeProductRepo := dic.GetConsumeProductRepository()
