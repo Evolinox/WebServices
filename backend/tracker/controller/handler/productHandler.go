@@ -14,16 +14,6 @@ func NewProductHandler(repo *repositories.ProductAPIRepository) *ProductHandler 
 	return &ProductHandler{repo: repo}
 }
 
-// GetProducts godoc
-// @Summary      List all products
-// @Description  Retrieves a list of all available products.
-// @Tags         products
-// @Accept       json
-// @Produce      json
-// @Success      200  {array}   dto.ProductDTO
-// @Failure      500  {object}  httputil.HTTPError
-// @Router       /products/ [get]
-
 func (h *ProductHandler) GetProducts(c *gin.Context) {
 	products, err := h.repo.GetProducts()
 	if err != nil {
@@ -32,18 +22,6 @@ func (h *ProductHandler) GetProducts(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, products)
 }
-
-// GetProductByID godoc
-// @Summary      Get a product by ID
-// @Description  Retrieves details of a specific product using its ID.
-// @Tags         products
-// @Accept       json
-// @Produce      json
-// @Param        id   path      string  true  "Product ID"
-// @Success      200  {object}  dto.ProductDTO
-// @Failure      404  {object}  httputil.HTTPError
-// @Failure      500  {object}  httputil.HTTPError
-// @Router       /products/{id} [get]
 
 func (h *ProductHandler) GetProductByID(c *gin.Context) {
 	id := c.Param("id")
@@ -58,18 +36,6 @@ func (h *ProductHandler) GetProductByID(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, product)
 }
-
-// GetProductByName godoc
-// @Summary      Search products by name
-// @Description  Retrieves a list of products matching a given name.
-// @Tags         products
-// @Accept       json
-// @Produce      json
-// @Param        name  path      string  true  "Product Name"
-// @Success      200   {array}   dto.ProductDTO
-// @Failure      404   {object}  httputil.HTTPError
-// @Failure      500   {object}  httputil.HTTPError
-// @Router       /products/name/{name} [get]
 
 func (h *ProductHandler) GetProductByName(c *gin.Context) {
 	name := c.Param("name")

@@ -2,23 +2,8 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	"tracker/controller/handler"
 )
-
-//	@title			Nutrition Tracker API
-//	@version		1.0
-//	@description	This is the Documentation of the Nutrition Tracker API, which contains 3 external APIs. The main Goal of the API is to get insights in your nutrition and helps you to organize your shopping and your meetings.
-
-//	@contact.name	Tim Kerl
-//	@contact.email	tim.kerl.23@lehre.mosbach.dhbw.de
-
-//	@host		localhost:8082
-//	@BasePath	/tracker/
-
-//	@externalDocs.description	OpenAPI
-//	@externalDocs.url			https://swagger.io/resources/open-api/
 
 func RouteController(
 	productHandler *handler.ProductHandler,
@@ -36,12 +21,12 @@ func RouteController(
 	productRouter.GET("/name/:name", productHandler.GetProductByName)
 
 	trackProductRouter := tracker.Group("/consume")
-	trackProductRouter.POST("/", consumeProductHandler.ConsumeProduct)
+	trackProductRouter.POST("/", consumeProductHandler.ConsumeProduct, nutritionStatisticsHandler.AddNutritionStatistics)
 
 	diaryRouter := tracker.Group("/diary/date")
 	diaryRouter.GET("/:date", diaryHandler.GetDiaryByDate)
 	diaryRouter.GET("/:date/:id", diaryHandler.GetConsumedProductByID)
-	diaryRouter.DELETE("/:date/:id", consumeProductHandler.DeleteConsumedProduct)
+	diaryRouter.DELETE("/:date/:id", consumeProductHandler.DeleteConsumedProduct, nutritionStatisticsHandler.SubtractNutritionStatistics)
 
 	nutritionStaticsRouter := tracker.Group("/nutrition")
 	nutritionStaticsRouter.GET("/date/:date", nutritionStatisticsHandler.GetNutritionStatisticsByDate)
@@ -49,8 +34,6 @@ func RouteController(
 	settingsRouter := tracker.Group("/settings")
 	settingsRouter.GET("/", settingsHandler.GetSettings)
 	settingsRouter.PATCH("/", settingsHandler.UpdateSettings)
-
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	err := router.Run("localhost:8082")
 	if err != nil {

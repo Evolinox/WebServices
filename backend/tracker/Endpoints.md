@@ -304,6 +304,8 @@ GET http://localhost:8082/tracker/calender/date/:date/:id (Eintrag an spezifisch
 
 DELETE http://localhost:8082/tracker/calender/date/:date/:id (Eintrag sn spezifischem Datum löschen)
 
+POST http://localhost:8082/tracker/calender/date/:date (Eintrag an spezifischem Datum erstellen)
+
 ```json
 {
   "ID": 1,
