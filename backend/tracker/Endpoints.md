@@ -100,15 +100,11 @@ Get the settings (needed as "Soll" for Dashboard)
 -----------
 PATCH http://localhost:8082/tracker/settings
 
-Update the Nutrition-Settings. Calculate the percentage with the PlannedCalories 
-and store the calculated Grams in the db
+Update the Nutrition-Settings. Calculation got with fix values from backend side
 #### Needed Data
 ```json
 {
-  "PlannedCalories": 2000,
-  "ProteinsPercentage": 20,
-  "FatsPercentage": 40,
-  "CarbsPercentage": 40
+  "PlannedCalories": 2000
 }
 ```
 

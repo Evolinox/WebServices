@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="Updated Documentation">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="changed location of env file" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -112,11 +110,11 @@
       <recent name="$PROJECT_DIR$/tracker/controller" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/productApi" />
+      <recent name="$PROJECT_DIR$/tracker" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/entity" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto/mapper" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto/entity" />
-      <recent name="$PROJECT_DIR$/tracker/infrastructure/dto" />
-      <recent name="$PROJECT_DIR$/productApi/controller/repositories" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.acme" />
@@ -317,7 +315,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Refactoring Backend from Java-Quarkus to Go" />
     <MESSAGE value="Added Product API V1.0" />
     <MESSAGE value="Added tracker API V1.0" />
     <MESSAGE value="Adjustments made to read env.local file" />
@@ -342,7 +339,8 @@
     <MESSAGE value="improved the router and updated the endpoints documentation" />
     <MESSAGE value="Updated JSON Annotations for DTOs" />
     <MESSAGE value="Updated Documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Documentation" />
+    <MESSAGE value="changed location of env file" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed location of env file" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
