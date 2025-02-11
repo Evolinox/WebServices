@@ -309,7 +309,7 @@ DELETE http://localhost:8082/tracker/calender/date/:date/:id (Eintrag sn spezifi
   "ID": 1,
   "Date": "2025-02-10",
   "Name": "Test",
-  "Category": "Shopping, Gym, ...",
+  "Category": "Shopping, Gym, ..."
 }
 ```
 Optional noch Uhrzeit
