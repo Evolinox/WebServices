@@ -1036,7 +1036,7 @@ tracker\\_db|schema||user||UPDATE|G</Grants>
     </schema>
     <schema id="325" parent="1" name="tracker_db">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-02-10.15:10:31</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-02-11.15:03:40</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_general_ci</CollationName>
     </schema>
     <user id="326" parent="1" name="user"/>
@@ -1057,7 +1057,7 @@ tracker\\_db|schema||user||UPDATE|G</Grants>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
     <column id="331" parent="327" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>4</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint(20) unsigned|0s</StoredType>
@@ -1119,7 +1119,7 @@ tracker\\_db|schema||user||UPDATE|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="345" parent="328" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>2</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint(20) unsigned|0s</StoredType>
@@ -1147,7 +1147,7 @@ tracker\\_db|schema||user||UPDATE|G</Grants>
       <UnderlyingIndexName>idx_daily_products_consumed_date</UnderlyingIndexName>
     </key>
     <column id="351" parent="329" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>3</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint(20) unsigned|0s</StoredType>
