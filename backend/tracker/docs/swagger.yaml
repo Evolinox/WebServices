@@ -1,16 +1,350 @@
-basePath: /tracker/
+openapi: 3.0.0
+info:
+  title: Nutrition Tracker API
+  description: |
+    This is the Documentation of the Nutrition Tracker API, which contains 3 external APIs.
+    The main goal of the API is to get insights into your nutrition and help you organize your shopping and meetings.
+  version: 1.0.0
+  contact:
+    name: Tim Kerl
+    email: tim.kerl.23@lehre.mosbach.dhbw.de
 externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
-host: localhost:8082
-info:
-  contact:
-    email: tim.kerl.23@lehre.mosbach.dhbw.de
-    name: Tim Kerl
-  description: This is the Documentation of the Nutrition Tracker API, which contains
-    3 external APIs. The main Goal of the API is to get insights in your nutrition
-    and helps you to organize your shopping and your meetings.
-  title: Nutrition Tracker API
-  version: "1.0"
-paths: {}
-swagger: "2.0"
+servers:
+  - url: http://localhost:8082/tracker
+paths:
+  /products:
+    get:
+      summary: List all products
+      description: Retrieves a list of all available products.
+      tags:
+        - products
+      operationId: getProducts
+      responses:
+        '200':
+          description: A list of products.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /products/{id}:
+    get:
+      summary: Get a product by ID
+      description: Retrieves details of a specific product using its ID.
+      tags:
+        - products
+      operationId: getProductByID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /products/name/{name}:
+    get:
+      summary: Search products by name
+      description: Retrieves a list of products matching a given name.
+      tags:
+        - products
+      operationId: getProductByName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of matching products.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDTO'
+        '404':
+          description: No products found with the given name
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /consume:
+    post:
+      summary: Consume a product
+      description: Logs the consumption of a product with nutritional calculations.
+      tags:
+        - consume
+      operationId: consumeProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpectedProductDTO'
+      responses:
+        '201':
+          description: Product consumed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsumedProduct'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '409':
+          description: Conflict - Product ID already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /diary/date/{date}:
+    get:
+      summary: Get diary by date
+      description: Retrieves the diary entry for a specific date.
+      tags:
+        - diary
+      operationId: getDiaryByDate
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Diary entry for the specified date.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyProductsConsumed'
+        '400':
+          description: Invalid date format
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '404':
+          description: No records found for this date
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /diary/date/{date}/{id}:
+    get:
+      summary: Get consumed product by ID
+      description: Retrieves details of a consumed product by ID for a specific date.
+      tags:
+        - diary
+      operationId: getConsumedProductByID
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Details of the consumed product.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsumedProduct'
+        '400':
+          description: Invalid ID format
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+    delete:
+      summary: Delete consumed product
+      description: Deletes a consumed product by ID for a specific date.
+      tags:
+        - diary
+      operationId: deleteConsumedProduct
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '400':
+          description: Invalid product ID format
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+components:
+  schemas:
+    ProductDTO:
+      type: object
+      properties:
+        ID:
+          type: integer
+          format: uint
+        Name:
+          type: string
+        Brand:
+          type: string
+        CaloriesPer100Grams:
+          type: integer
+        ProteinsInGrams:
+          type: number
+          format: float
+        FatsInGrams:
+          type: number
+          format: float
+        CarbsInGrams:
+          type: number
+          format: float
+    ExpectedProductDTO:
+      type: object
+      properties:
+        Product:
+          $ref: '#/components/schemas/ProductDTO'
+        Date:
+          type: string
+        Weight:
+          type: integer
+        Category:
+          type: string
+    DailyProductsConsumed:
+      type: object
+      properties:
+        ID:
+          type: integer
+        Date:
+          type: string
+        Products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumedProduct'
+    ConsumedProduct:
+      type: object
+      properties:
+        ID:
+          type: integer
+          format: uint
+        DailyProductsConsumedID:
+          type: integer
+        ProductID:
+          type: integer
+        ProductName:
+          type: string
+        Category:
+          type: string
+          enum: [Frühstück, Mittagessen, Abendessen, Snack]
+        WeightInGrams:
+          type: integer
+        Calories:
+          type: integer
+        ProteinsInGrams:
+          type: number
+          format: float
+        FatsInGrams:
+          type: number
+          format: float
+        CarbsInGrams:
+          type: number
+          format: float
