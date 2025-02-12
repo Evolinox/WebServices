@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fix bug. Added descritpon for endpoints">
-      <change beforePath="$PROJECT_DIR$/tracker/infrastructure/dto/mapper/productMapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/infrastructure/dto/mapper/productMapper.go" afterDir="false" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fixed bug with swagger">
+      <change beforePath="$PROJECT_DIR$/tracker/controller/handler/productHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/handler/productHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/controller/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/docs/docs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/docs/swagger.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/docs/swagger.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracker/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,11 +118,11 @@
       <recent name="$PROJECT_DIR$/tracker/controller" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/productApi" />
+      <recent name="$PROJECT_DIR$/tracker" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/entity" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto/mapper" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto/entity" />
-      <recent name="$PROJECT_DIR$/tracker/infrastructure/dto" />
-      <recent name="$PROJECT_DIR$/productApi/controller/repositories" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.acme" />
@@ -317,12 +323,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="creating productAPi and try to consume it with trackerApi" />
-    <MESSAGE value="adjusted names in Entity Product" />
-    <MESSAGE value="Refactoring Backend from Java-Quarkus to Go" />
-    <MESSAGE value="Added Product API V1.0" />
-    <MESSAGE value="Added tracker API V1.0" />
-    <MESSAGE value="Adjustments made to read env.local file" />
     <MESSAGE value="updated ReadMe for tracker API" />
     <MESSAGE value="structured Router for tracker Api with router groups" />
     <MESSAGE value="Added MariaDb to tracker Api.&#10;Added sable settings.&#10;Added Api routes for settings and created repository and handler" />
@@ -341,7 +341,14 @@
     <MESSAGE value="added Date to consumedProduct, ReceivedProductDTO and Mapper func for api requests with paramater date" />
     <MESSAGE value="fix db bug with gorm" />
     <MESSAGE value="fix bug. Added descritpon for endpoints" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug. Added descritpon for endpoints" />
+    <MESSAGE value="improved the router and updated the endpoints documentation" />
+    <MESSAGE value="Updated JSON Annotations for DTOs" />
+    <MESSAGE value="Updated Documentation" />
+    <MESSAGE value="changed location of env file" />
+    <MESSAGE value="update required JSON Data for settings Patch request" />
+    <MESSAGE value="added go first parameter for swagger" />
+    <MESSAGE value="fixed bug with swagger" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed bug with swagger" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

@@ -1,0 +1,854 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Nutrition Tracker API",
+        "description": "This is the Documentation of the Nutrition Tracker API, which contains 3 external APIs.\nThe main goal of the API is to get insights into your nutrition and help you organize your shopping and meetings.\n",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Tim Kerl",
+            "email": "tim.kerl.23@lehre.mosbach.dhbw.de"
+        }
+    },
+    "externalDocs": {
+        "description": "OpenAPI",
+        "url": "https://swagger.io/resources/open-api/"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8082/tracker"
+        }
+    ],
+    "paths": {
+        "/products": {
+            "get": {
+                "summary": "List all products",
+                "description": "Retrieves a list of all available products.",
+                "tags": [
+                    "products"
+                ],
+                "operationId": "getProducts",
+                "responses": {
+                    "200": {
+                        "description": "A list of products.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProductDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "summary": "Get a product by ID",
+                "description": "Retrieves details of a specific product using its ID.",
+                "tags": [
+                    "products"
+                ],
+                "operationId": "getProductByID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/name/{name}": {
+            "get": {
+                "summary": "Search products by name",
+                "description": "Retrieves a list of products matching a given name.",
+                "tags": [
+                    "products"
+                ],
+                "operationId": "getProductByName",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of matching products.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProductDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No products found with the given name",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/consume": {
+            "post": {
+                "summary": "Consume a product and update nutrition statistics.",
+                "description": "This endpoint allows a user to consume a product and update the nutrition statistics for that product.",
+                "tags": [
+                    "consume"
+                ],
+                "operationId": "consumeProduct",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExpectedProductDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Product consumed and nutrition statistics updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "consumedProduct": {
+                                            "$ref": "#/components/schemas/ConsumedProduct"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request. Invalid input data.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Product ID already exists.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error. Something went wrong while processing the request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/diary/date/{date}": {
+            "get": {
+                "summary": "Retrieve the diary of consumed products for a specific date.",
+                "description": "Fetches the list of consumed products for a given date.",
+                "tags": [
+                    "diary"
+                ],
+                "operationId": "getDiaryByDate",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "required": true,
+                        "description": "The date for which to retrieve the diary of consumed products (dateFormat YYYY-MM-DD).",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the diary for the specified date.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "date": {
+                                            "type": "string",
+                                            "format": "date"
+                                        },
+                                        "products": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ConsumedProduct"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid date format.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No records found for the given date.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error when fetching diary data.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/diary/date/{date}/{id}": {
+            "get": {
+                "summary": "Retrieve a specific consumed product by its ID.",
+                "description": "Fetches details of a consumed product based on its ID for a given date.",
+                "tags": [
+                    "diary"
+                ],
+                "operationId": "getConsumedProductByID",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "required": true,
+                        "description": "The date for which to retrieve the product (dateFormat YYYY-MM-DD).",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "The ID of the consumed product.",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the consumed product.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConsumedProduct"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID format (must be an integer).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found for the given ID.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error while fetching the consumed product.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a specific consumed product.",
+                "description": "Deletes a consumed product by its ID and updates the nutrition statistics.",
+                "tags": [
+                    "diary"
+                ],
+                "operationId": "deleteConsumedProduct",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "required": true,
+                        "description": "The date for which the product is being deleted (dateFormat YYYY-MM-DD).",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "The ID of the consumed product to delete.",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted the product and updated nutrition statistics.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID format (must be an integer).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found for the given ID.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error when deleting the product or updating nutrition statistics.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/settings": {
+            "get": {
+                "summary": "Retrieve the current settings.",
+                "description": "Fetches the current user settings for nutritional goals and preferences.",
+                "tags": [
+                    "settings"
+                ],
+                "operationId": "getSettings",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the current settings.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Settings"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Settings not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error while retrieving the settings.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update the user settings.",
+                "description": "Updates the user's nutritional goals and preferences based on the provided data.",
+                "tags": [
+                    "settings"
+                ],
+                "operationId": "updateSettings",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SettingsDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated the user settings.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body (e.g., missing required fields or incorrect data format).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error while updating the settings.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nutrition/date/{date}": {
+            "get": {
+                "summary": "Retrieve the nutrition statistics for a specific date.",
+                "description": "Fetches the total nutrition statistics for a given date based on consumed products.",
+                "tags": [
+                    "nutrition"
+                ],
+                "operationId": "getNutritionStatisticsByDate",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "required": true,
+                        "description": "The date for which to retrieve nutrition statistics (dateFormat YYYY-MM-DD).",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the nutrition statistics for the specified date.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DailyProductsConsumed"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid date format. Date must be in YYYY-MM-DD format.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error while fetching nutrition statistics.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ProductDTO": {
+                "type": "object",
+                "properties": {
+                    "ID": {
+                        "type": "integer",
+                        "format": "uint"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Brand": {
+                        "type": "string"
+                    },
+                    "CaloriesPer100Grams": {
+                        "type": "integer"
+                    },
+                    "ProteinsInGrams": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "FatsInGrams": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "CarbsInGrams": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                }
+            },
+            "ExpectedProductDTO": {
+                "type": "object",
+                "properties": {
+                    "Product": {
+                        "$ref": "#/components/schemas/ProductDTO"
+                    },
+                    "Date": {
+                        "type": "string"
+                    },
+                    "Weight": {
+                        "type": "integer"
+                    },
+                    "Category": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DailyProductsConsumed": {
+                "type": "object",
+                "properties": {
+                    "ID": {
+                        "type": "integer"
+                    },
+                    "Date": {
+                        "type": "string"
+                    },
+                    "Products": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ConsumedProduct"
+                        }
+                    }
+                }
+            },
+            "SettingsDTO": {
+                "type": "object",
+                "properties": {
+                    "PlannedCalories": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "Settings": {
+                "type": "object",
+                "properties": {
+                    "PlannedCalories": {
+                        "type": "integer"
+                    },
+                    "ProteinsInGrams": {
+                        "type": "integer"
+                    },
+                    "FatsInGrams": {
+                        "type": "integer"
+                    },
+                    "CarbsInGrams": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "ConsumedProduct": {
+                "type": "object",
+                "properties": {
+                    "ID": {
+                        "type": "integer",
+                        "format": "uint"
+                    },
+                    "DailyProductsConsumedID": {
+                        "type": "integer"
+                    },
+                    "ProductID": {
+                        "type": "integer"
+                    },
+                    "ProductName": {
+                        "type": "string"
+                    },
+                    "Category": {
+                        "type": "string",
+                        "enum": [
+                            "Frühstück",
+                            "Mittagessen",
+                            "Abendessen",
+                            "Snack"
+                        ]
+                    },
+                    "WeightInGrams": {
+                        "type": "integer"
+                    },
+                    "Calories": {
+                        "type": "integer"
+                    },
+                    "ProteinsInGrams": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "FatsInGrams": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "CarbsInGrams": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                }
+            }
+        }
+    }
+}
