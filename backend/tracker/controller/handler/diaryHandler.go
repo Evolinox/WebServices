@@ -45,10 +45,8 @@ func (h *DiaryHandler) GetDiaryByDate(c *gin.Context) {
 }
 
 func (h *DiaryHandler) GetConsumedProductByID(c *gin.Context) {
-	// Extract product ID from URL
 	idStr := c.Param("id")
 
-	// Convert ID string to integer
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format. Must be an integer"})
@@ -61,7 +59,6 @@ func (h *DiaryHandler) GetConsumedProductByID(c *gin.Context) {
 		return
 	}
 
-	// Return JSON response
 	c.JSON(http.StatusOK, consumedProduct)
 
 }

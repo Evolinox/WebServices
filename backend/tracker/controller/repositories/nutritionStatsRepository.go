@@ -7,7 +7,6 @@ import (
 	"tracker/infrastructure/entity"
 )
 
-// ToDO Update funzt net
 type NutritionStatisticsRepository struct {
 	db *gorm.DB
 }

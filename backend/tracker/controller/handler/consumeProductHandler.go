@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 	"net/http"
 	"strconv"
+	"strings"
 	"tracker/controller/repositories"
 	"tracker/infrastructure/dto/mapper"
 	"tracker/infrastructure/dto/model"
@@ -26,35 +27,34 @@ func NewConsumeProductHandler(consumeRepo *repositories.ConsumeProductRepository
 func (h *ConsumeProductHandler) ConsumeProduct(c *gin.Context) {
 	var receivedProductData model.ExpectedProductDTO
 
-	// Bind JSON request data
 	if err := c.ShouldBindJSON(&receivedProductData); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// Get or create the daily record
 	dailyRecordID, err := h.consumeRepo.GetOrCreateDailyRecord(receivedProductData.Date)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create/retrieve daily record"})
 		return
 	}
 
-	// Calculate the nutrition values
 	consumedProduct := mapper.CalculateNutritionValues(receivedProductData, dailyRecordID)
 
-	// Save the consumed product
 	if err := h.consumeRepo.ConsumeProduct(consumedProduct); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to consume product"})
+		if strings.Contains(err.Error(), "1062") {
+			c.JSON(http.StatusConflict, gin.H{"error": "Product ID already exists"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
 		return
 	}
 
-	// Update nutrition statistics
 	if err := h.nutritionRepo.AddStatistics(consumedProduct, receivedProductData.Date); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update nutrition statistics"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusCreated, gin.H{
 		"message":         "Product consumed and nutrition statistics updated successfully",
 		"consumedProduct": consumedProduct,
 	})
@@ -64,7 +64,6 @@ func (h *ConsumeProductHandler) DeleteConsumedProduct(c *gin.Context) {
 	id := c.Param("id")
 	date := c.Param("date")
 
-	// Convert ID to uint
 	productID, err := strconv.ParseUint(id, 10, 32)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product ID format"})

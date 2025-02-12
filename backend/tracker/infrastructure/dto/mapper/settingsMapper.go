@@ -11,7 +11,7 @@ func CalculateSettingsData(settingsData model.SettingsDTO) entity.Settings {
 	fatsPercentage := 0.25
 	carbsPercentage := 0.40
 
-	// multiply with percentag and divide through the factor gram to calorie
+	// multiply with percentage and divide through the factor gram to calorie
 	proteinsInGrams := (float64(settingsData.PlannedCalories) * proteinsPercentage) / 4
 	fatsInGrams := (float64(settingsData.PlannedCalories) * fatsPercentage) / 9
 	carbsInGrams := (float64(settingsData.PlannedCalories) * carbsPercentage) / 4
