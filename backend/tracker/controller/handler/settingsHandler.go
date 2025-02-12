@@ -31,12 +31,12 @@ func (h *SettingsHandler) GetSettings(c *gin.Context) {
 
 func (h *SettingsHandler) UpdateSettings(c *gin.Context) {
 	var receivedSettings model.SettingsDTO
-	updatedSettings := mapper.CalculateSettingsData(receivedSettings)
-
-	if err := c.ShouldBindJSON(&updatedSettings); err != nil {
+	if err := c.ShouldBindJSON(&receivedSettings); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	updatedSettings := mapper.CalculateSettingsData(receivedSettings)
 
 	if err := h.repo.UpdateSettings(&updatedSettings); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

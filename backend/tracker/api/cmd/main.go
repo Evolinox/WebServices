@@ -8,17 +8,17 @@ import (
 )
 
 func main() {
-	config.LoadConfig(".env")
+	config.LoadConfig("")
 	dic := api.DIC{}
 
 	consumeProductRepo := dic.GetConsumeProductRepository()
-	nutritionStatistics := dic.GetNutritionStatisticsRepository()
+	nutritionStatsRepo := dic.GetNutritionStatisticsRepository()
 	diaryRepo := dic.GetDiaryRepository()
 	settingsRepo := dic.GetSettingsRepository()
 	productAPIRepo := dic.GetProductAPIRepository()
 
-	consumeProductHandler := handler.NewConsumeProductHandler(consumeProductRepo)
-	nutritionStatisticsHandler := handler.NewNutritionStatisticsHandler(nutritionStatistics)
+	consumeProductHandler := handler.NewConsumeProductHandler(consumeProductRepo, nutritionStatsRepo)
+	nutritionStatisticsHandler := handler.NewNutritionStatisticsHandler(nutritionStatsRepo)
 	diaryHandler := handler.NewDiaryHandler(diaryRepo)
 	settingsHandler := handler.NewSettingsHandler(settingsRepo)
 	productHandler := handler.NewProductHandler(productAPIRepo)

@@ -17,12 +17,18 @@ func NewDiaryRepository(db *gorm.DB) *DiaryRepository {
 func (r *DiaryRepository) GetDiaryByDate(date string) (*entity.DailyProductsConsumed, error) {
 	var dailyRecord entity.DailyProductsConsumed
 
-	// Query the database filtering only by the date (ignoring time)
 	result := r.db.Preload("Products").Where("DATE(date) = ?", date).First(&dailyRecord)
 
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			return nil, errors.New("record not found")
+			newRecord := entity.DailyProductsConsumed{
+				Date:     date,
+				Products: []entity.ConsumedProduct{}, // No products yet
+			}
+			if err := r.db.Create(&newRecord).Error; err != nil {
+				return nil, err
+			}
+			return &newRecord, nil
 		}
 		return nil, result.Error
 	}
@@ -38,7 +44,6 @@ func (r *DiaryRepository) GetConsumedProductByID(id uint) (*entity.ConsumedProdu
 		return nil, errors.New("failed to fetch daily records")
 	}
 
-	// Search for the product inside the Products array
 	for _, dailyRecord := range dailyRecords {
 		for _, product := range dailyRecord.Products {
 			if product.ID == id {
@@ -47,6 +52,5 @@ func (r *DiaryRepository) GetConsumedProductByID(id uint) (*entity.ConsumedProdu
 		}
 	}
 
-	// If product not found, return an error
 	return nil, errors.New("product not found")
 }
