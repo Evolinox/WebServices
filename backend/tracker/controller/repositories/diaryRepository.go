@@ -17,12 +17,18 @@ func NewDiaryRepository(db *gorm.DB) *DiaryRepository {
 func (r *DiaryRepository) GetDiaryByDate(date string) (*entity.DailyProductsConsumed, error) {
 	var dailyRecord entity.DailyProductsConsumed
 
-	// Query the database filtering only by the date (ignoring time)
 	result := r.db.Preload("Products").Where("DATE(date) = ?", date).First(&dailyRecord)
 
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			return nil, errors.New("record not found")
+			newRecord := entity.DailyProductsConsumed{
+				Date:     date,
+				Products: []entity.ConsumedProduct{}, // No products yet
+			}
+			if err := r.db.Create(&newRecord).Error; err != nil {
+				return nil, err
+			}
+			return &newRecord, nil
 		}
 		return nil, result.Error
 	}
