@@ -4,7 +4,6 @@ import (
 	"errors"
 	"gorm.io/gorm"
 	"math"
-	"tracker/infrastructure/dto/model"
 	"tracker/infrastructure/entity"
 )
 
@@ -41,42 +40,34 @@ func (r *NutritionStatisticsRepository) GetStatisticsByDate(date string) (*entit
 	return &stats, nil
 }
 
-func (r *NutritionStatisticsRepository) AddStatistics(data model.ExpectedProductDTO) error {
+func (r *NutritionStatisticsRepository) AddStatistics(consumedProduct *entity.ConsumedProduct, date string) error {
 	var stats entity.NutritionStatistics
-	result := r.db.Where("date = ?", data.Date).First(&stats)
 
+	result := r.db.Where("date = ?", date).First(&stats)
 	if result.Error != nil {
-		if result.Error == gorm.ErrRecordNotFound {
-			// Create a new entry if none exists
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			stats = entity.NutritionStatistics{
-				Date:             data.Date,
+				Date:             date,
 				ConsumedCalories: 0,
 				ConsumedProteins: 0,
 				ConsumedFats:     0,
 				ConsumedCarbs:    0,
 			}
-			r.db.Create(&stats)
+			if err := r.db.Create(&stats).Error; err != nil {
+				return err
+			}
+			r.db.Where("date = ?", date).First(&stats)
 		} else {
 			return result.Error
 		}
 	}
 
-	// Update the statistics
-	stats.ConsumedCalories += data.Product.CaloriesPer100Grams * data.Weight / 100
-	stats.ConsumedProteins += data.Product.ProteinsInGrams * float64(data.Weight) / 100
-	stats.ConsumedFats += data.Product.FatsInGrams * float64(data.Weight) / 100
-	stats.ConsumedCarbs += data.Product.CarbsInGrams * float64(data.Weight) / 100
+	stats.ConsumedCalories += consumedProduct.Calories
+	stats.ConsumedProteins += consumedProduct.ProteinsInGrams
+	stats.ConsumedFats += consumedProduct.FatsInGrams
+	stats.ConsumedCarbs += consumedProduct.CarbsInGrams
 
 	return r.db.Save(&stats).Error
-}
-
-func (r *NutritionStatisticsRepository) GetByID(id uint) (*entity.ConsumedProduct, error) {
-	var product entity.ConsumedProduct
-	result := r.db.First(&product, id)
-	if result.Error != nil {
-		return nil, result.Error
-	}
-	return &product, nil
 }
 
 func (r *NutritionStatisticsRepository) SubtractStatistics(consumedProduct *entity.ConsumedProduct, date string) error {
@@ -87,7 +78,6 @@ func (r *NutritionStatisticsRepository) SubtractStatistics(consumedProduct *enti
 		return result.Error
 	}
 
-	// Subtract the statistics with uint safety
 	stats.ConsumedCalories = int(math.Max(float64(stats.ConsumedCalories-consumedProduct.Calories), 0))
 	stats.ConsumedProteins = math.Max(stats.ConsumedProteins-consumedProduct.ProteinsInGrams, 0)
 	stats.ConsumedFats = math.Max(stats.ConsumedFats-consumedProduct.FatsInGrams, 0)

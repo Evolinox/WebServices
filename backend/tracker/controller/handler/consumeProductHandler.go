@@ -6,55 +6,63 @@ import (
 	"gorm.io/gorm"
 	"net/http"
 	"strconv"
-	"strings"
 	"tracker/controller/repositories"
 	"tracker/infrastructure/dto/mapper"
 	"tracker/infrastructure/dto/model"
 )
 
 type ConsumeProductHandler struct {
-	repo *repositories.ConsumeProductRepository
+	consumeRepo   *repositories.ConsumeProductRepository
+	nutritionRepo *repositories.NutritionStatisticsRepository
 }
 
-func NewConsumeProductHandler(repo *repositories.ConsumeProductRepository) *ConsumeProductHandler {
-	return &ConsumeProductHandler{repo: repo}
+func NewConsumeProductHandler(consumeRepo *repositories.ConsumeProductRepository, nutritionRepo *repositories.NutritionStatisticsRepository) *ConsumeProductHandler {
+	return &ConsumeProductHandler{
+		consumeRepo:   consumeRepo,
+		nutritionRepo: nutritionRepo,
+	}
 }
 
 func (h *ConsumeProductHandler) ConsumeProduct(c *gin.Context) {
 	var receivedProductData model.ExpectedProductDTO
 
-	// Bind JSON request body
+	// Bind JSON request data
 	if err := c.ShouldBindJSON(&receivedProductData); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// Get or create the corresponding DailyProductsConsumed entry
-	dailyRecord, err := h.repo.GetOrCreateDailyRecord(receivedProductData.Date)
+	// Get or create the daily record
+	dailyRecordID, err := h.consumeRepo.GetOrCreateDailyRecord(receivedProductData.Date)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find or create daily record"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create/retrieve daily record"})
 		return
 	}
 
-	// Use mapper to calculate nutrition values and assign daily record ID
-	consumedProduct := mapper.CalculateNutritionValues(receivedProductData, dailyRecord.ID)
+	// Calculate the nutrition values
+	consumedProduct := mapper.CalculateNutritionValues(receivedProductData, dailyRecordID)
 
 	// Save the consumed product
-	err = h.repo.Create(consumedProduct)
-	if err != nil {
-		if strings.Contains(err.Error(), "1062") {
-			c.JSON(http.StatusConflict, gin.H{"error": "Product ID already exists"})
-		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		}
+	if err := h.consumeRepo.ConsumeProduct(consumedProduct); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to consume product"})
 		return
 	}
 
-	c.JSON(http.StatusCreated, consumedProduct)
+	// Update nutrition statistics
+	if err := h.nutritionRepo.AddStatistics(consumedProduct, receivedProductData.Date); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update nutrition statistics"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":         "Product consumed and nutrition statistics updated successfully",
+		"consumedProduct": consumedProduct,
+	})
 }
 
 func (h *ConsumeProductHandler) DeleteConsumedProduct(c *gin.Context) {
 	id := c.Param("id")
+	date := c.Param("date")
 
 	// Convert ID to uint
 	productID, err := strconv.ParseUint(id, 10, 32)
@@ -63,8 +71,7 @@ func (h *ConsumeProductHandler) DeleteConsumedProduct(c *gin.Context) {
 		return
 	}
 
-	// Retrieve the consumed product before deleting
-	consumedProduct, err := h.repo.GetByID(uint(productID))
+	consumedProduct, err := h.consumeRepo.GetByID(uint(productID))
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
@@ -74,19 +81,15 @@ func (h *ConsumeProductHandler) DeleteConsumedProduct(c *gin.Context) {
 		return
 	}
 
-	// Delete the consumed product
-	err = h.repo.DeleteByID(uint(productID))
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete consumed product"})
+	if err := h.consumeRepo.DeleteConsumedProduct(uint(productID)); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete product"})
 		return
 	}
 
-	// Check if the DailyProductsConsumed entry is now empty
-	err = h.repo.CleanupDailyRecord(consumedProduct.DailyProductsConsumedID)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to clean up daily record"})
+	if err := h.nutritionRepo.SubtractStatistics(consumedProduct, date); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update nutrition statistics"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Product deleted successfully"})
+	c.JSON(http.StatusOK, gin.H{"message": "Product deleted and nutrition statistics updated successfully"})
 }

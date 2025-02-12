@@ -21,12 +21,12 @@ func RouteController(
 	productRouter.GET("/name/:name", productHandler.GetProductByName)
 
 	trackProductRouter := tracker.Group("/consume")
-	trackProductRouter.POST("/", consumeProductHandler.ConsumeProduct, nutritionStatisticsHandler.AddNutritionStatistics)
+	trackProductRouter.POST("/", consumeProductHandler.ConsumeProduct)
 
 	diaryRouter := tracker.Group("/diary/date")
 	diaryRouter.GET("/:date", diaryHandler.GetDiaryByDate)
 	diaryRouter.GET("/:date/:id", diaryHandler.GetConsumedProductByID)
-	diaryRouter.DELETE("/:date/:id", consumeProductHandler.DeleteConsumedProduct, nutritionStatisticsHandler.SubtractNutritionStatistics)
+	diaryRouter.DELETE("/:date/:id", consumeProductHandler.DeleteConsumedProduct)
 
 	nutritionStaticsRouter := tracker.Group("/nutrition")
 	nutritionStaticsRouter.GET("/date/:date", nutritionStatisticsHandler.GetNutritionStatisticsByDate)
