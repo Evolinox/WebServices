@@ -44,7 +44,6 @@ func (r *DiaryRepository) GetConsumedProductByID(id uint) (*entity.ConsumedProdu
 		return nil, errors.New("failed to fetch daily records")
 	}
 
-	// Search for the product inside the Products array
 	for _, dailyRecord := range dailyRecords {
 		for _, product := range dailyRecord.Products {
 			if product.ID == id {
@@ -53,6 +52,5 @@ func (r *DiaryRepository) GetConsumedProductByID(id uint) (*entity.ConsumedProdu
 		}
 	}
 
-	// If product not found, return an error
 	return nil, errors.New("product not found")
 }
