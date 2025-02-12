@@ -1,0 +1,22 @@
+version: "3.0"
+services:
+  tracker:
+    container_name: tracker-api-db
+    image: mariadb:10.7
+    ports:
+      - "3406:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_PASSWORD=password
+      - MYSQL_USER=user
+      - MYSQL_DATABASE=tracker_db
+  productApi:
+    container_name: product-api-db
+    image: mariadb:10.7
+    ports:
+      - "3405:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_PASSWORD=password
+      - MYSQL_USER=user
+      - MYSQL_DATABASE=tracker_db
