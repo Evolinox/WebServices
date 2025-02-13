@@ -29,7 +29,7 @@ func RouteController(
 	diaryRouter.DELETE("/:date/:id", consumeProductHandler.DeleteConsumedProduct)
 
 	nutritionStaticsRouter := tracker.Group("/nutrition")
-	nutritionStaticsRouter.GET("/date/:date", nutritionStatisticsHandler.GetNutritionStatisticsByDate)
+	nutritionStaticsRouter.GET("/:date", nutritionStatisticsHandler.GetNutritionStatisticsByDate)
 
 	settingsRouter := tracker.Group("/settings")
 	settingsRouter.GET("/", settingsHandler.GetSettings)
