@@ -28,10 +28,12 @@ const showAddComponent = ref(false)
 function toggleAddComponent() {
   showAddComponent.value = !showAddComponent.value
 }
+
 </script>
 
 <template>
-  <WeekKalender v-if="route.name == 'dashboard' || route.name=='diary' || route.name=='shoppingList'" class="week-kalender"/>
+  <WeekKalender/>
+  <!-- <WeekKalender v-if="route.name == 'dashboard' || route.name=='diary' || route.name=='shoppingList'" class="week-kalender"/> -->
   <RouterView class="view"/>
   <NavBar class="nav-bar" @toggle-add-component="toggleAddComponent"/>
   <AddComponent v-if="showAddComponent" @close="toggleAddComponent" />
@@ -86,9 +88,9 @@ body {
   color: var(--text-color--primary);
 }
 
-.week-kalender {
+/* .week-kalender {
   height: var(--week-kalender__height);
-}
+} */
 .view {
   height: calc(100vh - var(--nav-bar__height) - var(--week-kalender__height));
 }
