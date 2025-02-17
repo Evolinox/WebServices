@@ -94,10 +94,12 @@ body {
 .nav-bar {
   height: var(--nav-bar__height);
 }
-.view > div, .view, .navBar {
+.view, .navBar {
   width: 100%;
 }
-
+.view > div {
+  width: calc(100% - 40px);
+}
 
 h1 {
   margin-block-start: 0;
