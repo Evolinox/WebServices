@@ -41,6 +41,7 @@ function toggleAddComponent() {
 :root {
   --nav-bar__height: 50px;
   --week-kalender__height: 50px;
+  --border-radius__secondary-background: 12px;
 
   
   --background-color--primary: #f8fafd;

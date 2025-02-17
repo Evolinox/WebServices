@@ -32,7 +32,7 @@
   transform: translateX(-50%);
   background-color: var(--background-color--secondary);
   padding: 1em;
-  border-radius: 8px;
+  border-radius: var(--border-radius__secondary-background);
 }
 ul {
   display: flex;

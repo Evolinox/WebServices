@@ -83,7 +83,7 @@ select, input {
   width: calc(100% - 40px);
   padding: 20px;
   background-color: var(--background-color--secondary);
-  border-radius: 12px;
+  border-radius: var(--border-radius__secondary-background);
 }
 .settings-view__item:last-child {
   margin-bottom: 0px;
