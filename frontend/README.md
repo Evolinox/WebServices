@@ -25,3 +25,6 @@ npm install vue-router@4
 Restart IDE
 
 npm run tauri dev
+
+### WeekCalender
+npm install date-fns
