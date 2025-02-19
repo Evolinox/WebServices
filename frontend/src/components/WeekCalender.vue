@@ -1,22 +1,23 @@
 <template>
   <div class="calendar-view">
     <div class="calendar-container">
-    <div class="calendar-title">Wochen Kalender</div>
-    <div class="calendar-header">
-      <button @click="prevWeek" class="nav-button">⬅</button>
-      <span class="week-text">{{ formattedWeek }}</span>
-      <button @click="nextWeek" class="nav-button">➡</button>
+      <div class="calendar-title">Wochen Kalender</div>
+      <div class="calendar-header">
+        <div class="nav-button" @click="prevWeek" v-html="leftArrow"></div>
+        <span class="week-text">{{ formattedWeek }}</span>
+        <div class="nav-button rotate" @click="nextWeek" v-html="leftArrow"></div>
+      </div>
+      <div>
+        <button class="appointment-button">Tages Termine</button>
+      </div>
     </div>
-    <button class="appointment-button">Tages Termine</button>
   </div>
-  </div>
-    
-  
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, computed } from "vue";
 import { format, startOfWeek, endOfWeek, addWeeks, subWeeks } from "date-fns";
+import leftArrow from '../assets/left-arrow.svg?raw';
 
 // Startdatum der Woche initialisieren
 const currentWeek = ref(new Date());
@@ -37,7 +38,7 @@ const prevWeek = () => {
 };
 </script>
 
-<style scoped>
+<style>
 
 select, input {
   border-radius: 6px;
@@ -45,33 +46,31 @@ select, input {
 
 /* Container über gesamte Breite */
 .calendar-view {
-  width: 100vw;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  border-radius: 12px;
-  margin-top: 5px;
+  padding: 20px;
+  width: 100vw;
 }
 .calendar-container {
-  width: calc(100% - 40px);
-  background: #3498db;
-  padding: 2px;
-  border-radius: 5px;
-  text-align:center;
-  color: white;
-  font-family: "Arial", sans-serif;
-  margin-bottom: 10px;
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  height: calc(var(--week-kalender__height) - 20px);
+
+  background: var(--background-color--secondary);
+  padding: 10px 20px;
+  border-radius: var(--border-radius__secondary-background);
+  text-align: center;
 }
 
 /* Kalender-Titel */
 .calendar-title {
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 5px;
-  
 }
 
 /* Header mit Navigation */
@@ -79,10 +78,10 @@ select, input {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #2980b9;
-  padding: 2px;
+  background: var(--accent-color--primary);
+  padding: 4px;
   border-radius: 5px;
-  
+  color: var(--button__text-color);
 }
 
 /* Wochen-Text */
@@ -93,25 +92,31 @@ select, input {
 
 /* Navigationstasten */
 .nav-button {
-  background: white;
-  color: #2980b9;
-  border: none;
-  padding: 10px 15px;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: inherit;
+  background: #fefeff;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
+}
+.nav-button > svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--accent-color--primary);
+}
+.rotate > svg{
+  rotate: 180deg;
 }
 
 /* Button für Termine */
 .appointment-button {
   background: #f1c40f;
-  border: none;
   padding: 10px 15px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
-  cursor: pointer;
-  margin-top: 2px;
+  color: var(--button__text-color);
 }
 </style>

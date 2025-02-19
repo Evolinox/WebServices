@@ -2,7 +2,7 @@
 import { ref, watch, onMounted } from 'vue'
 import AddComponent from './components/AddComponent.vue'
 import NavBar from './components/NavBar.vue'
-import WeekKalender from './components/WeekKalender.vue'
+import WeekCalender from './components/WeekCalender.vue'
 import { RouterView } from 'vue-router'
 import { theme } from './themes'
 import { useRoute } from 'vue-router'
@@ -32,8 +32,7 @@ function toggleAddComponent() {
 </script>
 
 <template>
-  <WeekKalender/>
-  <!-- <WeekKalender v-if="route.name == 'dashboard' || route.name=='diary' || route.name=='shoppingList'" class="week-kalender"/> -->
+  <WeekCalender class="week-kalender" v-if="route.name == 'dashboard' || route.name=='diary' || route.name=='shoppingList'"/>
   <RouterView class="view"/>
   <NavBar class="nav-bar" @toggle-add-component="toggleAddComponent"/>
   <AddComponent v-if="showAddComponent" @close="toggleAddComponent" />
@@ -42,7 +41,7 @@ function toggleAddComponent() {
 <style>
 :root {
   --nav-bar__height: 50px;
-  --week-kalender__height: 50px;
+  --week-kalender__height: 180px;
   --border-radius__secondary-background: 12px;
 
   
@@ -88,9 +87,9 @@ body {
   color: var(--text-color--primary);
 }
 
-/* .week-kalender {
+.week-kalender {
   height: var(--week-kalender__height);
-} */
+}
 .view {
   height: calc(100vh - var(--nav-bar__height) - var(--week-kalender__height));
 }
@@ -100,7 +99,7 @@ body {
 .view, .navBar {
   width: 100%;
 }
-.view > div {
+.view > div, .week-kalender > div {
   width: calc(100% - 40px);
 }
 
