@@ -92,6 +92,7 @@ body {
 }
 .view {
   height: calc(100vh - var(--nav-bar__height) - var(--week-kalender__height));
+  overflow-y: auto;
 }
 .nav-bar {
   height: var(--nav-bar__height);
