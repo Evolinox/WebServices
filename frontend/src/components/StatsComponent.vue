@@ -22,17 +22,20 @@
     <!-- Makronährstoffe mit Balkendiagramm -->      
     <div class="macros">
       <h2>Makronährstoffe</h2>
-      <div class="macro-bar" v-for="macro in macros" :key="macro.name">
-        <p>{{ macro.name }}: {{ macro.value }}g / {{ macro.goal }}g</p>
-        <div class="progress-bar">
-          <div
-            class="progress-fill"
-            :style="{ width: Math.min((macro.value / macro.goal) * 100, 100) + '%', backgroundColor: macro.color }"
-          ></div>
-        </div>
+      <div class="macros-row">
+    <div class="macro-bar" v-for="macro in macros" :key="macro.name">
+        <p class="macro-label">{{ macro.name }}</p>
+      <div class="progress-bar">
+        <div
+          class="progress-fill"
+          :style="{ width: Math.min((macro.value / macro.goal) * 100, 100) + '%', backgroundColor: macro.color }"
+        ></div>
       </div>
+      <small>{{ macro.value }}g / {{ macro.goal }}g</small>
     </div>
   </div>
+</div>
+</div>
   </template>
   
   <script setup>
@@ -81,9 +84,9 @@
   }));
   
 const macros = computed(() => [
-  { name: "Fett", value: fat.value, goal: fatGoal.value, color: "red" },
+  { name: "Fette", value: fat.value, goal: fatGoal.value, color: "red" },
   { name: "Kohlenhydrate", value: carbs.value, goal: carbsGoal.value, color: "orange" },
-  { name: "Protein", value: protein.value, goal: proteinGoal.value, color: "green" },
+  { name: "Proteine", value: protein.value, goal: proteinGoal.value, color: "green" },
 ]);
   </script>
   
@@ -132,21 +135,36 @@ const macros = computed(() => [
   margin-top: 20px;
 }
 
+.macros-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
 .macro-bar {
+    flex: 1;
   margin-bottom: 10px;
+  min-width: 80px;
+}
+
+.macro-label {
+  
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 .progress-bar {
   width: 100%;
   height: 10px;
   background-color: #e0e0e0;
-  border-radius: 5px;
+  border-radius: var(--border-radius__secondary-background);
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  border-radius: 5px;
+  border-radius: var(--border-radius__secondary-background);
 }
   </style>
   
