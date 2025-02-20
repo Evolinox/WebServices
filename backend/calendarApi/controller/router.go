@@ -8,7 +8,9 @@ import (
 func RouteController(calendarHandler *handler.CalendarHandler) {
 	router := gin.Default()
 
-	router.GET("/date/:date", calendarHandler.GetCalendarByDate)
+	calendar := router.Group("/calendar")
+
+	calendar.GET("/:date", calendarHandler.GetCalendarByDate)
 
 	router.Run("localhost:8081")
 }
