@@ -50,9 +50,11 @@ select, input {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
-  padding: 20px;
-  width: 100vw;
+  box-sizing: border-box;  
+  width: calc(100% - 40px);
+  margin-top: 5px;
+  margin-bottom: 10px;
+
 }
 .calendar-container {
   display: flex;

@@ -1,12 +1,20 @@
 <script lang="ts" setup>
+
 </script>
 
 <template>
-  <div>
-    
-    <h1>Dashboard</h1>
+  <div class="dashboard">
   </div>
 </template>
 
-<style>
+<style scoped>
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  height: 100%;
+}
+
 </style>
