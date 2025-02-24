@@ -11,7 +11,7 @@ import settingsSvg from '../assets/settings.svg?raw'
 const route = useRoute()
 const router = useRouter()
 
-const isActive = (path: string) => computed(() => route.path.includes(path))
+const isActive = (path: string) => computed(() => route.name?.toString().includes(path))
 
 watch(
   () => route.name,
