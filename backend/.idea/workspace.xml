@@ -4,26 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fixing bug with localhost for productApi">
-      <change afterPath="$PROJECT_DIR$/productApi/main" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/39320396-701c-40f0-8758-d9813f28583b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/39320396-701c-40f0-8758-d9813f28583b.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ea70dd79-e08a-4377-bfb3-723f0a61408e.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ea70dd79-e08a-4377-bfb3-723f0a61408e/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ea70dd79-e08a-4377-bfb3-723f0a61408e/storage_v2/_src_/schema/tracker_db.5a52RQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/productApi/.env" beforeDir="false" afterPath="$PROJECT_DIR$/productApi/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/productApi/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/productApi/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/productApi/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/productApi/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/productApi/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/.env" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/Dockerfile" beforeDir="false" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fixing docker compose file to start application">
       <change beforePath="$PROJECT_DIR$/tracker/api/DIC.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/api/DIC.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/controller/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -333,7 +315,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added consumedProduct entity, handler and repository" />
     <MESSAGE value="added diary entity, handler and repository. &#10;Added helper method to validate Date-String" />
     <MESSAGE value="added nutrition-statistics entity, handler and repository." />
     <MESSAGE value="update the input/output flow of the productHandler. Adding DTO and Mapper funcs for this" />
@@ -358,7 +339,8 @@
     <MESSAGE value="fixed formatting and added OpenApi Spec" />
     <MESSAGE value="fixed url bug in route for nutritionStatistics" />
     <MESSAGE value="fixing bug with localhost for productApi" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing bug with localhost for productApi" />
+    <MESSAGE value="fixing docker compose file to start application" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing docker compose file to start application" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
