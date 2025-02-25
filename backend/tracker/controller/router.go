@@ -35,7 +35,7 @@ func RouteController(
 	settingsRouter.GET("/", settingsHandler.GetSettings)
 	settingsRouter.PATCH("/", settingsHandler.UpdateSettings)
 
-	err := router.Run("localhost:8082")
+	err := router.Run(":8082")
 	if err != nil {
 		return
 	}

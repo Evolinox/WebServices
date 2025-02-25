@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fixed bug with swagger">
-      <change beforePath="$PROJECT_DIR$/tracker/controller/handler/productHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/handler/productHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/controller/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/controller/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/docs/docs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/docs/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/docs/swagger.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracker/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/go.sum" afterDir="false" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fixing docker compose file to start application">
+      <change beforePath="$PROJECT_DIR$/tracker/api/DIC.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/api/DIC.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +83,7 @@
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/timkerl/DHBW-AI/4. Semester/Web-Services/Repo/WebServices/backend/tracker/infrastructure/db&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/timkerl/DHBW-AI/4. Semester/Web-Services/Repo/WebServices/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -99,7 +93,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;swagger&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -111,11 +105,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/db" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/mapper" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/entity" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto" />
-      <recent name="$PROJECT_DIR$/tracker/controller" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/productApi" />
@@ -305,15 +299,13 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="9fbccdb6-967f-4a87-afe3-339a7f9b8285" value="TOOL_WINDOW" />
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
-        <entry key="9fbccdb6-967f-4a87-afe3-339a7f9b8285">
+        <entry key="MAIN">
           <value>
             <State />
           </value>
@@ -323,16 +315,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="updated ReadMe for tracker API" />
-    <MESSAGE value="structured Router for tracker Api with router groups" />
-    <MESSAGE value="Added MariaDb to tracker Api.&#10;Added sable settings.&#10;Added Api routes for settings and created repository and handler" />
-    <MESSAGE value="Fixed bug in productMapper" />
-    <MESSAGE value="added reader for env.local file to main" />
-    <MESSAGE value="added Dockerfile to trackerApi and updated the ReadMe" />
-    <MESSAGE value="changed the db port for productApi" />
-    <MESSAGE value="fixed bug in update settings" />
-    <MESSAGE value="improved settings Handler, Repository and Entity.&#10;Added Mapper func to calculate Nutrition-Data" />
-    <MESSAGE value="added consumedProduct entity, handler and repository" />
     <MESSAGE value="added diary entity, handler and repository. &#10;Added helper method to validate Date-String" />
     <MESSAGE value="added nutrition-statistics entity, handler and repository." />
     <MESSAGE value="update the input/output flow of the productHandler. Adding DTO and Mapper funcs for this" />
@@ -348,7 +330,17 @@
     <MESSAGE value="update required JSON Data for settings Patch request" />
     <MESSAGE value="added go first parameter for swagger" />
     <MESSAGE value="fixed bug with swagger" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed bug with swagger" />
+    <MESSAGE value="add openApi spec" />
+    <MESSAGE value="add update function for Nutrition Statistics" />
+    <MESSAGE value="fixed bug with settings" />
+    <MESSAGE value="added docker and makefile to backend folder" />
+    <MESSAGE value="added update nutrition statistics update handler and repository" />
+    <MESSAGE value="fixed bug in diary: new entry created if noc product is consumed yet" />
+    <MESSAGE value="fixed formatting and added OpenApi Spec" />
+    <MESSAGE value="fixed url bug in route for nutritionStatistics" />
+    <MESSAGE value="fixing bug with localhost for productApi" />
+    <MESSAGE value="fixing docker compose file to start application" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing docker compose file to start application" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

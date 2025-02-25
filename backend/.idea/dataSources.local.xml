@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="GO-243.23654.166">
-    <data-source name="trackerDb" uuid="ea70dd79-e08a-4377-bfb3-723f0a61408e">
+    <data-source name="product_db" uuid="39320396-701c-40f0-8758-d9813f28583b">
       <database-info product="MariaDB" version="10.7.8-MariaDB-1:10.7.8+maria~ubu2004" jdbc-version="4.2" driver-name="MariaDB Connector/J" driver-version="3.3.3" dbms="MARIADB" exact-version="10.7.8" exact-driver-version="3.3">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
@@ -15,7 +15,7 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
-    <data-source name="product_db" uuid="39320396-701c-40f0-8758-d9813f28583b">
+    <data-source name="tracker_db" uuid="67379b42-b7bd-4181-bae6-368e9806f1f2">
       <database-info product="MariaDB" version="10.7.8-MariaDB-1:10.7.8+maria~ubu2004" jdbc-version="4.2" driver-name="MariaDB Connector/J" driver-version="3.3.3" dbms="MARIADB" exact-version="10.7.8" exact-driver-version="3.3">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
