@@ -46,13 +46,13 @@
   Chart.register(...registerables);
   
   // Beispielwerte (später mit Backend ersetzen)
-  const consumedCalories = ref(577);
+  const consumedCalories = ref(1560);
   const calorieGoal = ref(2500);
-  const fat = ref(3);
+  const fat = ref(35);
   const fatGoal = ref(54);
-  const carbs = ref(106);
+  const carbs = ref(200);
   const carbsGoal = ref(287);
-  const protein = ref(28);
+  const protein = ref(120);
   const proteinGoal = ref(201);
   
   // Berechnung der verbleibenden Kalorien
