@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"calendarApi/infrastructure/entity"
+	"errors"
 	"gorm.io/gorm"
 )
 
@@ -26,4 +27,23 @@ func (r *CalendarRepository) GetByDate(date string) ([]*entity.Calendar, error) 
 		return nil, err
 	}
 	return entries, nil
+}
+
+func (r *CalendarRepository) UpdateById(id string) (*entity.Calendar, error) {
+	var calendar entity.Calendar
+	if err := r.db.Where("id = ?", id).First(&calendar).Error; err != nil {
+		return nil, err
+	}
+	return &calendar, nil
+}
+
+func (r *CalendarRepository) DeleteByID(id string) error {
+	result := r.db.Delete(&entity.Calendar{}, "id = ?", id)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected == 0 {
+		return errors.New("calendar not found")
+	}
+	return nil
 }

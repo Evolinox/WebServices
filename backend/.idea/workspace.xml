@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="Added discord plugin config">
-      <change afterPath="$PROJECT_DIR$/calendarApi/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calendarApi/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/calendarApi/config/config.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/calendarApi/controller/handler/calendarHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/calendarApi/controller/handler/calendarHandler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/calendarApi/controller/repositories/calendarRepository.go" beforeDir="false" afterPath="$PROJECT_DIR$/calendarApi/controller/repositories/calendarRepository.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/calendarApi/controller/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/calendarApi/controller/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calendarApi/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/calendarApi/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calendarApi/infrastructure/db/connection.go" beforeDir="false" afterPath="$PROJECT_DIR$/calendarApi/infrastructure/db/connection.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calendarApi/infrastructure/entity/calendar.go" beforeDir="false" afterPath="$PROJECT_DIR$/calendarApi/infrastructure/entity/calendar.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calendarApi/infrastructure/entity/data/calendarData.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -324,6 +318,11 @@
     <option name="TAB_STATES">
       <map>
         <entry key="9fbccdb6-967f-4a87-afe3-339a7f9b8285">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="MAIN">
           <value>
             <State />
           </value>
