@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="Added discord plugin config">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calendarApi/controller/handler/calendarHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/calendarApi/controller/handler/calendarHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calendarApi/controller/repositories/calendarRepository.go" beforeDir="false" afterPath="$PROJECT_DIR$/calendarApi/controller/repositories/calendarRepository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calendarApi/controller/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/calendarApi/controller/router.go" afterDir="false" />
+    <list default="true" id="bf7f3d3c-7dfc-4601-91b2-fc65039e5a3f" name="Changes" comment="fixing docker compose file to start application">
+      <change beforePath="$PROJECT_DIR$/tracker/api/DIC.go" beforeDir="false" afterPath="$PROJECT_DIR$/tracker/api/DIC.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +100,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;swagger&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -115,7 +112,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/calendarApi" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/db" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/mapper" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/entity" />
@@ -309,15 +306,13 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="9fbccdb6-967f-4a87-afe3-339a7f9b8285" value="TOOL_WINDOW" />
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
-        <entry key="9fbccdb6-967f-4a87-afe3-339a7f9b8285">
+        <entry key="MAIN">
           <value>
             <State />
           </value>

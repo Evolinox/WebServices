@@ -29,13 +29,13 @@ func RouteController(
 	diaryRouter.DELETE("/:date/:id", consumeProductHandler.DeleteConsumedProduct)
 
 	nutritionStaticsRouter := tracker.Group("/nutrition")
-	nutritionStaticsRouter.GET("/date/:date", nutritionStatisticsHandler.GetNutritionStatisticsByDate)
+	nutritionStaticsRouter.GET("/:date", nutritionStatisticsHandler.GetNutritionStatisticsByDate)
 
 	settingsRouter := tracker.Group("/settings")
 	settingsRouter.GET("/", settingsHandler.GetSettings)
 	settingsRouter.PATCH("/", settingsHandler.UpdateSettings)
 
-	err := router.Run("localhost:8082")
+	err := router.Run(":8082")
 	if err != nil {
 		return
 	}

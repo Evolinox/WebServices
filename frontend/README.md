@@ -14,3 +14,17 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
 
 You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+
+
+npm install
+
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs/ -sSf | sh
+
+npm install vue-router@4
+
+Restart IDE
+
+npm run tauri dev
+
+### WeekCalender
+npm install date-fns
