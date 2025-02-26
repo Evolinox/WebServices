@@ -8,7 +8,14 @@ import (
 func RouteController(shoppingListHandler *handler.ShoppingListHandler) {
 	router := gin.Default()
 
-	shoppinglist := router.Group("/shoppinglist")
+	shoppingList := router.Group("/shoppinglist")
 
-	router.Run("localhost:8081")
+	shoppingList.GET("/:date", shoppingListHandler.GetShoppingListByDate)
+	shoppingList.GET("/:date/:id", shoppingListHandler.GetShoppingListByDateById)
+	shoppingList.GET("/:id", shoppingListHandler.GetShoppingListById)
+	shoppingList.POST("/", shoppingListHandler.CreateShoppingList)
+	shoppingList.PATCH("/:id", shoppingListHandler.UpdateShoppingList)
+	shoppingList.DELETE("/:id", shoppingListHandler.DeleteShoppingList)
+
+	router.Run("localhost:8084")
 }

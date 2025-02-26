@@ -48,6 +48,7 @@ func NewDBConnectionFromDSN(dsn string, maxOpenConns int) *DbConnection {
 
 	if autoMigrateError := db.AutoMigrate(
 		&entity.ShoppingList{},
+		&entity.Product{},
 	); autoMigrateError != nil {
 		fmt.Printf("Error migrate table: %s", autoMigrateError.Error())
 		os.Exit(4)
