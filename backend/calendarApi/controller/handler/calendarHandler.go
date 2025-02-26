@@ -12,6 +12,10 @@ type CalendarHandler struct {
 	repo *repositories.CalendarRepository
 }
 
+func NewCalendarHandler(repo *repositories.CalendarRepository) *CalendarHandler {
+	return &CalendarHandler{repo: repo}
+}
+
 func (h *CalendarHandler) GetCalendarByDate(c *gin.Context) {
 	date := c.Param("date")
 	product, err := h.repo.GetByDate(date)
