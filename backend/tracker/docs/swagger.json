@@ -648,7 +648,7 @@
                 }
             }
         },
-        "/nutrition/date/{date}": {
+        "/nutrition/{date}": {
             "get": {
                 "summary": "Retrieve the nutrition statistics for a specific date.",
                 "description": "Fetches the total nutrition statistics for a given date based on consumed products.",

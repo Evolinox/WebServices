@@ -56,7 +56,7 @@ func (d *DIC) GetSettingsRepository() *repositories.SettingsRepository {
 
 func (d *DIC) GetProductAPIRepository() *repositories.ProductAPIRepository {
 	if d.productAPIRepo == nil {
-		d.productAPIRepo = repositories.NewProductAPIRepository("http://localhost:8081")
+		d.productAPIRepo = repositories.NewProductAPIRepository("http://product-api:8081")
 	}
 	return d.productAPIRepo
 }
