@@ -10,7 +10,9 @@ func RouteController(
 	consumeProductHandler *handler.ConsumeProductHandler,
 	diaryHandler *handler.DiaryHandler,
 	nutritionStatisticsHandler *handler.NutritionStatisticsHandler,
-	settingsHandler *handler.SettingsHandler) {
+	settingsHandler *handler.SettingsHandler,
+	shopListHandler *handler.ShopListHandler,
+	calendarHandler *handler.CalendarHandler) {
 	router := gin.Default()
 
 	tracker := router.Group("/tracker")
