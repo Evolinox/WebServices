@@ -117,4 +117,11 @@ button {
 
   cursor: pointer;
 }
+input {
+  padding: 5px;
+  border-radius: 6px;
+  border: solid var(--text-color--secondary);
+  background-color: var(--background-color--tertiary);
+  color: var(--text-color--primary);
+}
 </style>
