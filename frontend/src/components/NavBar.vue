@@ -63,13 +63,11 @@ watch(
 .plus {
   background-color: var(--button__background-color);
   border-radius: 90px;
-  scale: 0.9;
 }
 .dashboard > svg {
   scale: 0.9;
 }
 .plus > svg {
-  scale: 0.8;
   fill: var(--button__text-color);
 }
 </style>
