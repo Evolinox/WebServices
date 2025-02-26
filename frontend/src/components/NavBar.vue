@@ -36,6 +36,7 @@ watch(
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
 }
 .nav-bar__item {
   height: 45px;
