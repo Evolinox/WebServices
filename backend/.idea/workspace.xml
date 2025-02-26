@@ -22,11 +22,11 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file:///usr/local/go" />
+  <component name="GOROOT" url="file://$USER_HOME$/sdk/go1.23.6" />
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="main" />
+        <entry key="$PROJECT_DIR$/.." value="backend/calendar" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -39,8 +39,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:Evolinox/WebServices.git&quot;,
-    &quot;accountId&quot;: &quot;5af98e65-b802-4c3b-a675-c007e0dd0e15&quot;
+    &quot;url&quot;: &quot;https://github.com/Evolinox/WebServices.git&quot;,
+    &quot;accountId&quot;: &quot;d8b95d03-d144-4b8c-8077-a77aee8ae83e&quot;
   }
 }</component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -96,13 +96,13 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;swagger&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;,
-      &quot;mariadb&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql",
+      "mariadb"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -112,11 +112,11 @@
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/productApi" />
-      <recent name="$PROJECT_DIR$/tracker" />
+      <recent name="$PROJECT_DIR$/calendarApi/api" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/entity" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto/mapper" />
       <recent name="$PROJECT_DIR$/tracker/infrastructure/dto/entity" />
+      <recent name="$PROJECT_DIR$/tracker/infrastructure/dto" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.acme" />
@@ -305,6 +305,11 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State />
