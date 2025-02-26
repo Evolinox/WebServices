@@ -10,10 +10,11 @@ func RouteController(calendarHandler *handler.CalendarHandler) {
 
 	calendar := router.Group("/calendar")
 
-	calendar.GET("/:date", calendarHandler.GetCalendarByDate)
-	calendar.POST("/", calendarHandler.CreateCalendar)
-	calendar.PUT("/:id", calendarHandler.UpdateCalendar)
-	calendar.DELETE("/:id", calendarHandler.DeleteCalendar)
+	calendar.GET("/:date", calendarHandler.GetCalendarEntriesByDate)
+	calendar.GET("/:date/:id", calendarHandler.GetCalendarEntryByDateId)
+	calendar.POST("/", calendarHandler.CreateCalendarEntry)
+	calendar.PATCH("/:id", calendarHandler.UpdateCalendarEntry)
+	calendar.DELETE("/:id", calendarHandler.DeleteCalendarEntry)
 
 	router.Run("localhost:8081")
 }

@@ -29,6 +29,14 @@ func (r *CalendarRepository) GetByDate(date string) ([]*entity.Calendar, error) 
 	return entries, nil
 }
 
+func (r *CalendarRepository) GetByDateId(date string, id string) (*entity.Calendar, error) {
+	var entry *entity.Calendar
+	if err := r.db.Where("date = ? AND id = ?", date, id).Find(&entry).Error; err != nil {
+		return nil, err
+	}
+	return entry, nil
+}
+
 func (r *CalendarRepository) UpdateById(id string) (*entity.Calendar, error) {
 	var calendar entity.Calendar
 	if err := r.db.Where("id = ?", id).First(&calendar).Error; err != nil {

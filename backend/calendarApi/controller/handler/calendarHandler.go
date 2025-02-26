@@ -16,9 +16,9 @@ func NewCalendarHandler(repo *repositories.CalendarRepository) *CalendarHandler 
 	return &CalendarHandler{repo: repo}
 }
 
-func (h *CalendarHandler) GetCalendarByDate(c *gin.Context) {
+func (handler *CalendarHandler) GetCalendarEntriesByDate(c *gin.Context) {
 	date := c.Param("date")
-	product, err := h.repo.GetByDate(date)
+	product, err := handler.repo.GetByDate(date)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -30,14 +30,31 @@ func (h *CalendarHandler) GetCalendarByDate(c *gin.Context) {
 	c.JSON(http.StatusOK, product)
 }
 
-func (h *CalendarHandler) CreateCalendar(c *gin.Context) {
+func (handler *CalendarHandler) GetCalendarEntryByDateId(context *gin.Context) {
+	date := context.Param("date")
+	id := context.Param("id")
+	calendar, err := handler.repo.GetByDateId(date, id)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	if calendar == nil {
+		context.JSON(http.StatusNotFound, gin.H{"error": "Date and ID not found"})
+		return
+	}
+
+	context.JSON(http.StatusOK, calendar)
+}
+
+func (handler *CalendarHandler) CreateCalendarEntry(c *gin.Context) {
 	var calendar entity.Calendar
 	if err := c.ShouldBindJSON(&calendar); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := h.repo.Create(&calendar)
+	err := handler.repo.Create(&calendar)
 	if err != nil {
 		if strings.Contains(err.Error(), "1062") {
 			c.JSON(http.StatusConflict, gin.H{"error": "Calendar ID already exists"})
@@ -49,18 +66,18 @@ func (h *CalendarHandler) CreateCalendar(c *gin.Context) {
 	c.JSON(http.StatusCreated, calendar)
 }
 
-func (h *CalendarHandler) UpdateCalendar(c *gin.Context) {
+func (handler *CalendarHandler) UpdateCalendarEntry(c *gin.Context) {
 	id := c.Param("id")
-	calendar, err := h.repo.UpdateById(id)
+	calendar, err := handler.repo.UpdateById(id)
 	if err != nil {
 		return
 	}
 	c.JSON(http.StatusOK, calendar)
 }
 
-func (h *CalendarHandler) DeleteCalendar(c *gin.Context) {
+func (handler *CalendarHandler) DeleteCalendarEntry(c *gin.Context) {
 	id := c.Param("id")
-	err := h.repo.DeleteByID(id)
+	err := handler.repo.DeleteByID(id)
 	if err != nil {
 		if err.Error() == "calendar not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Calendar not found"})
