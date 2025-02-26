@@ -41,7 +41,7 @@ function toggleAddComponent() {
 <style>
 :root {
   --nav-bar__height: 50px;
-  --week-kalender__height: 180px;
+  --week-kalender__height: 200px;
   --border-radius__secondary-background: 12px;
 
   
