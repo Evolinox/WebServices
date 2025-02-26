@@ -37,6 +37,13 @@
     &quot;assignee&quot;: &quot;tim02-k&quot;
   }
 }</component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="main" />
+      </list>
+    </option>
+  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Evolinox/WebServices.git&quot;,
@@ -79,11 +86,11 @@
     &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/trackerApi&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;backend/calendar&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/timkerl/DHBW-AI/4. Semester/Web-Services/Repo/WebServices/backend&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/pascal/Repositories/WebServices/backend/calendarApi&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -320,6 +327,21 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="adjusted names in Entity Product" />
+    <MESSAGE value="Refactoring Backend from Java-Quarkus to Go" />
+    <MESSAGE value="Added Product API V1.0" />
+    <MESSAGE value="Added tracker API V1.0" />
+    <MESSAGE value="Adjustments made to read env.local file" />
+    <MESSAGE value="updated ReadMe for tracker API" />
+    <MESSAGE value="structured Router for tracker Api with router groups" />
+    <MESSAGE value="Added MariaDb to tracker Api.&#10;Added sable settings.&#10;Added Api routes for settings and created repository and handler" />
+    <MESSAGE value="Fixed bug in productMapper" />
+    <MESSAGE value="added reader for env.local file to main" />
+    <MESSAGE value="added Dockerfile to trackerApi and updated the ReadMe" />
+    <MESSAGE value="changed the db port for productApi" />
+    <MESSAGE value="fixed bug in update settings" />
+    <MESSAGE value="improved settings Handler, Repository and Entity.&#10;Added Mapper func to calculate Nutrition-Data" />
+    <MESSAGE value="added consumedProduct entity, handler and repository" />
     <MESSAGE value="added diary entity, handler and repository. &#10;Added helper method to validate Date-String" />
     <MESSAGE value="added nutrition-statistics entity, handler and repository." />
     <MESSAGE value="update the input/output flow of the productHandler. Adding DTO and Mapper funcs for this" />
@@ -328,24 +350,9 @@
     <MESSAGE value="added Date to consumedProduct, ReceivedProductDTO and Mapper func for api requests with paramater date" />
     <MESSAGE value="fix db bug with gorm" />
     <MESSAGE value="fix bug. Added descritpon for endpoints" />
-    <MESSAGE value="improved the router and updated the endpoints documentation" />
-    <MESSAGE value="Updated JSON Annotations for DTOs" />
-    <MESSAGE value="Updated Documentation" />
-    <MESSAGE value="changed location of env file" />
-    <MESSAGE value="update required JSON Data for settings Patch request" />
-    <MESSAGE value="added go first parameter for swagger" />
-    <MESSAGE value="fixed bug with swagger" />
-    <MESSAGE value="add openApi spec" />
-    <MESSAGE value="add update function for Nutrition Statistics" />
-    <MESSAGE value="fixed bug with settings" />
-    <MESSAGE value="added docker and makefile to backend folder" />
-    <MESSAGE value="added update nutrition statistics update handler and repository" />
-    <MESSAGE value="fixed bug in diary: new entry created if noc product is consumed yet" />
-    <MESSAGE value="fixed formatting and added OpenApi Spec" />
-    <MESSAGE value="fixed url bug in route for nutritionStatistics" />
-    <MESSAGE value="fixing bug with localhost for productApi" />
-    <MESSAGE value="fixing docker compose file to start application" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing docker compose file to start application" />
+    <MESSAGE value="Added basic Directory Structure" />
+    <MESSAGE value="Added discord plugin config" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added discord plugin config" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
