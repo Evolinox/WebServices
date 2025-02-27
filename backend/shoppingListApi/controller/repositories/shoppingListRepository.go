@@ -21,6 +21,14 @@ func (repo *ShoppingListRepository) Create(entry *entity.ShoppingList) error {
 	return nil
 }
 
+func (repo *ShoppingListRepository) GetAll() ([]entity.ShoppingList, error) {
+	var shoppingLists []entity.ShoppingList
+	if err := repo.db.Find(&shoppingLists).Error; err != nil {
+		return nil, err
+	}
+	return shoppingLists, nil
+}
+
 func (repo *ShoppingListRepository) GetByDate(date string) ([]*entity.ShoppingList, error) {
 	var list []*entity.ShoppingList
 	if err := repo.db.Where("date = ?", date).Find(&list).Error; err != nil {

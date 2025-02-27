@@ -10,12 +10,17 @@ func RouteController(shoppingListHandler *handler.ShoppingListHandler) {
 
 	shoppingList := router.Group("/shoppinglist")
 
-	shoppingList.GET("/:date", shoppingListHandler.GetShoppingListByDate)
-	shoppingList.GET("/:date/:id", shoppingListHandler.GetShoppingListByDateById)
+	shoppingList.GET("/", shoppingListHandler.GetShoppingLists)
 	shoppingList.GET("/:id", shoppingListHandler.GetShoppingListById)
+
 	shoppingList.POST("/", shoppingListHandler.CreateShoppingList)
+	shoppingList.POST("/:id")
+
 	shoppingList.PATCH("/:id", shoppingListHandler.UpdateShoppingList)
+	shoppingList.PATCH("/:id/:entry")
+
 	shoppingList.DELETE("/:id", shoppingListHandler.DeleteShoppingList)
+	shoppingList.DELETE("/:id/:entry")
 
 	router.Run("localhost:8084")
 }

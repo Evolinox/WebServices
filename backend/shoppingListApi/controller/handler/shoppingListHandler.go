@@ -34,6 +34,19 @@ func (handler *ShoppingListHandler) CreateShoppingList(context *gin.Context) {
 	context.JSON(http.StatusCreated, list)
 }
 
+func (handler *ShoppingListHandler) GetShoppingLists(context *gin.Context) {
+	lists, err := handler.repo.GetAll()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	if lists == nil {
+		context.JSON(http.StatusNotFound, gin.H{"error": "No shopping lists for that date found"})
+		return
+	}
+	context.JSON(http.StatusOK, lists)
+}
+
 func (handler *ShoppingListHandler) GetShoppingListByDate(context *gin.Context) {
 	date := context.Param("date")
 	list, err := handler.repo.GetByDate(date)
