@@ -45,12 +45,12 @@ func (repo *ShoppingListRepository) GetByDateById(date string, id string) (*enti
 	return list, nil
 }
 
-func (repo *ShoppingListRepository) UpdateById(id string) (*entity.ShoppingList, error) {
+func (repo *ShoppingListRepository) UpdateById(id string, updatedList *entity.ShoppingList) error {
 	var list entity.ShoppingList
 	if err := repo.db.Where("id = ?", id).First(&list).Error; err != nil {
-		return nil, err
+		return err
 	}
-	return &list, nil
+	return repo.db.Model(&entity.ShoppingList{}).Where("id = ?", id).Updates(updatedList).Error
 }
 
 func (repo *ShoppingListRepository) DeleteById(id string) error {

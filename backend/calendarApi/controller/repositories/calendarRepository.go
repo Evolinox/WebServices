@@ -37,12 +37,12 @@ func (r *CalendarRepository) GetByDateId(date string, id string) (*entity.Calend
 	return entry, nil
 }
 
-func (r *CalendarRepository) UpdateById(id string) (*entity.Calendar, error) {
+func (r *CalendarRepository) UpdateById(id string, updatedCalendar *entity.Calendar) error {
 	var calendar entity.Calendar
 	if err := r.db.Where("id = ?", id).First(&calendar).Error; err != nil {
-		return nil, err
+		return err
 	}
-	return &calendar, nil
+	return r.db.Model(&entity.Calendar{}).Where("id = ?", id).Updates(updatedCalendar).Error
 }
 
 func (r *CalendarRepository) DeleteByID(id string) error {
