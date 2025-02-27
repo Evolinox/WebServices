@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import plusSvg from '../assets/plus.svg?raw';
 import trashSvg from '../assets/trash.svg?raw';
 import ShoppingListNew from '../components/ShoppingListNew.vue';
@@ -35,6 +35,9 @@ function deleteList(index: number) {
   // TODO: Update the shopping list in the backend
 }
 
+onMounted(() => {
+  // TODO: Fetch the shopping lists from the backend
+})
 // Simulierte JSON-Daten
 const shoppingLists = ref([
   {
