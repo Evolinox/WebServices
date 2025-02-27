@@ -1,13 +1,38 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import plusSvg from '../assets/plus.svg?raw';
-import ShoppingListAdd from '../components/ShoppingListAdd.vue';
+import trashSvg from '../assets/trash.svg?raw';
+import ShoppingListNew from '../components/ShoppingListNew.vue';
+import ShoppingListShow from '../components/ShoppingListShow.vue';
 
-let showAddShoppingList = ref(false);
-function toggleShoppingListAdd() {
-  console.log('toggleShoppingListAdd ' + showAddShoppingList.value);
+const showAddShoppingList = ref(false);
+const selectedListIndex = ref<number>(0);
+function openShoppingListShow(index: number) {
   showAddShoppingList.value = !showAddShoppingList.value;
-  console.log('toggleShoppingListAdd ' + showAddShoppingList.value);
+  console.log('toggle shopping list show ' + showAddShoppingList.value + ' index: ' + index + ' input?: ' + openWithInput.value)
+  selectedListIndex.value = index;
+}
+function closeShoppingListShow() {
+  showAddShoppingList.value = false;
+  openWithInput.value = false;
+}
+
+const showNewShoppingList = ref(false);
+function toggleShoppingListNew() {
+  showNewShoppingList.value = !showNewShoppingList.value;
+}
+
+const openWithInput = ref(false);
+function openAddArticleWithInput(index: number) {
+  openWithInput.value = true;
+  console.log('open with input?: ' + openWithInput.value)
+  openShoppingListShow(index)
+}
+
+function deleteList(index: number) {
+  console.log('Delete list number: ' + index)
+  shoppingLists.value.splice(index, 1)
+  // TODO: Update the shopping list in the backend
 }
 
 // Simulierte JSON-Daten
@@ -34,9 +59,9 @@ const shoppingLists = ref([
     name: "Grillabend",
     date: "20.02.2025",
     products: [
-      { name: "Steaks", quantity: 4 },
-      { name: "Würstchen", quantity: 12 },
-      { name: "Brot", quantity: 2 }
+      { name: "Steaks", quantity: "4 Stück"},
+      { name: "Würstchen", quantity: "12 Stück" },
+      { name: "Brot", quantity: "2 Leib" }
     ]
   }
 ])
@@ -47,19 +72,21 @@ const shoppingLists = ref([
     <div class="shopping-list__content">
       <div class="shopping-list__header">
         <h1>Einkaufsliste</h1>
-        <button @click="toggleShoppingListAdd()" v-html="plusSvg"></button>
+        <button @click="toggleShoppingListNew()" v-html="plusSvg"></button>
       </div>
-      <div v-for="shoppingList in shoppingLists" :key="shoppingList.name">
-        <h2>{{ shoppingList.name }}</h2>
-        <p>{{ shoppingList.date }}</p>
-        <ul>
-          <li v-for="product in shoppingList.products" :key="product.name">
-            {{ product.name }}: {{ product.quantity }}
-          </li>
-        </ul>
+      <div class="shopping-list__lists">
+        <div v-if="shoppingLists.length > 0" class="shopping-list__list" v-for="(shoppingList, index) in shoppingLists" :key="shoppingList.name">
+          <div class="shopping-list__date-name" @click="openShoppingListShow(index)">
+            <p><strong>{{ shoppingList.date }}</strong> - {{ shoppingList.name }}</p>
+          </div>
+          <div class="shopping-list__add-to-list--icon" v-html="plusSvg" @click="openAddArticleWithInput(index)"></div>
+          <div class="shopping-list__delete-list--icon" v-html="trashSvg" @click="deleteList(index)"></div>
+        </div>
+        <p v-else style="text-align: center;">Keine Einkaufslisten vorhanden</p>
       </div>
     </div>
-    <ShoppingListAdd v-if="showAddShoppingList==true" @close="toggleShoppingListAdd"/>
+    <ShoppingListNew v-if="showNewShoppingList==true" @close="toggleShoppingListNew" :shoppingLists="shoppingLists"/>
+    <ShoppingListShow v-if="showAddShoppingList==true" @close="closeShoppingListShow" :shoppingLists="shoppingLists" :selectedListIndex="selectedListIndex" :addArticleInput="openWithInput"/>
   </div>
 </template>
 
@@ -77,6 +104,10 @@ const shoppingLists = ref([
   padding: 20px;
   border-radius: var(--border-radius__secondary-background);
 }
+.shopping-list__content:last-child p {
+  margin-bottom: 0;
+}
+
 .shopping-list__header {
   display: flex;
   justify-content: space-between;
@@ -86,12 +117,42 @@ const shoppingLists = ref([
   width: 40px;
   height: 40px;
   background-color: transparent;
-}
-.shopping-list__header button {
   display: flex;
 }
 .shopping-list__header svg {
   width: 35px;
   height:35px;
+  fill: var(--text-color--primary);
+}
+
+.shopping-list__list, .shopping-list__date-name {
+  display: flex;
+  align-items: center;
+}
+.shopping-list__date-name {
+  width: -webkit-fill-available;
+}
+.shopping-list__list p {
+  margin: 0px;
+}
+
+.shopping-list__add-to-list--icon {
+  margin-right: 10px;
+}
+.shopping-list__add-to-list--icon,  .shopping-list__delete-list--icon{
+  height: 35px;
+  width: 35px;
+  display: flex;
+  align-items: center;
+}
+.shopping-list__add-to-list--icon > svg, .shopping-list__delete-list--icon > svg {
+  height: 50px;
+  width: 50px;
+  scale: 0.8;
+  fill: var(--icon-color);
+}
+
+.shopping-list__date-name, .shopping-list__add-to-list--icon, .shopping-list__delete-list--icon {
+  cursor: pointer;
 }
 </style>
