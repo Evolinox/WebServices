@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"tracker/controller/handler"
 )
 
@@ -14,6 +15,7 @@ func RouteController(
 	shopListHandler *handler.ShopListHandler,
 	calendarHandler *handler.CalendarHandler) {
 	router := gin.Default()
+	router.Use(corsMiddleware())
 
 	tracker := router.Group("/tracker")
 
@@ -40,5 +42,21 @@ func RouteController(
 	err := router.Run(":8082")
 	if err != nil {
 		return
+	}
+}
+
+func corsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, DELETE, PATCH, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		c.Writer.Header().Set("Access-Control-Max-Age", "600") // CORS-permission to cache data for 10 minutes
+
+		// Handle preflight request
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
+		}
+		c.Next()
 	}
 }
