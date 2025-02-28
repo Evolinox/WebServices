@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-
+  import StatsComponent from '../components/StatsComponent.vue'
 </script>
 
 <template>
   <div class="dashboard">
+    <StatsComponent />
   </div>
 </template>
 
