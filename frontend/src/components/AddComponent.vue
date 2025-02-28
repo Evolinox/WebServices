@@ -1,10 +1,11 @@
 <script lang="ts" setup>
+import plusSvg from '../assets/plus.svg?raw'
 </script>
 
 <template>
   <div class="add-component__overlay" @click.self="$emit('close')">
     <div class="add-component__content">
-      <img class="add-component__close-button" src="../assets/plus.svg" @click="$emit('close')"/>
+      <div class="add-component__close-button" v-html="plusSvg" @click="$emit('close')"></div>
       <ul>
         <li>Lebensmittel</li>
         <li>Kalendereintrag</li>
@@ -48,12 +49,13 @@ li {
 li:hover {
   color: var(--accent-color--primary);
 }
-.add-component__close-button {
+.add-component__close-button, .add-component__close-button > svg {
   width: 20px;
   height: 20px;
   margin-left: auto;
   margin-right: 0;
   rotate: 45deg;
   cursor: pointer;
+  fill: var(--icon-color);
 }
 </style>
