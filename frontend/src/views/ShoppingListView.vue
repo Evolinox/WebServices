@@ -115,6 +115,7 @@ const shoppingLists = ref([
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-block-end: 0.7rem;
 }
 .shopping-list__header button{
   width: 40px;
