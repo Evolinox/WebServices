@@ -1036,9 +1036,175 @@ tracker\\_db|schema||user||UPDATE|G</Grants>
     </schema>
     <schema id="325" parent="1" name="tracker_db">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-02-25.19:21:49</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-02-26.08:09:02</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_general_ci</CollationName>
     </schema>
     <user id="326" parent="1" name="user"/>
+    <table id="327" parent="325" name="consumed_product">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="328" parent="325" name="daily_products_consumed">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="329" parent="325" name="nutrition_statistics">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="330" parent="325" name="settings">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <column id="331" parent="327" name="id">
+      <AutoIncrement>3</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint(20) unsigned|0s</StoredType>
+    </column>
+    <column id="332" parent="327" name="daily_products_consumed_id">
+      <Position>2</Position>
+      <StoredType>bigint(20) unsigned|0s</StoredType>
+    </column>
+    <column id="333" parent="327" name="product_id">
+      <Position>3</Position>
+      <StoredType>bigint(20) unsigned|0s</StoredType>
+    </column>
+    <column id="334" parent="327" name="product_name">
+      <Position>4</Position>
+      <StoredType>longtext|0s</StoredType>
+    </column>
+    <column id="335" parent="327" name="category">
+      <Position>5</Position>
+      <StoredType>enum(&apos;Frühstück&apos;, &apos;Mittagessen&apos;, &apos;Abendessen&apos;, &apos;Snack&apos;)|0e</StoredType>
+    </column>
+    <column id="336" parent="327" name="weight_in_grams">
+      <Position>6</Position>
+      <StoredType>bigint(20)|0s</StoredType>
+    </column>
+    <column id="337" parent="327" name="calories">
+      <Position>7</Position>
+      <StoredType>bigint(20)|0s</StoredType>
+    </column>
+    <column id="338" parent="327" name="proteins_in_grams">
+      <Position>8</Position>
+      <StoredType>double|0s</StoredType>
+    </column>
+    <column id="339" parent="327" name="fats_in_grams">
+      <Position>9</Position>
+      <StoredType>double|0s</StoredType>
+    </column>
+    <column id="340" parent="327" name="carbs_in_grams">
+      <Position>10</Position>
+      <StoredType>double|0s</StoredType>
+    </column>
+    <foreign-key id="341" parent="327" name="fk_daily_products_consumed_products">
+      <ColNames>daily_products_consumed_id</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <RefColNames>id</RefColNames>
+      <RefTableName>daily_products_consumed</RefTableName>
+    </foreign-key>
+    <index id="342" parent="327" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="343" parent="327" name="fk_daily_products_consumed_products">
+      <ColNames>daily_products_consumed_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="344" parent="327" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="345" parent="328" name="id">
+      <AutoIncrement>2</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint(20) unsigned|0s</StoredType>
+    </column>
+    <column id="346" parent="328" name="date">
+      <Position>2</Position>
+      <StoredType>longtext|0s</StoredType>
+    </column>
+    <index id="347" parent="328" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="348" parent="328" name="idx_daily_products_consumed_date">
+      <ColNames>date</ColNames>
+      <Type>hash</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="349" parent="328" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="350" parent="328" name="idx_daily_products_consumed_date">
+      <UnderlyingIndexName>idx_daily_products_consumed_date</UnderlyingIndexName>
+    </key>
+    <column id="351" parent="329" name="id">
+      <AutoIncrement>2</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint(20) unsigned|0s</StoredType>
+    </column>
+    <column id="352" parent="329" name="date">
+      <Position>2</Position>
+      <StoredType>longtext|0s</StoredType>
+    </column>
+    <column id="353" parent="329" name="consumed_calories">
+      <Position>3</Position>
+      <StoredType>bigint(20)|0s</StoredType>
+    </column>
+    <column id="354" parent="329" name="consumed_proteins">
+      <Position>4</Position>
+      <StoredType>double|0s</StoredType>
+    </column>
+    <column id="355" parent="329" name="consumed_fats">
+      <Position>5</Position>
+      <StoredType>double|0s</StoredType>
+    </column>
+    <column id="356" parent="329" name="consumed_carbs">
+      <Position>6</Position>
+      <StoredType>double|0s</StoredType>
+    </column>
+    <index id="357" parent="329" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="358" parent="329" name="idx_nutrition_statistics_date">
+      <ColNames>date</ColNames>
+      <Type>hash</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="359" parent="329" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="360" parent="329" name="idx_nutrition_statistics_date">
+      <UnderlyingIndexName>idx_nutrition_statistics_date</UnderlyingIndexName>
+    </key>
+    <column id="361" parent="330" name="planned_calories">
+      <Position>1</Position>
+      <StoredType>bigint(20)|0s</StoredType>
+    </column>
+    <column id="362" parent="330" name="proteins_in_grams">
+      <Position>2</Position>
+      <StoredType>bigint(20)|0s</StoredType>
+    </column>
+    <column id="363" parent="330" name="fats_in_grams">
+      <Position>3</Position>
+      <StoredType>bigint(20)|0s</StoredType>
+    </column>
+    <column id="364" parent="330" name="carbs_in_grams">
+      <Position>4</Position>
+      <StoredType>bigint(20)|0s</StoredType>
+    </column>
   </database-model>
 </dataSource>
