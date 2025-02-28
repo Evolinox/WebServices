@@ -6,6 +6,7 @@ import WeekCalender from './components/WeekCalender.vue'
 import { RouterView } from 'vue-router'
 import { theme } from './themes'
 import { useRoute } from 'vue-router'
+import StatsComponent from './components/StatsComponent.vue'
 
 // Router
 const route = useRoute()
@@ -33,6 +34,7 @@ function toggleAddComponent() {
 
 <template>
   <WeekCalender class="week-kalender" v-if="route.name == 'dashboard' || route.name=='diary' || route.name=='shoppingList'"/>
+  <StatsComponent v-if="route.name === 'dashboard'" />
   <RouterView class="view"/>
   <NavBar class="nav-bar" @toggle-add-component="toggleAddComponent"/>
   <AddComponent v-if="showAddComponent" @close="toggleAddComponent" />
@@ -41,7 +43,7 @@ function toggleAddComponent() {
 <style>
 :root {
   --nav-bar__height: 50px;
-  --week-kalender__height: 180px;
+  --week-kalender__height: 200px;
   --border-radius__secondary-background: 12px;
 
   
@@ -116,5 +118,12 @@ button {
   border-radius: 10px;
 
   cursor: pointer;
+}
+input {
+  padding: 5px;
+  border-radius: 6px;
+  border: solid var(--text-color--secondary);
+  background-color: var(--background-color--tertiary);
+  color: var(--text-color--primary);
 }
 </style>

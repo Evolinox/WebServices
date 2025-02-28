@@ -13,6 +13,8 @@ type DIC struct {
 	diaryRepo                    *repositories.DiaryRepository
 	settingsRepo                 *repositories.SettingsRepository
 	productAPIRepo               *repositories.ProductAPIRepository
+	shopListAPIRepo              *repositories.ShopListAPIRepository
+	calendarAPIRepo              *repositories.CalendarAPIRepository
 }
 
 func (d *DIC) GetDbConnection() *db.DbConnection {
@@ -59,4 +61,18 @@ func (d *DIC) GetProductAPIRepository() *repositories.ProductAPIRepository {
 		d.productAPIRepo = repositories.NewProductAPIRepository("http://product-api:8081")
 	}
 	return d.productAPIRepo
+}
+
+func (d *DIC) GetCalendarAPIRepository() *repositories.CalendarAPIRepository {
+	if d.calendarAPIRepo == nil {
+		d.calendarAPIRepo = repositories.NewCalendarAPIRepository("http://calendar-api:8083")
+	}
+	return d.calendarAPIRepo
+}
+
+func (d *DIC) GetShopListAPIRepository() *repositories.ShopListAPIRepository {
+	if d.shopListAPIRepo == nil {
+		d.shopListAPIRepo = repositories.NewShopListAPIRepository("http://shop-list-api:8084")
+	}
+	return d.shopListAPIRepo
 }
