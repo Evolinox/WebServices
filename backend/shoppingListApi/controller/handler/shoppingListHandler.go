@@ -34,6 +34,22 @@ func (handler *ShoppingListHandler) CreateShoppingList(context *gin.Context) {
 	context.JSON(http.StatusCreated, list)
 }
 
+func (handler *ShoppingListHandler) CreateShoppingListEntry(context *gin.Context) {
+	id := context.Param("id")
+	var product entity.Product
+	if err := context.ShouldBindJSON(&product); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	err := handler.repo.CreateProduct(id, &product)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	context.JSON(http.StatusCreated, product)
+
+}
+
 func (handler *ShoppingListHandler) GetShoppingLists(context *gin.Context) {
 	lists, err := handler.repo.GetAll()
 	if err != nil {

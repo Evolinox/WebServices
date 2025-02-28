@@ -21,6 +21,13 @@ func (repo *ShoppingListRepository) Create(entry *entity.ShoppingList) error {
 	return nil
 }
 
+func (repo *ShoppingListRepository) CreateProduct(id string, entry *entity.Product) error {
+	if err := repo.db.Where("id = ?", id).Create(entry).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
 func (repo *ShoppingListRepository) GetAll() ([]entity.ShoppingList, error) {
 	var shoppingLists []entity.ShoppingList
 	if err := repo.db.Find(&shoppingLists).Error; err != nil {
