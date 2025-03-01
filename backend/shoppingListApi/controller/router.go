@@ -17,10 +17,10 @@ func RouteController(shoppingListHandler *handler.ShoppingListHandler) {
 	shoppingList.POST("/:id", shoppingListHandler.CreateShoppingListEntry) // Muss noch auf Funktion getestet werden :)
 
 	shoppingList.PATCH("/:id", shoppingListHandler.UpdateShoppingList)
-	shoppingList.PATCH("/:id/:entry")
+	shoppingList.PATCH("/:id/:entryId")
 
 	shoppingList.DELETE("/:id", shoppingListHandler.DeleteShoppingList)
-	shoppingList.DELETE("/:id/:entry")
+	shoppingList.DELETE("/:id/:entryId")
 
 	router.Run("localhost:8084")
 }
