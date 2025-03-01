@@ -68,7 +68,12 @@ func (handler *CalendarHandler) CreateCalendarEntry(c *gin.Context) {
 
 func (handler *CalendarHandler) UpdateCalendarEntry(c *gin.Context) {
 	id := c.Param("id")
-	calendar, err := handler.repo.UpdateById(id)
+	var calendar entity.Calendar
+	if err := c.ShouldBindJSON(&calendar); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	err := handler.repo.UpdateById(id, &calendar)
 	if err != nil {
 		return
 	}

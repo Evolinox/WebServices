@@ -21,6 +21,14 @@ func (repo *ShoppingListRepository) Create(entry *entity.ShoppingList) error {
 	return nil
 }
 
+func (repo *ShoppingListRepository) GetAll() ([]entity.ShoppingList, error) {
+	var shoppingLists []entity.ShoppingList
+	if err := repo.db.Find(&shoppingLists).Error; err != nil {
+		return nil, err
+	}
+	return shoppingLists, nil
+}
+
 func (repo *ShoppingListRepository) GetByDate(date string) ([]*entity.ShoppingList, error) {
 	var list []*entity.ShoppingList
 	if err := repo.db.Where("date = ?", date).Find(&list).Error; err != nil {
@@ -45,12 +53,12 @@ func (repo *ShoppingListRepository) GetByDateById(date string, id string) (*enti
 	return list, nil
 }
 
-func (repo *ShoppingListRepository) UpdateById(id string) (*entity.ShoppingList, error) {
+func (repo *ShoppingListRepository) UpdateById(id string, updatedList *entity.ShoppingList) error {
 	var list entity.ShoppingList
 	if err := repo.db.Where("id = ?", id).First(&list).Error; err != nil {
-		return nil, err
+		return err
 	}
-	return &list, nil
+	return repo.db.Model(&entity.ShoppingList{}).Where("id = ?", id).Updates(updatedList).Error
 }
 
 func (repo *ShoppingListRepository) DeleteById(id string) error {
