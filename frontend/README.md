@@ -28,3 +28,6 @@ npm run tauri dev
 
 ### WeekCalender
 npm install date-fns
+
+### Dashboard Charts
+npm install chart.js vue-chart-3
