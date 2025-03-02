@@ -22,10 +22,6 @@ func (h *CalendarHandler) GetCalendarByDate(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	if entries == nil || len(entries) == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "No calendar entries found for the given date"})
-		return
-	}
 	c.JSON(http.StatusOK, entries)
 }
 
