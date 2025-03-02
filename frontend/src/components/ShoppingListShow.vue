@@ -150,7 +150,6 @@ li:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: transparent;
   background-color: var(--button__background-color);
   scale: 0.9;
 }
