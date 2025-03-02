@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, defineProps, watch } from 'vue'
+import { ref, watch } from 'vue'
 import plusSvg from '../assets/plus.svg?raw'
 import trashSvg from '../assets/trash.svg?raw'
 
