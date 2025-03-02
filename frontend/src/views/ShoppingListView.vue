@@ -99,7 +99,6 @@ const shoppingLists = ref([
   flex-direction: column;
   width: calc(100% - 40px);
   padding: 20px;
-  
   border-radius: 4px;
 }
 .shopping-list__content {
