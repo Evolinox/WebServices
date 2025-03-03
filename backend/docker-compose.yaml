@@ -42,6 +42,25 @@ services:
       start_period: 5s
       timeout: 2s
 
+  calendar-db:
+    container_name: calendar-db
+    image: mariadb:10.7
+    ports:
+      - "3403:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_PASSWORD=password
+      - MYSQL_USER=user
+      - MYSQL_DATABASE=calendar_db
+    networks:
+      - backend-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      retries: 5
+      start_period: 5s
+      timeout: 2s
+
   product-api:
     container_name: product-api
     image: golang:1.20-alpine
@@ -53,6 +72,21 @@ services:
       - "8081:8081"
     depends_on:
       product-db:
+        condition: service_healthy
+    networks:
+      - backend-network
+
+  calendar-api:
+    container_name: calendar-api
+    image: golang:1.20-alpine
+    working_dir: /app
+    volumes:
+      - ./calendarApi:/app
+    command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
+    ports:
+      - "8083:8083"
+    depends_on:
+      calendar-db:
         condition: service_healthy
     networks:
       - backend-network
@@ -69,9 +103,13 @@ services:
     depends_on:
       product-db:
         condition: service_healthy
+      calendar-db:
+        condition: service_healthy
       tracker-db:
         condition: service_healthy
       product-api:
+        condition: service_started
+      calendar-api:
         condition: service_started
     networks:
       - backend-network

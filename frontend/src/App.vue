@@ -41,7 +41,7 @@ function toggleAddComponent() {
 <style>
 :root {
   --nav-bar__height: 50px;
-  --week-kalender__height: 180px;
+  --week-kalender__height: 200px;
   --border-radius__secondary-background: 12px;
 
   
@@ -116,5 +116,12 @@ button {
   border-radius: 10px;
 
   cursor: pointer;
+}
+input {
+  padding: 5px;
+  border-radius: 6px;
+  border: solid var(--text-color--secondary);
+  background-color: var(--background-color--tertiary);
+  color: var(--text-color--primary);
 }
 </style>

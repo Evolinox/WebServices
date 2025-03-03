@@ -11,7 +11,7 @@ import settingsSvg from '../assets/settings.svg?raw'
 const route = useRoute()
 const router = useRouter()
 
-const isActive = (path: string) => computed(() => route.path.includes(path))
+const isActive = (path: string) => computed(() => route.name?.toString().includes(path))
 
 watch(
   () => route.name,
@@ -25,7 +25,7 @@ watch(
   <div class="nav-bar">
     <button :class="['dashboard', 'nav-bar__item', { 'nav-bar__item--active': isActive('dashboard').value }]" v-html="dashboardSvg" @click="router.push({ name: 'dashboard' })"></button>
     <button :class="['nav-bar__item', { 'nav-bar__item--active': isActive('diary').value }, 'rightShift']" v-html="diarySvg" @click="router.push({ name: 'diary' })"></button>
-    <button :class="['plus', 'nav-bar__item', { 'nav-bar__item--active': isActive('plus').value }]" v-html="plusSvg" @click="$emit('toggle-add-component')"></button>
+    <button :class="['plus', 'nav-bar__item']" v-html="plusSvg" @click="$emit('toggle-add-component')"></button>
     <button :class="['nav-bar__item', { 'nav-bar__item--active': isActive('shoppingList').value }]" v-html="shoppingListSvg" @click="router.push({ name: 'shoppingList' })"></button>
     <button :class="['nav-bar__item', { 'nav-bar__item--active': isActive('settings').value }]" v-html="settingsSvg" @click="router.push({ name: 'settings' })"></button>
   </div>
@@ -36,6 +36,7 @@ watch(
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
 }
 .nav-bar__item {
   height: 45px;
@@ -62,13 +63,11 @@ watch(
 .plus {
   background-color: var(--button__background-color);
   border-radius: 90px;
-  scale: 0.9;
 }
 .dashboard > svg {
   scale: 0.9;
 }
 .plus > svg {
-  scale: 0.8;
   fill: var(--button__text-color);
 }
 </style>
