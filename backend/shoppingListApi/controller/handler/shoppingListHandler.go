@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"shoppingListApi/controller/repositories"
 	"shoppingListApi/infrastructure/entity"
-	"strings"
+	"strconv"
 )
 
 type ShoppingListHandler struct {
@@ -16,105 +16,83 @@ func NewShoppingListHandler(repo *repositories.ShoppingListRepository) *Shopping
 	return &ShoppingListHandler{repo: repo}
 }
 
-func (handler *ShoppingListHandler) CreateShoppingList(context *gin.Context) {
+func (h *ShoppingListHandler) GetShoppingLists(c *gin.Context) {
+	lists, err := h.repo.GetShoppingLists()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch shopping lists"})
+		return
+	}
+	c.JSON(http.StatusOK, lists)
+}
+
+func (h *ShoppingListHandler) GetShoppingListById(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid shopping list ID"})
+		return
+	}
+	list, err := h.repo.GetShoppingListById(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Shopping list not found"})
+		return
+	}
+	c.JSON(http.StatusOK, list)
+}
+
+func (h *ShoppingListHandler) CreateShoppingList(c *gin.Context) {
 	var list entity.ShoppingList
-	if err := context.ShouldBindJSON(&list); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := c.ShouldBindJSON(&list); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
 		return
 	}
-	err := handler.repo.Create(&list)
-	if err != nil {
-		if strings.Contains(err.Error(), "1062") {
-			context.JSON(http.StatusConflict, gin.H{"error": "ShoppingList already exists"})
-		} else {
-			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		}
+	if err := h.repo.CreateShoppingList(&list); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create shopping list"})
 		return
 	}
-	context.JSON(http.StatusCreated, list)
+	c.JSON(http.StatusCreated, list)
 }
 
-func (handler *ShoppingListHandler) GetShoppingLists(context *gin.Context) {
-	lists, err := handler.repo.GetAll()
+func (h *ShoppingListHandler) CreateShoppingListEntry(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid shopping list ID"})
 		return
 	}
-	if lists == nil {
-		context.JSON(http.StatusNotFound, gin.H{"error": "No shopping lists for that date found"})
+	var product entity.Product
+	if err := c.ShouldBindJSON(&product); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
 		return
 	}
-	context.JSON(http.StatusOK, lists)
+	product.ShoppingListID = id
+	if err := h.repo.CreateShoppingListEntry(&product); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to add product"})
+		return
+	}
+	c.JSON(http.StatusCreated, product)
 }
 
-func (handler *ShoppingListHandler) GetShoppingListByDate(context *gin.Context) {
-	date := context.Param("date")
-	list, err := handler.repo.GetByDate(date)
+func (h *ShoppingListHandler) DeleteShoppingList(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid shopping list ID"})
 		return
 	}
-	if list == nil {
-		context.JSON(http.StatusNotFound, gin.H{"error": "No shopping lists for that date found"})
+	if err := h.repo.DeleteShoppingList(id); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete shopping list"})
 		return
 	}
-	context.JSON(http.StatusOK, list)
+	c.JSON(http.StatusOK, gin.H{"message": "Shopping list deleted"})
 }
 
-func (handler *ShoppingListHandler) GetShoppingListById(context *gin.Context) {
-	id := context.Param("id")
-	list, err := handler.repo.GetById(id)
+func (h *ShoppingListHandler) DeleteShoppingListEntry(c *gin.Context) {
+	entryId, err := strconv.Atoi(c.Param("entryId"))
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product ID"})
 		return
 	}
-	if list == nil {
-		context.JSON(http.StatusNotFound, gin.H{"error": "No shopping list with that id found"})
+	if err := h.repo.DeleteShoppingListEntry(entryId); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete product"})
 		return
 	}
-	context.JSON(http.StatusOK, list)
-}
-
-func (handler *ShoppingListHandler) GetShoppingListByDateById(context *gin.Context) {
-	date := context.Param("date")
-	id := context.Param("id")
-	list, err := handler.repo.GetByDateById(date, id)
-	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	if list == nil {
-		context.JSON(http.StatusNotFound, gin.H{"error": "No shopping list for this date and id found"})
-		return
-	}
-	context.JSON(http.StatusOK, list)
-}
-
-func (handler *ShoppingListHandler) UpdateShoppingList(context *gin.Context) {
-	id := context.Param("id")
-	var list entity.ShoppingList
-	if err := context.ShouldBindJSON(&list); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	err := handler.repo.UpdateById(id, &list)
-	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	context.JSON(http.StatusOK, list)
-}
-
-func (handler *ShoppingListHandler) DeleteShoppingList(context *gin.Context) {
-	id := context.Param("id")
-	err := handler.repo.DeleteById(id)
-	if err != nil {
-		if err.Error() == "shoppinglist not found" {
-			context.JSON(http.StatusNotFound, gin.H{"error": "Shoppinglist not found"})
-		} else {
-			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		}
-		return
-	}
-	context.JSON(http.StatusOK, gin.H{"message": "calendar deleted"})
+	c.JSON(http.StatusOK, gin.H{"message": "Product deleted"})
 }

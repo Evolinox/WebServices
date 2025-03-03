@@ -14,60 +14,41 @@ func NewShoppingListRepository(db *gorm.DB) *ShoppingListRepository {
 	return &ShoppingListRepository{db: db}
 }
 
-func (repo *ShoppingListRepository) Create(entry *entity.ShoppingList) error {
-	if err := repo.db.Create(entry).Error; err != nil {
-		return err
-	}
-	return nil
-}
-
-func (repo *ShoppingListRepository) GetAll() ([]entity.ShoppingList, error) {
-	var shoppingLists []entity.ShoppingList
-	if err := repo.db.Find(&shoppingLists).Error; err != nil {
+func (r *ShoppingListRepository) GetShoppingLists() ([]entity.ShoppingList, error) {
+	var lists []entity.ShoppingList
+	err := r.db.Preload("Products").Find(&lists).Error
+	if err != nil {
 		return nil, err
 	}
-	return shoppingLists, nil
+	return lists, nil
 }
 
-func (repo *ShoppingListRepository) GetByDate(date string) ([]*entity.ShoppingList, error) {
-	var list []*entity.ShoppingList
-	if err := repo.db.Where("date = ?", date).Find(&list).Error; err != nil {
-		return nil, err
-	}
-	return list, nil
-}
-
-func (repo *ShoppingListRepository) GetById(id string) (*entity.ShoppingList, error) {
-	var list *entity.ShoppingList
-	if err := repo.db.Where("id = ?", id).First(&list).Error; err != nil {
-		return nil, err
-	}
-	return list, nil
-}
-
-func (repo *ShoppingListRepository) GetByDateById(date string, id string) (*entity.ShoppingList, error) {
-	var list *entity.ShoppingList
-	if err := repo.db.Where("date = ? AND id = ?", date, id).First(&list).Error; err != nil {
-		return nil, err
-	}
-	return list, nil
-}
-
-func (repo *ShoppingListRepository) UpdateById(id string, updatedList *entity.ShoppingList) error {
+func (r *ShoppingListRepository) GetShoppingListById(id int) (*entity.ShoppingList, error) {
 	var list entity.ShoppingList
-	if err := repo.db.Where("id = ?", id).First(&list).Error; err != nil {
-		return err
+	err := r.db.Preload("Products").First(&list, id).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, err
 	}
-	return repo.db.Model(&entity.ShoppingList{}).Where("id = ?", id).Updates(updatedList).Error
+	return &list, nil
 }
 
-func (repo *ShoppingListRepository) DeleteById(id string) error {
-	result := repo.db.Where("id = ?", id).Delete(&entity.ShoppingList{})
-	if result.Error != nil {
-		return result.Error
+func (r *ShoppingListRepository) CreateShoppingList(list *entity.ShoppingList) error {
+	return r.db.Create(list).Error
+}
+
+func (r *ShoppingListRepository) CreateShoppingListEntry(product *entity.Product) error {
+	return r.db.Create(product).Error
+}
+
+func (r *ShoppingListRepository) DeleteShoppingList(id int) error {
+	// Delete all associated products first
+	if err := r.db.Where("shopping_list_id = ?", id).Delete(&entity.Product{}).Error; err != nil {
+		return err
 	}
-	if result.RowsAffected == 0 {
-		return errors.New("shoppinglist not found")
-	}
-	return nil
+	// Delete the shopping list
+	return r.db.Delete(&entity.ShoppingList{}, id).Error
+}
+
+func (r *ShoppingListRepository) DeleteShoppingListEntry(productId int) error {
+	return r.db.Delete(&entity.Product{}, productId).Error
 }
