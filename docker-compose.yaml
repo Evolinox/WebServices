@@ -85,7 +85,7 @@ services:
     image: golang:1.20-alpine
     working_dir: /app
     volumes:
-      - ./productApi:/app
+      - ./backend/productApi:/app
     command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
     ports:
       - "8081:8081"
@@ -100,7 +100,7 @@ services:
     image: golang:1.20-alpine
     working_dir: /app
     volumes:
-      - ./calendarApi:/app
+      - ./backend/calendarApi:/app
     command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
     ports:
       - "8083:8083"
@@ -115,7 +115,7 @@ services:
     image: golang:1.20-alpine
     working_dir: /app
     volumes:
-      - ./shoppingListApi:/app
+      - ./backend/shoppingListApi:/app
     command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
     ports:
       - "8084:8084"
@@ -130,7 +130,7 @@ services:
     image: golang:1.20-alpine
     working_dir: /app
     volumes:
-      - ./tracker:/app
+      - ./backend/tracker:/app
     command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
     ports:
       - "8082:8082"
