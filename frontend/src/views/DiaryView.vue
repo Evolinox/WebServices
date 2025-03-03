@@ -1,15 +1,30 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
 import croissantSvg from '../assets/croissant.svg?raw';
 import pizzaSvg from '../assets/pizza.svg?raw';
 import saladSvg from '../assets/salad.svg?raw';
 import appleSvg from '../assets/apple.svg?raw';
 import plusSvg from '../assets/plus.svg?raw';
+import ShowMeal from '../components/ShowMeal.vue';
 
-function showMeal(meal: String) {
+const openMeal = ref(false)
+const currentMeal = ref('')
+const addArticle = ref(false)
+
+function showMeal(meal: string) {
   console.log('Show meal:', meal)
+  openMeal.value = true
+  currentMeal.value = meal
+}
+function closeMeal() {
+  openMeal.value = false
+  currentMeal.value = ''
+  addArticle.value = false
 }
 
-function add(meal: String) {
+function add(meal: string) {
+  addArticle.value = true
+  showMeal(meal)
   console.log('Add food to', meal)
 }
 </script>
@@ -46,6 +61,7 @@ function add(meal: String) {
         </div>
       </div>
     </div>
+    <ShowMeal v-if="openMeal" :meal="currentMeal" :add-article="addArticle" @close="closeMeal" />
   </div>
 </template>
 
