@@ -61,6 +61,25 @@ services:
       start_period: 5s
       timeout: 2s
 
+  shoppingList-db:
+    container_name: shoppingList-db
+    image: mariadb:10.7
+    ports:
+      - "3404:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_PASSWORD=password
+      - MYSQL_USER=user
+      - MYSQL_DATABASE=shoppingList_db
+    networks:
+      - backend-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      retries: 5
+      start_period: 5s
+      timeout: 2s
+
   product-api:
     container_name: product-api
     image: golang:1.20-alpine
@@ -91,6 +110,21 @@ services:
     networks:
       - backend-network
 
+  shoppingList-api:
+    container_name: shoppingList-api
+    image: golang:1.20-alpine
+    working_dir: /app
+    volumes:
+      - ./shoppingListApi:/app
+    command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
+    ports:
+      - "8084:8084"
+    depends_on:
+      shoppingList-db:
+        condition: service_healthy
+    networks:
+      - backend-network
+
   tracker-api:
     container_name: tracker-api
     image: golang:1.20-alpine
@@ -105,11 +139,15 @@ services:
         condition: service_healthy
       calendar-db:
         condition: service_healthy
+      shoppingList-db:
+        condition: service_healthy
       tracker-db:
         condition: service_healthy
       product-api:
         condition: service_started
       calendar-api:
+        condition: service_started
+      shoppingList-api:
         condition: service_started
     networks:
       - backend-network

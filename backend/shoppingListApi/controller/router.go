@@ -19,7 +19,7 @@ func RouteController(shoppingListHandler *handler.ShoppingListHandler) {
 	shoppingList.DELETE("/:id", shoppingListHandler.DeleteShoppingList)
 	shoppingList.DELETE("/:id/products/:entryId", shoppingListHandler.DeleteShoppingListEntry) // Muss noch auf Funktion getestet werden :)
 
-	err := router.Run("localhost:8084")
+	err := router.Run(":8084")
 	if err != nil {
 		return
 	}

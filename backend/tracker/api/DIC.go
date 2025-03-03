@@ -72,7 +72,7 @@ func (d *DIC) GetCalendarAPIRepository() *repositories.CalendarAPIRepository {
 
 func (d *DIC) GetShopListAPIRepository() *repositories.ShopListAPIRepository {
 	if d.shopListAPIRepo == nil {
-		d.shopListAPIRepo = repositories.NewShopListAPIRepository("http://shop-list-api:8084")
+		d.shopListAPIRepo = repositories.NewShopListAPIRepository("http://shoppingList-api:8084")
 	}
 	return d.shopListAPIRepo
 }
