@@ -12,17 +12,7 @@ up: ## start up the docker-compose setup for local development
 down: ## start up the docker-compose setup for local development
 	$(DOCKER_COMPOSE) down
 
-swagger: ## create swagger api doc
-	swag init --parseDependency --parseInternal
-	cp docs/swagger.json openapi/openapi.json
-
-lint: ## Lints all code with golangci-lint
-	golangci-lint run
-
-lint-fix: ## Lints all code with golangci-lint
-	golangci-lint run --fix
-
 # .PHONY declarations https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
-.PHONY: up, build, swagger
+.PHONY: up, build
 
 
