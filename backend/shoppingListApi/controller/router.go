@@ -16,11 +16,11 @@ func RouteController(shoppingListHandler *handler.ShoppingListHandler) {
 	shoppingList.POST("/", shoppingListHandler.CreateShoppingList)
 	shoppingList.POST("/:id", shoppingListHandler.CreateShoppingListEntry) // Muss noch auf Funktion getestet werden :)
 
-	shoppingList.PATCH("/:id", shoppingListHandler.UpdateShoppingList)
-	shoppingList.PATCH("/:id/products/:entryId", shoppingListHandler.UpdateShoppingListEntry) // Muss noch auf Funktion getestet werden :)
-
 	shoppingList.DELETE("/:id", shoppingListHandler.DeleteShoppingList)
 	shoppingList.DELETE("/:id/products/:entryId", shoppingListHandler.DeleteShoppingListEntry) // Muss noch auf Funktion getestet werden :)
 
-	router.Run("localhost:8084")
+	err := router.Run("localhost:8084")
+	if err != nil {
+		return
+	}
 }

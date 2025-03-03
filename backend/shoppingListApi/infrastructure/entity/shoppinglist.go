@@ -5,7 +5,7 @@ type ShoppingList struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	Date        string    `json:"date"`
-	Products    []Product `json:"products" gorm:"foreignKey:ShoppingListID"`
+	Products    []Product `json:"products" gorm:"foreignKey:ShoppingListID;constraint:OnDelete:CASCADE;"`
 }
 
 type Product struct {
