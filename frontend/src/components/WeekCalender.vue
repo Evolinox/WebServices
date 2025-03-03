@@ -8,16 +8,25 @@
         <div class="nav-button rotate" @click="nextWeek" v-html="leftArrow"></div>
       </div>
       <div>
-        <button class="appointment-button">Tages Termine</button>
+        <button class="appointment-button" @click="openAppointments">Tages Termine</button>      
       </div>
     </div>
   </div>
+
+  <DayAppointments
+    v-if="showAppointments"
+    :appointments="appointments"
+    @close="showAppointments = false"
+    @add="addAppointment"
+    @delete="deleteAppointment"
+  />
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { format, startOfWeek, endOfWeek, addWeeks, subWeeks } from "date-fns";
 import leftArrow from '../assets/left-arrow.svg?raw';
+import DayAppointments from "./DayAppointments.vue";
 
 // Startdatum der Woche initialisieren
 const currentWeek = ref(new Date());
@@ -35,6 +44,25 @@ const nextWeek = () => {
 };
 const prevWeek = () => {
   currentWeek.value = subWeeks(currentWeek.value, 1);
+};
+
+// Terminverwaltung
+const showAppointments = ref(false);
+const appointments = ref<Array<{ date: string; description: string }>>([]);
+
+// Tages-Termine Fenster öffnen
+const openAppointments = () => {
+  showAppointments.value = true;
+};
+
+// Neuen Termin hinzufügen
+const addAppointment = (date: string, description: string) => {
+  appointments.value.push({ date, description });
+};
+
+// Termin löschen
+const deleteAppointment = (index: number) => {
+  appointments.value.splice(index, 1);
 };
 </script>
 
@@ -60,9 +88,7 @@ select, input {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
   height: calc(var(--week-kalender__height) - 20px);
-
   background: var(--background-color--secondary);
   padding: 10px 20px;
   border-radius: var(--border-radius__secondary-background);
