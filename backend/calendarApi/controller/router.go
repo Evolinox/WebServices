@@ -16,5 +16,8 @@ func RouteController(calendarHandler *handler.CalendarHandler) {
 	calendar.PATCH("/:id", calendarHandler.UpdateCalendarEntry)
 	calendar.DELETE("/:id", calendarHandler.DeleteCalendarEntry)
 
-	router.Run("localhost:8083")
+	err := router.Run(":8083")
+	if err != nil {
+		return
+	}
 }

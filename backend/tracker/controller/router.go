@@ -39,6 +39,12 @@ func RouteController(
 	settingsRouter.GET("/", settingsHandler.GetSettings)
 	settingsRouter.PATCH("/", settingsHandler.UpdateSettings)
 
+	calendarRouter := tracker.Group("/calendar")
+	calendarRouter.GET("/:date", calendarHandler.GetCalendarByDate)
+	calendarRouter.POST("/", calendarHandler.AddCalendarEntry)
+	calendarRouter.PATCH("/:id", calendarHandler.UpdateCalendarEntry)
+	calendarRouter.DELETE("/:id", calendarHandler.DeleteCalendar)
+
 	err := router.Run(":8082")
 	if err != nil {
 		return
