@@ -21,6 +21,13 @@ func (repo *ShoppingListRepository) Create(entry *entity.ShoppingList) error {
 	return nil
 }
 
+func (repo *ShoppingListRepository) CreateProduct(id string, entry *entity.Product) error {
+	if err := repo.db.Where("id = ?", id).Create(entry).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
 func (repo *ShoppingListRepository) GetAll() ([]entity.ShoppingList, error) {
 	var shoppingLists []entity.ShoppingList
 	if err := repo.db.Find(&shoppingLists).Error; err != nil {
@@ -53,12 +60,31 @@ func (repo *ShoppingListRepository) GetByDateById(date string, id string) (*enti
 	return list, nil
 }
 
+func (repo *ShoppingListRepository) GetEntryById(id string, entryId string) (*entity.Product, error) {
+	var product *entity.Product
+	if err := repo.db.Where("id = ? AND shopping_list_id = ?", id, entryId).First(&product).Error; err != nil {
+		return nil, err
+	}
+	return product, nil
+}
+
 func (repo *ShoppingListRepository) UpdateById(id string, updatedList *entity.ShoppingList) error {
 	var list entity.ShoppingList
 	if err := repo.db.Where("id = ?", id).First(&list).Error; err != nil {
 		return err
 	}
 	return repo.db.Model(&entity.ShoppingList{}).Where("id = ?", id).Updates(updatedList).Error
+}
+
+func (repo *ShoppingListRepository) UpdateEntryById(id string, entryId string, updatedProduct *entity.Product) error {
+	var existingProduct entity.Product
+	if err := repo.db.Where("id = ? AND shopping_list_id = ?", entryId, id).First(&existingProduct).Error; err != nil {
+		return err
+	}
+	if err := repo.db.Model(&existingProduct).Updates(updatedProduct).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
 func (repo *ShoppingListRepository) DeleteById(id string) error {
@@ -68,6 +94,17 @@ func (repo *ShoppingListRepository) DeleteById(id string) error {
 	}
 	if result.RowsAffected == 0 {
 		return errors.New("shoppinglist not found")
+	}
+	return nil
+}
+
+func (repo *ShoppingListRepository) DeleteEntryById(id string, entryId string) error {
+	result := repo.db.Where("id = ? AND shopping_list_id = ?", entryId, id).Delete(&entity.Product{})
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected == 0 {
+		return errors.New("entry not found")
 	}
 	return nil
 }

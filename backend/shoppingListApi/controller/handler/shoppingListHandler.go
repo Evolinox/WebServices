@@ -34,6 +34,22 @@ func (handler *ShoppingListHandler) CreateShoppingList(context *gin.Context) {
 	context.JSON(http.StatusCreated, list)
 }
 
+func (handler *ShoppingListHandler) CreateShoppingListEntry(context *gin.Context) {
+	id := context.Param("id")
+	var product entity.Product
+	if err := context.ShouldBindJSON(&product); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	err := handler.repo.CreateProduct(id, &product)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	context.JSON(http.StatusCreated, product)
+
+}
+
 func (handler *ShoppingListHandler) GetShoppingLists(context *gin.Context) {
 	lists, err := handler.repo.GetAll()
 	if err != nil {
@@ -105,6 +121,21 @@ func (handler *ShoppingListHandler) UpdateShoppingList(context *gin.Context) {
 	context.JSON(http.StatusOK, list)
 }
 
+func (handler *ShoppingListHandler) UpdateShoppingListEntry(context *gin.Context) {
+	id := context.Param("id")
+	entryId := context.Param("entryId")
+	var updatedProduct entity.Product
+	if err := context.ShouldBindJSON(&updatedProduct); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if err := handler.repo.UpdateEntryById(id, entryId, &updatedProduct); err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK, updatedProduct)
+}
+
 func (handler *ShoppingListHandler) DeleteShoppingList(context *gin.Context) {
 	id := context.Param("id")
 	err := handler.repo.DeleteById(id)
@@ -116,5 +147,20 @@ func (handler *ShoppingListHandler) DeleteShoppingList(context *gin.Context) {
 		}
 		return
 	}
-	context.JSON(http.StatusOK, gin.H{"message": "calendar deleted"})
+	context.JSON(http.StatusOK, gin.H{"message": "shoppinglist deleted"})
+}
+
+func (handler *ShoppingListHandler) DeleteShoppingListEntry(context *gin.Context) {
+	id := context.Param("id")
+	entryId := context.Param("entryId")
+	err := handler.repo.DeleteEntryById(id, entryId)
+	if err != nil {
+		if err.Error() == "entry not found" {
+			context.JSON(http.StatusNotFound, gin.H{"error": "Entry not found"})
+		} else {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+		return
+	}
+	context.JSON(http.StatusOK, gin.H{"message": "entry deleted"})
 }
