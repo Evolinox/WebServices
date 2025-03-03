@@ -45,6 +45,14 @@ func RouteController(
 	calendarRouter.PATCH("/:id", calendarHandler.UpdateCalendarEntry)
 	calendarRouter.DELETE("/:id", calendarHandler.DeleteCalendar)
 
+	shopListRouter := tracker.Group("/shoppinglist")
+	shopListRouter.GET("/", shopListHandler.GetShoppingLists)
+	shopListRouter.GET("/:id", shopListHandler.GetShoppingListByID)
+	shopListRouter.POST("/", shopListHandler.CreateShoppingList)
+	shopListRouter.POST("/:id", shopListHandler.CreateShoppingListEntry)
+	shopListRouter.DELETE("/:id", shopListHandler.DeleteShoppingList)
+	shopListRouter.DELETE("/:id/products/:entryID", shopListHandler.DeleteShoppingListEntry)
+
 	err := router.Run(":8082")
 	if err != nil {
 		return
@@ -58,7 +66,6 @@ func corsMiddleware() gin.HandlerFunc {
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		c.Writer.Header().Set("Access-Control-Max-Age", "600") // CORS-permission to cache data for 10 minutes
 
-		// Handle preflight request
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(http.StatusNoContent)
 			return
