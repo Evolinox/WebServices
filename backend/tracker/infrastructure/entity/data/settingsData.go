@@ -7,4 +7,6 @@ var Settings = entity.Settings{
 	ProteinsInGrams: 201,
 	FatsInGrams:     54,
 	CarbsInGrams:    287,
+	Gender:          "männlich",
+	WeightInKg:      90,
 }
