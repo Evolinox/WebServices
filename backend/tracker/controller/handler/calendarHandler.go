@@ -41,6 +41,14 @@ func (h *CalendarHandler) AddCalendarEntry(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format. Use YYYY-MM-DD"})
 		return
 	}
+	if !helper.IsValidDateFormat(entry.BeginTime) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid time format. Use HH-TT"})
+		return
+	}
+	if !helper.IsValidDateFormat(entry.EndTime) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid time format. Use HH-TT"})
+		return
+	}
 
 	err := h.repo.AddCalendarEntry(entry)
 	if err != nil {
@@ -60,6 +68,14 @@ func (h *CalendarHandler) UpdateCalendarEntry(c *gin.Context) {
 
 	if !helper.IsValidDateFormat(entry.Date) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format. Use YYYY-MM-DD"})
+		return
+	}
+	if !helper.IsValidDateFormat(entry.BeginTime) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid time format. Use HH-TT"})
+		return
+	}
+	if !helper.IsValidDateFormat(entry.EndTime) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid time format. Use HH-TT"})
 		return
 	}
 
