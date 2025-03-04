@@ -19,7 +19,7 @@ func (h *NutritionStatisticsHandler) GetNutritionStatisticsByDate(c *gin.Context
 	dateStr := c.Param("date")
 
 	if !helper.IsValidDateFormat(dateStr) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format. Use YYYY-MM-DD"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format in url. Use YYYY-MM-DD"})
 		return
 	}
 
