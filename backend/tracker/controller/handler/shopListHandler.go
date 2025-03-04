@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"tracker/controller/helper"
 	"tracker/controller/repositories"
 	"tracker/infrastructure/dto/model"
 )
@@ -42,6 +43,11 @@ func (h *ShopListHandler) CreateShoppingList(c *gin.Context) {
 	var list model.ShoppingListDTO
 	if err := c.ShouldBindJSON(&list); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if !helper.IsValidDateFormat(list.Date) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format. Use YYYY-MM-DD"})
 		return
 	}
 

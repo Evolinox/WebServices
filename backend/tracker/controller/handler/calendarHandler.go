@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"tracker/controller/helper"
 	"tracker/controller/repositories"
 	"tracker/infrastructure/dto/model"
 )
@@ -17,6 +18,10 @@ func NewCalendarHandler(repo *repositories.CalendarAPIRepository) *CalendarHandl
 
 func (h *CalendarHandler) GetCalendarByDate(c *gin.Context) {
 	date := c.Param("date")
+	if !helper.IsValidDateFormat(date) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format. Use YYYY-MM-DD"})
+		return
+	}
 	entries, err := h.repo.GetCalendarByDate(date)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -29,6 +34,11 @@ func (h *CalendarHandler) AddCalendarEntry(c *gin.Context) {
 	var entry model.CalendarDTO
 	if err := c.ShouldBindJSON(&entry); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if !helper.IsValidDateFormat(entry.Date) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format. Use YYYY-MM-DD"})
 		return
 	}
 
@@ -45,6 +55,11 @@ func (h *CalendarHandler) UpdateCalendarEntry(c *gin.Context) {
 	var entry model.CalendarDTO
 	if err := c.ShouldBindJSON(&entry); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if !helper.IsValidDateFormat(entry.Date) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format. Use YYYY-MM-DD"})
 		return
 	}
 
