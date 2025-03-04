@@ -7,18 +7,17 @@
         <span class="week-text">{{ formattedWeek }}</span>
         <div class="nav-button rotate" @click="nextWeek" v-html="leftArrow"></div>
       </div>
-      <div>
-        <button class="appointment-button" @click="openAppointments">Tages Termine</button>      
+      <div class="appointments-button-container">
+        <button class="appointments-button" @click="openDayAppointments = true">Tages Termine</button>
       </div>
     </div>
   </div>
-
   <DayAppointments
-    v-if="showAppointments"
+    v-if="openDayAppointments"
     :appointments="appointments"
-    @close="showAppointments = false"
-    @add="addAppointment"
-    @delete="deleteAppointment"
+    :selectedDateIndex="0"
+    :addAppointmentInput="addAppointmentInput"
+    @close="openDayAppointments = false"
   />
 </template>
 
@@ -27,6 +26,7 @@ import { ref, computed } from "vue";
 import { format, startOfWeek, endOfWeek, addWeeks, subWeeks } from "date-fns";
 import leftArrow from '../assets/left-arrow.svg?raw';
 import DayAppointments from "./DayAppointments.vue";
+
 
 // Startdatum der Woche initialisieren
 const currentWeek = ref(new Date());
@@ -45,25 +45,14 @@ const nextWeek = () => {
 const prevWeek = () => {
   currentWeek.value = subWeeks(currentWeek.value, 1);
 };
+const openDayAppointments = ref(false);
+const addAppointmentInput = ref(false);
 
-// Terminverwaltung
-const showAppointments = ref(false);
-const appointments = ref<Array<{ date: string; description: string }>>([]);
+// Beispielhafte Terminliste
+const appointments = ref([
+  { date: "01.05.2025", description: "Tag der Arbeit" },
 
-// Tages-Termine Fenster öffnen
-const openAppointments = () => {
-  showAppointments.value = true;
-};
-
-// Neuen Termin hinzufügen
-const addAppointment = (date: string, description: string) => {
-  appointments.value.push({ date, description });
-};
-
-// Termin löschen
-const deleteAppointment = (index: number) => {
-  appointments.value.splice(index, 1);
-};
+]);
 </script>
 
 <style>
@@ -93,6 +82,7 @@ select, input {
   padding: 10px 20px;
   border-radius: var(--border-radius__secondary-background);
   text-align: center;
+  width: calc(100% - 40px);
 }
 
 /* Kalender-Titel */
@@ -138,13 +128,20 @@ select, input {
   rotate: 180deg;
 }
 
-/* Button für Termine */
-.appointment-button {
+.appointments-button-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.appointments-button {
   background: #f1c40f;
   padding: 10px 15px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
   color: var(--button__text-color);
+  border: none;
+  cursor: pointer;
 }
+
 </style>

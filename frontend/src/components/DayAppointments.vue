@@ -1,74 +1,78 @@
+<script lang="ts" setup>
+import { ref } from 'vue';
+import plusSvg from '../assets/plus.svg?raw';
+import trashSvg from '../assets/trash.svg?raw';
+import { format, parseISO } from 'date-fns';
+
+const props = defineProps<{
+  appointments: Array<{ date: string; description: string }>;
+}>();
+
+// Eingabefelder (Datum & Beschreibung)
+const date = ref('')
+const description = ref('')
+
+// Funktion: Termin hinzufügen
+function addAppointment() {
+  if (!date.value || !description.value) {
+    console.log('Datum oder Beschreibung ist leer')
+    return
+  }
+  
+  const dateFormatted = format(parseISO(date.value), 'dd.MM.yyyy')
+  props.appointments.push({ date: dateFormatted, description: description.value })
+  
+  date.value = ''
+  description.value = ''
+}
+
+// Termin löschen
+function deleteAppointment(index: number) {
+  console.log('Termin löschen');
+  props.appointments.splice(index, 1);
+}
+</script>
+
 <template>
-  <div class="appointments-overlay" @click.self="$emit('close')">
-    <div class="appointments-card">
-      <div class="appointments-header">
+  <div class="day-appointments__overlay" @click.self="$emit('close')" style="width: 100%;">
+    <div class="day-appointments__card">
+      <div class="day-appointments__card-header">
         <h2>Tages Termine</h2>
-        <div class="appointments-close-button" v-html="plusSvg" @click="$emit('close')"></div>
+        <div class="day-appointments__close-button" v-html="plusSvg" @click="$emit('close')"></div>
       </div>
-      <div class="appointments-content">
+
+      <div class="day-appointments__card-content">
         <ul v-if="appointments.length > 0">
-          <li v-for="(appointment, index) in appointments" :key="index">
-            <span class="appointment-date"><strong>{{ formatDate(appointment.date) }}</strong>:</span> 
-            <span class="appointment-description">{{ appointment.description }}</span>
-            <div class="appointment-trash-icon" v-html="trashSvg" @click="$emit('delete', index)"></div>
+          <li v-for="(appt, index) in appointments" :key="index">
+            <span class="appt__date"> {{ appt.date }}:</span> 
+            <span class="appt__desc"> {{ appt.description }} </span>
+            <div class="appt__trash-icon" v-html="trashSvg" @click="deleteAppointment(index)"></div>
           </li>
         </ul>
         <p v-else style="text-align: center;">Keine Termine vorhanden</p>
       </div>
-      <div class="appointments-footer">
-        <input type="date" v-model="date" placeholder="Datum">
-        <input type="text" v-model="description" placeholder="Beschreibung">
+
+      <div class="day-appointments__add-appointment">
+        <input type="date" v-model="date" placeholder="Datum" />
+        <input type="text" v-model="description" placeholder="Beschreibung" />
         <button class="plus add-appointment__add-button" v-html="plusSvg" @click="addAppointment"></button>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-import plusSvg from '../assets/plus.svg?raw';
-import trashSvg from '../assets/trash.svg?raw';
-import { format, parseISO  } from 'date-fns';
-import { ref } from "vue";
-
-const props = defineProps<{ appointments: Array<{ date: string; description: string }> }>();
-const emit = defineEmits(['close', 'add', 'delete']);
-
-const addAppointmentInput = ref(false);
-const date = ref("");
-const description = ref("");
-
-
-const formatDate = (dateString: string) => {
-  return format(parseISO(dateString), "dd.MM.yyyy");
-};
-
-// Neuen Termin hinzufügen
-const addAppointment = () => {
-  if (description.value === '' || date.value === '') {
-    console.log('Beschreibung oder Datum ist leer');
-    return;
-  }
-
-  emit('add', date.value, description.value);
-
-  // Eingaben zurücksetzen
-  date.value = "";
-  description.value = "";
-  addAppointmentInput.value = false;
-}
-</script>
-
 <style>
-.appointments-overlay {
+.day-appointments__overlay {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
+  z-index: 999;
 }
 
-.appointments-card {
+.day-appointments__card {
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -81,41 +85,88 @@ const addAppointment = () => {
   border-radius: 8px;
 }
 
-.appointments-header {
+/* Header */
+.day-appointments__card-header {
+  align-items: center;
   display: flex;
   justify-content: space-between;
 }
-
-.appointments-footer {
-  display: flex;
-  justify-content: center;
+.day-appointments__card-header h2 {
+  margin-left: 5px;
 }
-
-.add-appointment__add-button {
-  background: #4CAF50;
-  color: white;
-}
-
-.appointment-trash-icon > svg{
-  height: 20px;
-  width: 20px;
-  fill: var(--icon-color);
-}
-
-.appointment-description {
-  margin-left: 10px;
-}
-
-.appointments-close-button > svg {
+.day-appointments__close-button > svg {
   width: 20px;
   height: 20px;
-  margin-right: 0;
   rotate: 45deg;
   cursor: pointer;
   margin-left: 30px;
-  margin-top: 0px;
+  margin-right: 0;
   scale: 1.2;
   fill: var(--icon-color);
 }
 
+/* Content */
+.day-appointments__card-content ul {
+  padding: 0px 35px;
+}
+.day-appointments__card-content li {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.day-appointments__card-content li:last-child {
+  margin-bottom: 0;
+}
+
+.appt__desc {
+  margin-left: 10px;
+}
+
+.appt__trash-icon {
+  cursor: pointer;
+}
+.appt__trash-icon > svg {
+  height: 20px;
+  width: 20px;
+  fill: var(--icon-color);
+}
+.appt__trash-icon:hover > svg {
+  fill: var(--accent-color--primary);
+}
+
+/* Footer */
+.day-appointments__card-footer {
+  display: flex;
+  justify-content: center;
+
+}
+
+/* Plus-Button */
+.plus {
+  height: 35px;
+  width: 35px;
+  border-radius: 90px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--button__background-color);
+  scale: 0.9;
+}
+.plus > svg {
+  height: 50px;
+  width: 50px;
+  scale: 0.8;
+  fill: var(--button__text-color);
+}
+
+/* Neues Termin-Eingabeformular */
+.day-appointments__add-appointment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 370px;
+}
 </style>
