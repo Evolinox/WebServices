@@ -25,6 +25,8 @@ func CalculateSettingsData(settingsData model.SettingsDTO) entity.Settings {
 		ProteinsInGrams: proteinsInGramsInt,
 		FatsInGrams:     fatsInGramsInt,
 		CarbsInGrams:    carbsInGramsInt,
+		Gender:          settingsData.Gender,
+		WeightInKg:      settingsData.WeightInKg,
 	}
 
 }
