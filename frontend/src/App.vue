@@ -2,7 +2,7 @@
 import { ref, watch, onMounted } from 'vue'
 import AddComponent from './components/AddComponent.vue'
 import NavBar from './components/NavBar.vue'
-import WeekCalender from './components/WeekCalender.vue'
+import DayCalender from './components/DayCalender.vue'
 import { RouterView } from 'vue-router'
 import { theme } from './themes'
 import { useRoute } from 'vue-router'
@@ -32,7 +32,7 @@ function toggleAddComponent() {
 </script>
 
 <template>
-  <WeekCalender class="week-kalender" v-if="route.name == 'dashboard' || route.name=='diary' || route.name=='shoppingList'"/>
+  <DayCalender class="week-kalender" v-if="route.name == 'dashboard' || route.name=='shoppingList'" />
   <RouterView class="view"/>
   <NavBar class="nav-bar" @toggle-add-component="toggleAddComponent"/>
   <AddComponent v-if="showAddComponent" @close="toggleAddComponent" />
