@@ -7,17 +7,26 @@
         <span class="week-text">{{ formattedWeek }}</span>
         <div class="nav-button rotate" @click="nextWeek" v-html="leftArrow"></div>
       </div>
-      <div>
-        <button class="appointment-button">Tages Termine</button>
+      <div class="appointments-button-container">
+        <button class="appointments-button" @click="openDayAppointments = true">Tages Termine</button>
       </div>
     </div>
   </div>
+  <DayAppointments
+    v-if="openDayAppointments"
+    :appointments="appointments"
+    :selectedDateIndex="0"
+    :addAppointmentInput="addAppointmentInput"
+    @close="openDayAppointments = false"
+  />
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { format, startOfWeek, endOfWeek, addWeeks, subWeeks } from "date-fns";
 import leftArrow from '../assets/left-arrow.svg?raw';
+import DayAppointments from "./DayAppointments.vue";
+
 
 // Startdatum der Woche initialisieren
 const currentWeek = ref(new Date());
@@ -36,6 +45,14 @@ const nextWeek = () => {
 const prevWeek = () => {
   currentWeek.value = subWeeks(currentWeek.value, 1);
 };
+const openDayAppointments = ref(false);
+const addAppointmentInput = ref(false);
+
+// Beispielhafte Terminliste
+const appointments = ref([
+  { date: "01.05.2025", description: "Tag der Arbeit" },
+
+]);
 </script>
 
 <style>
@@ -60,13 +77,12 @@ select, input {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
   height: calc(var(--week-kalender__height) - 20px);
-
   background: var(--background-color--secondary);
   padding: 10px 20px;
   border-radius: var(--border-radius__secondary-background);
   text-align: center;
+  width: calc(100% - 40px);
 }
 
 /* Kalender-Titel */
@@ -112,13 +128,20 @@ select, input {
   rotate: 180deg;
 }
 
-/* Button für Termine */
-.appointment-button {
+.appointments-button-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.appointments-button {
   background: #f1c40f;
   padding: 10px 15px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
   color: var(--button__text-color);
+  border: none;
+  cursor: pointer;
 }
+
 </style>
