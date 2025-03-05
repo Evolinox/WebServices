@@ -1,1 +1,0 @@
-# Shoppinglist API V1.0
