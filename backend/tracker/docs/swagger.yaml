@@ -1,18 +1,27 @@
 openapi: 3.0.0
 info:
   title: Nutrition Tracker API
-  description: |
-    This is the Documentation of the Nutrition Tracker API, which contains 3 external APIs.
-    The main goal of the API is to get insights into your nutrition and help you organize your shopping and meetings.
   version: 1.0.0
-  contact:
-    name: Tim Kerl
-    email: tim.kerl.23@lehre.mosbach.dhbw.de
+  description: |
+    The Tracker API allows users to manage their products, consumption logs, nutritional statistics, shopping lists, and personal settings. 
+    This API provides various endpoints for retrieving product details, adding or removing items from shopping lists, consuming products and tracking daily nutrition, 
+    updating personal settings, and more.
+
+    Key functionalities include:
+    - Managing products: Get, create, and search products by ID or name.
+    - Consuming products: Record product consumption and update nutrition statistics.
+    - Managing shopping lists: Create, retrieve, and delete shopping lists, as well as add or remove items from them.
+    - Tracking daily nutrition: Retrieve detailed nutrition statistics based on consumed products.
+    - Personal settings: View and update user-specific nutritional goals and preferences.
+    - Calendar integration: View, create, and update calendar events related to food consumption.
 externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
 servers:
-  - url: http://localhost:8082/tracker
+  - url: http://localhost:9401/tracker
+    description: "standard url"
+  - url: http://tracker-api:9401/tracker
+    description: "url when fetching data from this api inside a docker network"
 paths:
   /products:
     get:
@@ -38,6 +47,7 @@ paths:
                 type: object
                 additionalProperties:
                   type: string
+                  example: "Failed to retrieve product."
   /products/{id}:
     get:
       summary: Get a product by ID
@@ -66,6 +76,7 @@ paths:
                 type: object
                 additionalProperties:
                   type: string
+                  example: "Product not found."
         '500':
           description: Internal Server Error
           content:
@@ -74,6 +85,7 @@ paths:
                 type: object
                 additionalProperties:
                   type: string
+                  example: "Failed to retrieve product."
   /products/name/{name}:
     get:
       summary: Search products by name
@@ -104,6 +116,7 @@ paths:
                 type: object
                 additionalProperties:
                   type: string
+                  example: "Product not found."
         '500':
           description: Internal Server Error
           content:
@@ -112,6 +125,7 @@ paths:
                 type: object
                 additionalProperties:
                   type: string
+                  example: "Failed to retrieve product."
   /consume:
     post:
       summary: Consume a product and update nutrition statistics.
@@ -146,6 +160,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Invalid data format."
         409:
           description: Product ID already exists.
           content:
@@ -155,6 +170,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Product ID already exists."
         500:
           description: Internal server error. Something went wrong while processing the request.
           content:
@@ -164,6 +180,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Failed to create/retrieve daily record."
   /diary/date/{date}:
     get:
       summary: Retrieve the diary of consumed products for a specific date.
@@ -175,7 +192,7 @@ paths:
         - name: date
           in: path
           required: true
-          description: The date for which to retrieve the diary of consumed products (dateFormat YYYY-MM-DD).
+          description: The date for which to retrieve the diary of consumed products (format YYYY-MM-DD).
           schema:
             type: string
             format: date
@@ -203,6 +220,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Invalid date format. Use YYYY-MM-DD."
         404:
           description: No records found for the given date.
           content:
@@ -212,6 +230,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "No records found for this date."
         500:
           description: Internal server error when fetching diary data.
           content:
@@ -221,6 +240,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Failed to fetch diary entry."
 
   /diary/date/{date}/{id}:
     get:
@@ -233,7 +253,7 @@ paths:
         - name: date
           in: path
           required: true
-          description: The date for which to retrieve the product (dateFormat YYYY-MM-DD).
+          description: The date for which to retrieve the product (format YYYY-MM-DD).
           schema:
             type: string
             format: date
@@ -259,6 +279,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Invalid ID format. Must be an integer."
         404:
           description: Product not found for the given ID.
           content:
@@ -268,6 +289,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Product not found."
         500:
           description: Internal server error while fetching the consumed product.
           content:
@@ -277,10 +299,10 @@ paths:
                 properties:
                   error:
                     type: string
-
+                    example: "Failed to fetch product."
     delete:
       summary: Delete a specific consumed product.
-      description: Deletes a consumed product by its ID and updates the nutrition statistics.
+      description: Deletes a consumed product by its ID and updates nutrition statistics.
       tags:
         - diary
       operationId: deleteConsumedProduct
@@ -288,7 +310,7 @@ paths:
         - name: date
           in: path
           required: true
-          description: The date for which the product is being deleted (dateFormat YYYY-MM-DD).
+          description: The date for which the product is being deleted (format YYYY-MM-DD).
           schema:
             type: string
             format: date
@@ -308,6 +330,7 @@ paths:
                 properties:
                   message:
                     type: string
+                    example: "Product deleted successfully."
         400:
           description: Invalid ID format (must be an integer).
           content:
@@ -317,6 +340,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Invalid ID format. Must be an integer."
         404:
           description: Product not found for the given ID.
           content:
@@ -326,6 +350,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Product not found."
         500:
           description: Internal server error when deleting the product or updating nutrition statistics.
           content:
@@ -335,6 +360,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Failed to delete product."
   /settings:
     get:
       summary: Retrieve the current settings.
@@ -358,8 +384,9 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Settings not found."
         500:
-          description: Internal server error while retrieving the settings.
+          description: Internal server error while fetching the settings.
           content:
             application/json:
               schema:
@@ -367,7 +394,7 @@ paths:
                 properties:
                   error:
                     type: string
-
+                    example: "Failed to fetch settings."
     patch:
       summary: Update the user settings.
       description: Updates the user's nutritional goals and preferences based on the provided data.
@@ -399,6 +426,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Invalid data format."
         500:
           description: Internal server error while updating the settings.
           content:
@@ -408,6 +436,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Failed to update settings."
   /nutrition/{date}:
     get:
       summary: Retrieve the nutrition statistics for a specific date.
@@ -419,7 +448,7 @@ paths:
         - name: date
           in: path
           required: true
-          description: The date for which to retrieve nutrition statistics (dateFormat YYYY-MM-DD).
+          description: The date for which to retrieve nutrition statistics (format YYYY-MM-DD).
           schema:
             type: string
             format: date
@@ -439,6 +468,7 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Invalid date format. Use YYYY-MM-DD."
         500:
           description: Internal server error while fetching nutrition statistics.
           content:
@@ -448,6 +478,463 @@ paths:
                 properties:
                   error:
                     type: string
+                    example: "Failed to fetch nutrition statistics."
+  /calendar/{date}:
+    get:
+      summary: Retrieve calendar entries for a specific date.
+      description: Fetches calendar entries for a given date.
+      tags:
+        - calendar
+      operationId: getCalendarByDate
+      parameters:
+        - name: date
+          in: path
+          required: true
+          description: The date for which to retrieve calendar entries (format YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: Successfully retrieved calendar entries.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CalendarDTO'
+        400:
+          description: Invalid date format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid date format. Use YYYY-MM-DD."
+        500:
+          description: Internal server error while fetching calendar entries.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to fetch calendar entries."
+
+  /calendar:
+    post:
+      summary: Add a new calendar entry.
+      description: Creates a new calendar entry with date and time details.
+      tags:
+        - calendar
+      operationId: addCalendarEntry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalendarDTO'
+      responses:
+        201:
+          description: Successfully added calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Calendar entry added successfully."
+        400:
+          description: Invalid input data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid request payload."
+        500:
+          description: Internal server error while adding calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to add calendar entry."
+
+  /calendar/{id}:
+    patch:
+      summary: Update an existing calendar entry.
+      description: Modifies details of a calendar entry by ID.
+      tags:
+        - calendar
+      operationId: updateCalendarEntry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the calendar entry to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalendarDTO'
+      responses:
+        200:
+          description: Successfully updated the calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Calendar entry updated successfully."
+        400:
+          description: Invalid input data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid request payload."
+        500:
+          description: Internal server error while updating calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to update calendar entry."
+
+    delete:
+      summary: Delete a calendar entry.
+      description: Removes a calendar entry by ID.
+      tags:
+        - calendar
+      operationId: deleteCalendarEntry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the calendar entry to delete.
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Successfully deleted the calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Calendar entry deleted successfully."
+        404:
+          description: Calendar entry not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Calendar entry not found."
+        500:
+          description: Internal server error while deleting calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to delete calendar entry."
+  /shoppinglist:
+    get:
+      summary: Get all shopping lists
+      operationId: getShoppingLists
+      tags:
+        - shoppinglist
+      description: Retrieve a list of all shopping lists.
+      responses:
+        '200':
+          description: A list of shopping lists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingListDTO'
+        '500':
+          description: Internal server error while fetching shopping lists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Failed to fetch shopping lists."
+
+    post:
+      summary: Create a new shopping list
+      operationId: createShoppingList
+      tags:
+        - shoppinglist
+      description: Create a new shopping list.
+      requestBody:
+        description: Shopping list to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingListDTO'
+      responses:
+        '201':
+          description: Shopping list created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Shopping list created successfully"
+        '400':
+          description: Bad request due to invalid data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Invalid date format. Use YYYY-MM-DD"
+        '500':
+          description: Internal server error while creating shopping list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Internal server error"
+
+  /shoppinglist/{id}:
+    get:
+      summary: Get a shopping list by ID
+      operationId: getShoppingListByID
+      tags:
+        - shoppinglist
+      description: Retrieve a specific shopping list by its ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A shopping list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingListDTO'
+        '404':
+          description: Shopping list not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Shopping list not found"
+        '500':
+          description: Internal server error while fetching shopping list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Failed to fetch shopping lists"
+
+    post:
+      summary: Add an entry to a shopping list
+      operationId: createShoppingListEntry
+      tags:
+        - shoppinglist
+      description: Add a new item to an existing shopping list.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Shopping list entry to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingListEntryDTO'
+      responses:
+        '201':
+          description: Shopping list entry created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Shopping list entry created successfully"
+        '400':
+          description: Bad request due to invalid data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Product name is required"
+        '500':
+          description: Internal server error while creating shopping list entry
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Failed to create shopping list entry"
+
+    delete:
+      summary: Delete a shopping list
+      operationId: deleteShoppingList
+      tags:
+        - shoppinglist
+      description: Delete a shopping list by its ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Shopping list deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Shopping list deleted successfully"
+        '404':
+          description: Shopping list not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Shopping list not found"
+        '500':
+          description: Internal server error while deleting a shopping list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Failed to delete shopping list"
+
+  /shoppinglist/{id}/products/{entryID}:
+    delete:
+      summary: Delete a shopping list entry
+      operationId: deleteShoppingListEntry
+      tags:
+        - shoppinglist
+      description: Remove an entry from a shopping list by its entry ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: entryID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Shopping list entry deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Shopping list entry deleted successfully"
+        '404':
+          description: Shopping list entry not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Shopping list entry not found"
+        '500':
+          description: Internal server error while deleting a shopping list entry
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Failed to delete shopping list entry"
 components:
   schemas:
     ProductDTO:
@@ -493,22 +980,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ConsumedProduct'
-    SettingsDTO:
-      type: object
-      properties:
-        PlannedCalories:
-          type: integer
-    Settings:
-      type: object
-      properties:
-        PlannedCalories:
-          type: integer
-        ProteinsInGrams:
-          type: integer
-        FatsInGrams:
-          type: integer
-        CarbsInGrams:
-          type: integer
     ConsumedProduct:
       type: object
       properties:
@@ -537,3 +1008,68 @@ components:
         CarbsInGrams:
           type: number
           format: float
+    SettingsDTO:
+      type: object
+      properties:
+        PlannedCalories:
+          type: integer
+        Gender:
+          type: string
+        WeightInKg:
+          type: number
+          format: float
+    Settings:
+      type: object
+      properties:
+        PlannedCalories:
+          type: integer
+        ProteinsInGrams:
+          type: integer
+        FatsInGrams:
+          type: integer
+        CarbsInGrams:
+          type: integer
+        Gender:
+          type: string
+        WeightInKg:
+          type: number
+          format: float
+    CalendarDTO:
+      type: object
+      properties:
+        Id:
+          type: integer
+        Date:
+          type: string
+        BeginTime:
+          type: string
+        EndTime:
+          type: string
+        Name:
+          type: string
+        Description:
+          type: string
+    ShoppingListDTO:
+      type: object
+      properties:
+        Id:
+          type: integer
+        Name:
+          type: string
+        Description:
+          type: string
+        Date:
+          type: string
+        Products:
+          $ref: '#/components/schemas/ShoppingListEntryDTO'
+    ShoppingListEntryDTO:
+      type: object
+      properties:
+        Id:
+          type: integer
+        Name:
+          type: string
+        Quantity:
+          type: string
+        ShoppingListID:
+          type: integer
