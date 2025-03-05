@@ -54,12 +54,12 @@ function deleteProduct(index: number) {
             <p v-else style="text-align: center;">Keine Artikel vorhanden</p>
           </div>
           <div class="shopping-list-show__card-footer" v-if="!addArticleInput">
-            <button class="plus" v-html="plusSvg" @click="openAddArticle"></button>
+            <button class="shopping-list-show__open-add-article" v-html="plusSvg" @click="openAddArticle"></button>
           </div>
           <div class="shopping-list-show__add-article" v-if="addArticleInput">
             <input type="text" placeholder="Artikel" id="article">
             <input type="text" placeholder="Menge" id="quantity">
-            <button class="plus add-article__add-button" v-html="plusSvg" @click="addArticle($el)"></button>
+            <button class="add-article__add-button" v-html="plusSvg" @click="addArticle($el)"></button>
           </div>
         </div>
     </div>
@@ -142,7 +142,7 @@ li:last-child {
   display: flex;
   justify-content: center;
 }
-.plus {
+.shopping-list-show__open-add-article, .add-article__add-button {
   height: 35px;
   width: 35px;
   border-radius: 90px;
@@ -153,7 +153,7 @@ li:last-child {
   background-color: var(--button__background-color);
   scale: 0.9;
 }
-.plus > svg {
+.shopping-list-show__open-add-article > svg, .add-article__add-button > svg {
   height: 50px;
   width: 50px;
   scale: 0.8;
