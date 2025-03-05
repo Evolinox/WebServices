@@ -1,24 +1,38 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { theme, toggleTheme } from '../themes'
 
-var weight = "";
+const gender = ref('divers');
+const weight = ref<number | null>(null);
+const dailyCalories = ref<number | null>(null);
+
+function handleGenderInput(event: Event) {
+  const select = event.target as HTMLSelectElement;
+  gender.value = select.value;
+}
+
 const handleWeightInput = (event: Event) => {
   const input = event.target as HTMLInputElement
   if (input?.value == "") {
-    input.value = weight;
+    input.value = weight.value ? weight.value.toString() : "";
   } else {
-    weight = input.value;
+    weight.value = input.value ? parseFloat(input.value) : null;
   }
 }
 
-var dailyCalories = "";
 const handleCaloriesInput = (event: Event) => {
   const input = event.target as HTMLInputElement
   if (input?.value == "") {
-    input.value = dailyCalories;
+    input.value = dailyCalories.value ? dailyCalories.value.toString() : "";
   } else {
-    dailyCalories = input.value;
+    dailyCalories.value = input.value? parseFloat(input.value) : null;
   }
+}
+
+function storeSettings() {
+  console.log('Store settings: ', gender.value, " weight:", weight.value, "calories: ", dailyCalories.value);
+  console.log('TODO: Store settings in backend');
+  
 }
 </script>
 
@@ -38,9 +52,10 @@ const handleCaloriesInput = (event: Event) => {
     <div class="settings-view__content">
       <div class="settings-view__item">
         <span class="settings-view__label">Geschlecht</span>
-        <select class="settings-view__select">
-          <option>männlich</option>
-          <option>weiblich</option>
+        <select class="settings-view__select" @change="handleGenderInput($event)">
+          <option value="männlich">männlich</option>
+          <option value="weiblich">weiblich</option>
+          <option value="divers">divers</option>
         </select>
       </div>
       <div class="settings-view__item">
@@ -51,7 +66,9 @@ const handleCaloriesInput = (event: Event) => {
         <span class="settings-view__label">Kalorientagesziel [kcal]</span>
         <input type="number" class="settings-view__input" min="0" @input="handleCaloriesInput"/>
       </div>
-      
+      <div class="settings-view__footer">
+        <button class="settings-footer__store-button" @click="storeSettings">Speichern</button>
+      </div>
     </div>
   </div>
 </template>
@@ -179,5 +196,13 @@ input:checked + .switch__slider:before {
 }
 .switch__slider--round:before {
   border-radius: 50%;
+}
+
+.settings-view__footer {
+  text-align: center;
+}
+.settings-footer__store-button {
+  padding: 10px 20px;
+  color: var(--button__text-color);
 }
 </style>
