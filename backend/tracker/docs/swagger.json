@@ -697,7 +697,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/DailyProductsConsumed"
+                                    "$ref": "#/components/schemas/NutritionStatistics"
                                 }
                             }
                         }
@@ -1560,6 +1560,33 @@
                         "format": "float"
                     },
                     "CarbsInGrams": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                }
+            },
+            "NutritionStatistics": {
+                "type": "object",
+                "properties": {
+                    "ID": {
+                        "type": "integer",
+                        "format": "uint"
+                    },
+                    "Date": {
+                        "type": "string"
+                    },
+                    "ConsumedCalories": {
+                        "type": "integer"
+                    },
+                    "ConsumedProteins": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "ConsumedFats": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "ConsumedCarbs": {
                         "type": "number",
                         "format": "float"
                     }

@@ -458,7 +458,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DailyProductsConsumed'
+                $ref: '#/components/schemas/NutritionStatistics'
         400:
           description: Invalid date format. Date must be in YYYY-MM-DD format.
           content:
@@ -1006,6 +1006,25 @@ components:
           type: number
           format: float
         CarbsInGrams:
+          type: number
+          format: float
+    NutritionStatistics:
+      type: object
+      properties:
+        ID:
+          type: integer
+          format: uint
+        Date:
+          type: string
+        ConsumedCalories:
+          type: integer
+        ConsumedProteins:
+          type: number
+          format: float
+        ConsumedFats:
+          type: number
+          format: float
+        ConsumedCarbs:
           type: number
           format: float
     SettingsDTO:
