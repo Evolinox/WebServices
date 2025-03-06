@@ -3,7 +3,7 @@ import { defineProps, ref } from 'vue';
 import plusSvg from '../assets/plus.svg?raw';
 import BASE_URL from '../baseUrl';
 
-interface ProductInfo {
+interface Product {
   ID: number;
   Name: string;
   Brand: string;
@@ -13,8 +13,8 @@ interface ProductInfo {
   CarbsInGrams: number;
 }
 
-const props = defineProps<{ meal: string, allProducts: ProductInfo[], day: string }>();
-const products = ref<ProductInfo[]>(props.allProducts);
+const props = defineProps<{ meal: string, allProducts: Product[], day: string }>();
+const products = ref<Product[]>(props.allProducts);
 const selectedMeal = ref(props.meal);
 const emit = defineEmits(['close']);
 
@@ -23,8 +23,7 @@ function addProduct(id: number) {
     console.log('No weight given');
     return;
   }
-  console.log('Add', weight.value, 'g of product to', selectedMeal.value, 'with backenID:', id, 'to', props.day);
-  const addedProduct: ProductInfo = products.value[id - 1];
+  const addedProduct: Product = products.value[id - 1];
   fetch(BASE_URL+'/consume/', {
     method: 'POST',
     headers: {

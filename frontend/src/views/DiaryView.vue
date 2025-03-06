@@ -12,7 +12,7 @@ import currentDay from '../day';
 import baseUrl from '../baseUrl';
 import AddMeal from '../components/AddToMeal.vue';
 
-interface Product {
+interface ProductDiary {
   ID: number;
   DailyProductsConsumedID: number;
   ProductID: number;
@@ -25,7 +25,7 @@ interface Product {
   CarbsInGrams: number;
 }
 
-interface ProductInfo {
+interface Product {
   ID: number;
   Name: string;
   Brand: string;
@@ -37,11 +37,11 @@ interface ProductInfo {
 
 const openAddToMealBoolean = ref(false);
 const meal = ref('');
-const breakfastProducts = ref<Product[]>([]);
-const lunchProducts = ref<Product[]>([]);
-const dinnerProducts = ref<Product[]>([]);
-const snackProducts = ref<Product[]>([]);
-const allProducts = ref<ProductInfo[]>([]);
+const breakfastProducts = ref<ProductDiary[]>([]);
+const lunchProducts = ref<ProductDiary[]>([]);
+const dinnerProducts = ref<ProductDiary[]>([]);
+const snackProducts = ref<ProductDiary[]>([]);
+const allProducts = ref<Product[]>([]);
 
 const currentDayBackend = computed(() => {
   return format(currentDay.value, "yyyy-MM-dd");
@@ -72,10 +72,10 @@ function loadDay() {
     .then(response => response.json())
     .then(data => {
       console.log(data)
-      breakfastProducts.value = data.products.filter((product: Product) => product.Category === 'Frühstück');
-      lunchProducts.value = data.products.filter((product: Product) => product.Category === 'Mittagessen');
-      dinnerProducts.value = data.products.filter((product: Product) => product.Category === 'Abendessen');
-      snackProducts.value = data.products.filter((product: Product) => product.Category === 'Snack');
+      breakfastProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Frühstück');
+      lunchProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Mittagessen');
+      dinnerProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Abendessen');
+      snackProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Snack');
     }) 
 }
 
