@@ -39,9 +39,9 @@ function addProduct(id: number) {
         FatsInGrams: addedProduct.FatsInGrams,
         CarbsInGrams: addedProduct.CarbsInGrams,
       },
-      meal: selectedMeal.value,
-      weight: weight.value,
-      day: props.day,
+      Date: props.day,
+      Weight: weight.value,
+      Category: selectedMeal.value,
     }),
   })
   .then(response => response.json())
@@ -52,7 +52,6 @@ function addProduct(id: number) {
   .catch((error) => {
     console.error('Error:', error);
   });
-  // emit('close');
 }
 
 const weight = ref<number | null>(null);
