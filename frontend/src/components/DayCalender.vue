@@ -24,7 +24,6 @@ const addAppointmentInput = ref(false);
 // Beispielhafte Terminliste
 const appointments = ref([
   { date: "01.05.2025", description: "Tag der Arbeit" },
-
 ]);
 </script>
 
@@ -138,5 +137,4 @@ select, input {
   border: none;
   cursor: pointer;
 }
-
 </style>
