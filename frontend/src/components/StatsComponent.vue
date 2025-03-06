@@ -27,14 +27,17 @@ const chartOptions = ref({
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      display: false,
-    },
+      display: false,      
+    }, 
+    labels: {
+      color: "white",
+    },   
   },
 });
 
 // Chart-Daten für Kalorienübersicht
 const caloriesChartData = computed(() => ({
-  labels: ["Verbraucht", "Übrig"],
+  labels: ["Gegessen", "Übrig"],
   datasets: [
     {
       data: [consumedCalories.value, remainingCalories.value],
@@ -100,6 +103,7 @@ const macros = computed(() => [
 /* Kalorienübersicht */
 .calories-overview h2 {
   margin-top: 0px;
+  margin-bottom: 15px;
 }
 
 .calories-flex {
@@ -116,10 +120,14 @@ const macros = computed(() => [
 .doughnut-chart {    
     height: 230px;
 }
+
+.legend-label {
+  color: white;
+}
   
-  /* Makronährstoffe */
-  .macros {
-  margin-top: 15px;
+/* Makronährstoffe */
+.macros {
+  margin-top: 30px;
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
@@ -127,8 +135,8 @@ const macros = computed(() => [
 }
 
 .macros h2 {
-    text-align: center;
-  margin-top: 20px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .macros-row {
