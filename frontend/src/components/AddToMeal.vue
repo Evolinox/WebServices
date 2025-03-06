@@ -20,7 +20,7 @@ const emit = defineEmits(['close']);
 
 function addProduct(id: number) {
   if (!weight.value) {
-    console.log('No weight given');
+    console.error('No weight given');
     return;
   }
   const addedProduct: Product = products.value[id - 1];
@@ -62,10 +62,7 @@ const handleWeightInput = (event: Event) => {
   if (input.value.length > 5) {
     input.value = input.value.slice(0, 5);
   }
-  console.log('Input:', input.value);
   weight.value = parseInt(input.value);
-  console.log('Weight:', weight.value);
-  
 }
 </script>
 
