@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import DayCalender from '../components/DayCalender.vue';
 import { onMounted, ref, watch, computed } from 'vue';
 import { format } from "date-fns";
 import croissantSvg from '../assets/croissant.svg?raw';
@@ -92,8 +91,7 @@ function loadProducts() {
 </script>
 
 <template>
-  <DayCalender class="week-kalender" />
-  <div class="diary-view" style="width: calc(100% - 40px); height: calc(100vh - var(--nav-bar__height) - var(--week-kalender__height));">
+  <div class="diary-view" style="width: calc(100% - 40px); height: calc(100vh - var(--nav-bar__height) - var(--day-calender__height));">
     <div class="diary__container">
       <div class="diary-header">
         <h1>Tagebuch</h1>

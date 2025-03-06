@@ -72,7 +72,7 @@ select, input {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: calc(var(--week-kalender__height) - 20px);
+  height: calc(var(--day-calender__height) - 20px);
   background: var(--background-color--secondary);
   padding: 10px 20px;
   border-radius: var(--border-radius__secondary-background);
@@ -97,8 +97,8 @@ select, input {
   color: var(--button__text-color);
 }
 
-/* Wochen-Text */
-.week-text {
+/* Tag-Text */
+.day-text {
   font-size: 20px;
   font-weight: bold;
 }

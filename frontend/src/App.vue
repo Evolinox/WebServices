@@ -32,7 +32,7 @@ function toggleAddComponent() {
 </script>
 
 <template>
-  <DayCalender class="week-kalender" v-if="route.name == 'dashboard' || route.name=='shoppingList'" />
+  <DayCalender class="day-calender" v-if="route.name == 'dashboard' || route.name == 'diary' || route.name=='shoppingList'" />
   <RouterView class="view"/>
   <NavBar class="nav-bar" @toggle-add-component="toggleAddComponent"/>
   <AddComponent v-if="showAddComponent" @close="toggleAddComponent" />
@@ -41,7 +41,7 @@ function toggleAddComponent() {
 <style>
 :root {
   --nav-bar__height: 50px;
-  --week-kalender__height: 200px;
+  --day-calender__height: 200px;
   --border-radius__secondary-background: 12px;
 
   
@@ -87,11 +87,11 @@ body {
   color: var(--text-color--primary);
 }
 
-.week-kalender {
-  height: var(--week-kalender__height);
+.day-calender {
+  height: var(--day-calender__height);
 }
 .view {
-  height: calc(100vh - var(--nav-bar__height) - var(--week-kalender__height));
+  height: calc(100vh - var(--nav-bar__height) - var(--day-calender__height));
   overflow-y: auto;
 }
 .nav-bar {
@@ -100,7 +100,7 @@ body {
 .view, .navBar {
   width: 100%;
 }
-.view > div, .week-kalender > div {
+.view > div, .day-calender > div {
   width: calc(100% - 40px);
 }
 
