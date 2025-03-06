@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import { format, addDays, subDays } from "date-fns";
 import leftArrow from '../assets/left-arrow.svg?raw';
 import currentDay from "../day";
+import DayAppointments from "./DayAppointments.vue";
 
 // Berechnet das Datum des aktuellen Tages
 const formattedDay = computed(() => {
