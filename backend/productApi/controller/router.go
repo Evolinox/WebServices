@@ -14,5 +14,5 @@ func RouteController(productHandler *handler.ProductHandler) {
 	router.POST("/products", productHandler.CreateProduct)
 	router.DELETE("/products/:id", productHandler.DeleteProductByID)
 
-	router.Run(":8081")
+	router.Run(":9402")
 }
