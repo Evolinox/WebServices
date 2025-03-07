@@ -16,7 +16,7 @@ interface Product {
 const props = defineProps<{ meal: string, allProducts: Product[], day: string }>();
 const products = ref<Product[]>(props.allProducts);
 const selectedMeal = ref(props.meal);
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'loadDay']);
 
 function addProduct(id: number) {
   if (!weight.value) {
@@ -47,6 +47,7 @@ function addProduct(id: number) {
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
+    emit('loadDay');
     emit('close');
   })
   .catch((error) => {
@@ -83,7 +84,7 @@ const handleWeightInput = (event: Event) => {
           <div v-for="product in products" class="add-meal__product">
             <div class="product__description">
               <p>{{ product.Name }} - {{ product.Brand }}</p>
-              <p style="color: var(--text-color--secondary);">{{ product.CaloriesPer100Grams }} kcal / 100g</p>
+              <p style="color: var(--text-color--secondary);">{{ product.CaloriesPer100Grams }} kcal / 100 g</p>
             </div>
             <div class="product-list__icon--add" v-html="plusSvg" @click="addProduct(product.ID)"></div>
           </div>

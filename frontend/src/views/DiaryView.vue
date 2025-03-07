@@ -6,9 +6,9 @@ import pizzaSvg from '../assets/pizza.svg?raw';
 import saladSvg from '../assets/salad.svg?raw';
 import appleSvg from '../assets/apple.svg?raw';
 import plusSvg from '../assets/plus.svg?raw';
-import trashSvg from '../assets/trash.svg?raw';
 import currentDay from '../day';
 import baseUrl from '../baseUrl';
+import DiaryList from '../components/DiaryList.vue';
 import AddMeal from '../components/AddToMeal.vue';
 
 interface ProductDiary {
@@ -88,6 +88,24 @@ function loadProducts() {
       allProducts.value = data;
     })
 }
+
+function deleteMeal(productID: number) {
+  console.log('Delete meal: ', productID);
+  fetch(baseUrl + '/diary/date/'+ currentDayBackend.value + '/' + productID.toString(), {
+    method: 'DELETE',
+    headers: {
+      'accept': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    loadDay();
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
 </script>
 
 <template>
@@ -97,47 +115,36 @@ function loadProducts() {
         <h1>Tagebuch</h1>
       </div>
       <div class="diary__content">
-        <div class="diary-content__item diary-content__item--breakfast">
+        <div class="diary-content__item">
           <div class="diary-content__icon diary-content__icon--smaller" v-html="croissantSvg"></div>
           <h2>Frühstück</h2>
           <div class="diary-content__icon--add" v-html="plusSvg" @click="openAddToMeal('Frühstück')"></div>
         </div>
-        <ul v-if="breakfastProducts.length > 0">
-          <li v-for="product in breakfastProducts" :key="product.ID">{{ product.ProductName }}</li>
-        </ul>
+        <DiaryList v-if="breakfastProducts.length > 0" :list="breakfastProducts" @deleteMeal="deleteMeal"/>
         <div class="diary-content__line"></div>
-        <div class="diary-content__item diary-content__item--lunch">
+        <div class="diary-content__item">
           <div class="diary-content__icon diary-content__icon--bigger" v-html="pizzaSvg"></div>
           <h2>Mittagessen</h2>
           <div class="diary-content__icon--add" v-html="plusSvg" @click="openAddToMeal('Mittagessen')"></div>
-          <ul v-if="lunchProducts.length > 0">
-            <li v-for="product in lunchProducts" :key="product.ID">{{ product.ProductName }}</li>
-          </ul>
         </div>
+        <DiaryList v-if="lunchProducts.length > 0" :list="lunchProducts" @deleteMeal="deleteMeal"/>
         <div class="diary-content__line"></div>
-        <div class="diary-content__item diary-content__item--dinner">
+        <div class="diary-content__item">
           <div class="diary-content__icon diary-content__icon--bigger" v-html="saladSvg"></div>
           <h2>Abendessen</h2>
           <div class="diary-content__icon--add" v-html="plusSvg" @click="openAddToMeal('Abendessen')"></div>
-          <ul v-if="dinnerProducts.length > 0">
-            <li v-for="product in dinnerProducts" :key="product.ID">
-              {{ product.ProductName }}
-              <div v-html="trashSvg"></div>
-            </li>
-          </ul>
         </div>
+        <DiaryList v-if="dinnerProducts.length > 0" :list="dinnerProducts" @deleteMeal="deleteMeal"/>
         <div class="diary-content__line"></div>
-        <div class="diary-content__item diary-content__item--snacks">
+        <div class="diary-content__item">
           <div class="diary-content__icon diary-content__icon--smaller" v-html="appleSvg"></div>
           <h2>Snack</h2>
           <div class="diary-content__icon--add" v-html="plusSvg" @click="openAddToMeal('Snack')"></div>
-          <ul v-if="snackProducts.length > 0">
-            <li v-for="product in snackProducts" :key="product.ID">{{ product.ProductName }}</li>
-          </ul>
         </div>
+        <DiaryList v-if="snackProducts.length > 0" :list="snackProducts" @deleteMeal="deleteMeal"/>
       </div>
     </div>
-    <AddMeal v-if="openAddToMealBoolean" :meal="meal" :all-products="allProducts" :day="currentDayBackend" @close="closeAddToMeal"/>
+    <AddMeal v-if="openAddToMealBoolean" :meal="meal" :all-products="allProducts" :day="currentDayBackend" @close="closeAddToMeal" @loadDay="loadDay"/>
   </div>
 </template>
 
