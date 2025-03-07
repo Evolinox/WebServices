@@ -296,19 +296,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "date": {
-                                            "type": "string",
-                                            "format": "date"
-                                        },
-                                        "products": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/ConsumedProduct"
-                                            }
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/DailyProductsConsumed"
                                 }
                             }
                         }
@@ -1534,6 +1522,9 @@
                         "type": "integer"
                     },
                     "ProductName": {
+                        "type": "string"
+                    },
+                    "Brand": {
                         "type": "string"
                     },
                     "Category": {

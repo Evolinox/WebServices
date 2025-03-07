@@ -86,7 +86,7 @@ services:
     working_dir: /app
     volumes:
       - ./backend/productApi:/app
-    command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
+    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
     ports:
       - "9402:9402"
     depends_on:
@@ -101,7 +101,7 @@ services:
     working_dir: /app
     volumes:
       - ./backend/calendarApi:/app
-    command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
+    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
     ports:
       - "9403:9403"
     depends_on:
@@ -116,7 +116,7 @@ services:
     working_dir: /app
     volumes:
       - ./backend/shoppingListApi:/app
-    command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
+    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
     ports:
       - "9404:9404"
     depends_on:
@@ -131,7 +131,7 @@ services:
     working_dir: /app
     volumes:
       - ./backend/tracker:/app
-    command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
+    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
     ports:
       - "9401:9401"
     depends_on:

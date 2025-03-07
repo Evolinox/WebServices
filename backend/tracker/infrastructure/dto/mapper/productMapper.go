@@ -12,6 +12,7 @@ func CalculateNutritionValues(productData model.ExpectedProductDTO, dailyRecordI
 		DailyProductsConsumedID: dailyRecordID, // Assign the ID from the DailyProductsConsumed record
 		ProductID:               productData.Product.ID,
 		ProductName:             productData.Product.Name,
+		Brand:                   productData.Product.Brand,
 		Category:                productData.Category,
 		WeightInGrams:           productData.Weight,
 		Calories:                int(float64(productData.Product.CaloriesPer100Grams) * weightFactor),
