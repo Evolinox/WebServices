@@ -5,6 +5,7 @@ type ConsumedProduct struct {
 	DailyProductsConsumedID uint    `json:"DailyProductsConsumedID"`
 	ProductID               uint    `json:"ProductID"`
 	ProductName             string  `json:"ProductName"`
+	Brand                   string  `json:"Brand"`
 	Category                string  `json:"Category" gorm:"type:enum('Frühstück', 'Mittagessen', 'Abendessen', 'Snack')"`
 	WeightInGrams           int     `json:"WeightInGrams"`
 	Calories                int     `json:"Calories"`
