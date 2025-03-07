@@ -72,26 +72,29 @@ func (h *ShoppingListHandler) CreateShoppingListEntry(c *gin.Context) {
 }
 
 func (h *ShoppingListHandler) DeleteShoppingList(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
+	id := c.Param("id")
+	err := h.repo.DeleteShoppingList(id)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid shopping list ID"})
-		return
-	}
-	if err := h.repo.DeleteShoppingList(id); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete shopping list"})
+		if err.Error() == "shopping list not found" {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Shopping list not found"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Shopping list deleted"})
 }
 
 func (h *ShoppingListHandler) DeleteShoppingListEntry(c *gin.Context) {
-	entryId, err := strconv.Atoi(c.Param("entryId"))
+	id := c.Param("id")
+	entryId := c.Param("entryId")
+	err := h.repo.DeleteShoppingListEntry(id, entryId)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product ID"})
-		return
-	}
-	if err := h.repo.DeleteShoppingListEntry(entryId); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete product"})
+		if err.Error() == "shopping list entry not found" {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Product deleted"})

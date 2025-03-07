@@ -40,15 +40,24 @@ func (r *ShoppingListRepository) CreateShoppingListEntry(product *entity.Product
 	return r.db.Create(product).Error
 }
 
-func (r *ShoppingListRepository) DeleteShoppingList(id int) error {
-	// Delete all associated products first
-	if err := r.db.Where("shopping_list_id = ?", id).Delete(&entity.Product{}).Error; err != nil {
-		return err
+func (r *ShoppingListRepository) DeleteShoppingList(id string) error {
+	res := r.db.Delete(&entity.ShoppingList{}, "id = ?", id)
+	if res.Error != nil {
+		return res.Error
 	}
-	// Delete the shopping list
-	return r.db.Delete(&entity.ShoppingList{}, id).Error
+	if res.RowsAffected == 0 {
+		return errors.New("shopping list not found")
+	}
+	return nil
 }
 
-func (r *ShoppingListRepository) DeleteShoppingListEntry(productId int) error {
-	return r.db.Delete(&entity.Product{}, productId).Error
+func (r *ShoppingListRepository) DeleteShoppingListEntry(id string, productId string) error {
+	res := r.db.Delete(&entity.Product{}, "id = ? AND shopping_list_id = ?", productId, id)
+	if res.Error != nil {
+		return res.Error
+	}
+	if res.RowsAffected == 0 {
+		return errors.New("shopping list entry not found")
+	}
+	return nil
 }
