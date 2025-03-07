@@ -992,6 +992,8 @@ components:
           type: integer
         ProductName:
           type: string
+        Brand:
+          type: string
         Category:
           type: string
           enum: [Frühstück, Mittagessen, Abendessen, Snack]
