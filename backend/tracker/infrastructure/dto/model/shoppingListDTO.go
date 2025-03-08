@@ -1,16 +1,16 @@
 package model
 
 type ShoppingListDTO struct {
-	Id          int                    `json:"id"`
-	Name        string                 `json:"name"`
-	Description string                 `json:"description"`
-	Date        string                 `json:"date"`
-	Products    []ShoppingListEntryDTO `json:"products"`
+	ID          int                    `json:"ID"`
+	Name        string                 `json:"Name"`
+	Description string                 `json:"Description"`
+	Date        string                 `json:"Date"`
+	Products    []ShoppingListEntryDTO `json:"Products"`
 }
 
 type ShoppingListEntryDTO struct {
-	Id             int    `json:"id"`
-	Name           string `json:"name"`
-	Quantity       string `json:"quantity"`
-	ShoppingListID int    `json:"shopping_list_id"`
+	ID             int    `json:"ID"`
+	Name           string `json:"Name"`
+	Quantity       string `json:"Quantity"`
+	ShoppingListID int    `json:"ShoppingListID"`
 }
