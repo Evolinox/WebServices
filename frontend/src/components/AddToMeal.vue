@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import plusSvg from '../assets/plus.svg?raw';
 import BASE_URL from '../baseUrl';
 
