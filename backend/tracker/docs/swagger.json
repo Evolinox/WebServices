@@ -1625,7 +1625,7 @@
             "CalendarDTO": {
                 "type": "object",
                 "properties": {
-                    "Id": {
+                    "ID": {
                         "type": "integer"
                     },
                     "Date": {

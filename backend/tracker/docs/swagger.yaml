@@ -1050,7 +1050,7 @@ components:
     CalendarDTO:
       type: object
       properties:
-        Id:
+        ID:
           type: integer
         Date:
           type: string
