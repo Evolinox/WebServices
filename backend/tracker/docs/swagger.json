@@ -1625,7 +1625,7 @@
             "CalendarDTO": {
                 "type": "object",
                 "properties": {
-                    "Id": {
+                    "ID": {
                         "type": "integer"
                     },
                     "Date": {
@@ -1648,7 +1648,7 @@
             "ShoppingListDTO": {
                 "type": "object",
                 "properties": {
-                    "Id": {
+                    "ID": {
                         "type": "integer"
                     },
                     "Name": {
@@ -1668,7 +1668,7 @@
             "ShoppingListEntryDTO": {
                 "type": "object",
                 "properties": {
-                    "Id": {
+                    "ID": {
                         "type": "integer"
                     },
                     "Name": {

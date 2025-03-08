@@ -1,10 +1,10 @@
 package model
 
 type CalendarDTO struct {
-	Id          int    `json:"id"`
-	Date        string `json:"date"`
-	BeginTime   string `json:"beginTime"`
-	EndTime     string `json:"endTime"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	ID          int    `json:"ID"`
+	Date        string `json:"Date"`
+	BeginTime   string `json:"BeginTime"`
+	EndTime     string `json:"EndTime"`
+	Name        string `json:"Name"`
+	Description string `json:"Description"`
 }
