@@ -2,9 +2,10 @@
 import { ref, watch } from 'vue'
 import plusSvg from '../assets/plus.svg?raw'
 import trashSvg from '../assets/trash.svg?raw'
+import BASE_URL from '../baseUrl';
 
 interface Product {
-  ID: number;
+  // ID: number;
   Name: string;
   Quantity: string;
   ShoppingListID: number;
@@ -23,7 +24,8 @@ const props = defineProps<{
   // lastId: number
   selectedListIndex: number
   addArticleInput: boolean
-}>()
+}>()  
+const listId = ref(props.shoppingLists[props.selectedListIndex].ID)
 
 const addArticleInput = ref(props.addArticleInput)
 watch(() => props.addArticleInput, (newValue) => {
@@ -42,8 +44,26 @@ function addArticle(div: HTMLElement) {
     console.log('Article name or quantity is empty')
     return
   }
-  props.shoppingLists[props.selectedListIndex].Products.push({ID: 999, Name: articleName, Quantity: articleQuantity, ShoppingListID: props.shoppingLists[props.selectedListIndex].ID})
+  props.shoppingLists[props.selectedListIndex].Products.push({Name: articleName, Quantity: articleQuantity, ShoppingListID: props.shoppingLists[props.selectedListIndex].ID})
   // Update the shopping list in the backend
+  fetch (BASE_URL + '/shoppinglist/' + listId.value, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      Name: articleName,
+      Quantity: articleQuantity,
+      ShoppingListID: props.shoppingLists[props.selectedListIndex].ID
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data)
+    })
+    .catch((error) => {
+      console.error('Error:', error)
+    })
 }
 
 function deleteProduct(index: number) {
