@@ -30,13 +30,28 @@ function submitNewList(event: Event) {
     console.log('Name or date is empty');
     return;
   }
-  const date = format(new Date(dateInput), 'dd.MM.yyyy');
+  const date = format(new Date(dateInput), 'yyyy-MM-dd').toString();
   console.log('Name: ' + name + ' Date: ' + date);
-  props.shoppingLists.push({ ID: props.lastId + 1, Name: name, Description: '', Date: date, Products: [] });
-  //TODO: Add the new shopping list to the backend
+  const newList: ShoppingList = { ID: props.lastId + 1, Name: name, Description: '', Date: date, Products: [] };
+  console.log('New list: ' + JSON.stringify(newList));
+  
+  props.shoppingLists.push(newList);
+
   fetch(BASE_URL + '/shoppinglist/', {
-    method: 'POST',
-  })
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newList),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Data:', data);
+      emit('close');
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   emit('close');
 }
 </script>
