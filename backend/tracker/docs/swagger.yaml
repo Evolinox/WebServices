@@ -1050,7 +1050,7 @@ components:
     CalendarDTO:
       type: object
       properties:
-        Id:
+        ID:
           type: integer
         Date:
           type: string
@@ -1065,7 +1065,7 @@ components:
     ShoppingListDTO:
       type: object
       properties:
-        Id:
+        ID:
           type: integer
         Name:
           type: string
@@ -1078,7 +1078,7 @@ components:
     ShoppingListEntryDTO:
       type: object
       properties:
-        Id:
+        ID:
           type: integer
         Name:
           type: string
