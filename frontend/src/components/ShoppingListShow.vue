@@ -3,8 +3,24 @@ import { ref, watch } from 'vue'
 import plusSvg from '../assets/plus.svg?raw'
 import trashSvg from '../assets/trash.svg?raw'
 
+interface Product {
+  ID: number;
+  Name: string;
+  Quantity: string;
+  ShoppingListID: number;
+}
+
+interface ShoppingList {
+  ID: number;
+  Name: string;
+  Description: string;
+  Date: string;
+  Products: Product[];
+}
+
 const props = defineProps<{
-  shoppingLists: Array<{ name: string; date: string; products: Array<{ name: string; quantity: string | number }> }>
+  shoppingLists: ShoppingList[]
+  lastId: number
   selectedListIndex: number
   addArticleInput: boolean
 }>()
@@ -14,7 +30,7 @@ watch(() => props.addArticleInput, (newValue) => {
   addArticleInput.value = newValue
 })
 function openAddArticle() {
-  console.log('Open add article to list ' + props.shoppingLists[props.selectedListIndex].name)
+  console.log('Open add article to list ' + props.shoppingLists[props.selectedListIndex].Name)
   addArticleInput.value = true
 }
 
@@ -26,13 +42,13 @@ function addArticle(div: HTMLElement) {
     console.log('Article name or quantity is empty')
     return
   }
-  props.shoppingLists[props.selectedListIndex].products.push({ name: articleName, quantity: articleQuantity })
+  props.shoppingLists[props.selectedListIndex].Products.push({ID: 999, Name: articleName, Quantity: articleQuantity, ShoppingListID: props.shoppingLists[props.selectedListIndex].ID})
   // Update the shopping list in the backend
 }
 
 function deleteProduct(index: number) {
   console.log('Delete product')
-  props.shoppingLists[props.selectedListIndex].products.splice(index, 1)
+  props.shoppingLists[props.selectedListIndex].Products.splice(index, 1)
   // Update the shopping list in the backend
 }
 </script>
@@ -41,13 +57,13 @@ function deleteProduct(index: number) {
     <div class="shopping-list-show__overlay" @click.self="$emit('close')" style="width: 100%;">
         <div class="shopping-list-show__card">
           <div class="shopping-list-show__card-header">
-            <h2>{{ props.shoppingLists[selectedListIndex].name }}</h2>
+            <h2>{{ props.shoppingLists[selectedListIndex].Name }}</h2>
             <div class="shopping-list-show__close-button" v-html="plusSvg" @click="$emit('close')"></div>
           </div>
           <div class="shopping-list-show__card-content">
-            <ul v-if="props.shoppingLists[selectedListIndex].products.length > 0">
-              <li v-for="(product, index) in props.shoppingLists[selectedListIndex].products">
-                <span>{{ product.name }}:</span> <span class="product__quantity"> {{ product.quantity }} </span>
+            <ul v-if="props.shoppingLists[selectedListIndex].Products.length > 0">
+              <li v-for="(product, index) in props.shoppingLists[selectedListIndex].Products">
+                <span>{{ product.Name }}:</span> <span class="product__quantity"> {{ product.Quantity }} </span>
                 <div class="product__trash-icon" v-html="trashSvg" @click="deleteProduct(index)"></div>
               </li>
             </ul>
