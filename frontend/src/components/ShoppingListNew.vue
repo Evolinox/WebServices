@@ -1,10 +1,24 @@
 <script lang="ts" setup>
 import plusSvg from '../assets/plus.svg?raw'
 import { format } from 'date-fns';
+import BASE_URL from '../baseUrl';
 
-const props = defineProps<{
-  shoppingLists: Array<{ name: string; date: string; products: Array<{ name: string; quantity: string | number }> }>
-}>()
+interface Product {
+  ID: number;
+  Name: string;
+  Quantity: string;
+  ShoppingListID: number;
+}
+
+interface ShoppingList {
+  ID: number;
+  Name: string;
+  Description: string;
+  Date: string;
+  Products: Product[];
+}
+
+const props = defineProps<{ shoppingLists: ShoppingList[]; lastId: number }>()
 
 const emit = defineEmits(['close']);
 
@@ -18,8 +32,11 @@ function submitNewList(event: Event) {
   }
   const date = format(new Date(dateInput), 'dd.MM.yyyy');
   console.log('Name: ' + name + ' Date: ' + date);
-  props.shoppingLists.push({ name: name, date: date, products: [] });
+  props.shoppingLists.push({ ID: props.lastId + 1, Name: name, Description: '', Date: date, Products: [] });
   //TODO: Add the new shopping list to the backend
+  fetch(BASE_URL + '/shoppinglist/', {
+    method: 'POST',
+  })
   emit('close');
 }
 </script>

@@ -7,7 +7,7 @@ import saladSvg from '../assets/salad.svg?raw';
 import appleSvg from '../assets/apple.svg?raw';
 import plusSvg from '../assets/plus.svg?raw';
 import currentDay from '../day';
-import baseUrl from '../baseUrl';
+import BASE_URL from '../baseUrl';
 import DiaryList from '../components/DiaryList.vue';
 import AddMeal from '../components/AddToMeal.vue';
 
@@ -67,7 +67,7 @@ function closeAddToMeal() {
 
 function loadDay() {
   console.log('Load day')
-  fetch(baseUrl + '/diary/date/' + currentDayBackend.value)
+  fetch(BASE_URL + '/diary/date/' + currentDayBackend.value)
     .then(response => response.json())
     .then(data => {
       console.log(data)
@@ -79,9 +79,9 @@ function loadDay() {
 }
 
 function loadProducts() {
-  const url = baseUrl + '/products/';
+  const url = BASE_URL + '/products/';
   console.log('Load products from ', url)
-  fetch(baseUrl + '/products/')
+  fetch(BASE_URL + '/products/')
     .then(response => response.json())
     .then(data => {
       console.log(data)
@@ -91,7 +91,7 @@ function loadProducts() {
 
 function deleteMeal(productID: number) {
   console.log('Delete meal: ', productID);
-  fetch(baseUrl + '/diary/date/'+ currentDayBackend.value + '/' + productID.toString(), {
+  fetch(BASE_URL + '/diary/date/'+ currentDayBackend.value + '/' + productID.toString(), {
     method: 'DELETE',
     headers: {
       'accept': 'application/json',

@@ -4,6 +4,7 @@ import plusSvg from '../assets/plus.svg?raw';
 import trashSvg from '../assets/trash.svg?raw';
 import ShoppingListNew from '../components/ShoppingListNew.vue';
 import ShoppingListShow from '../components/ShoppingListShow.vue';
+import BASE_URL from '../baseUrl';
 
 const showAddShoppingList = ref(false);
 const selectedListIndex = ref<number>(0);
