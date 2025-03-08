@@ -7,9 +7,24 @@ import ShoppingListNew from '../components/ShoppingListNew.vue';
 import ShoppingListShow from '../components/ShoppingListShow.vue';
 import BASE_URL from '../baseUrl';
 
+interface Product {
+  ID: number;
+  Name: string;
+  Quantity: string;
+  ShoppingListID: number;
+}
+
+interface ShoppingList {
+  ID: number;
+  Name: string;
+  Description: string;
+  Date: string;
+  Products: Product[];
+}
+
 const showAddShoppingList = ref(false);
 const selectedListIndex = ref<number>(0);
-const lastListId = ref<number>(0);
+const shoppingLists = ref<ShoppingList[]>([]);
 
 function openShoppingListShow(index: number) {
   showAddShoppingList.value = !showAddShoppingList.value;
@@ -33,45 +48,45 @@ function openAddArticleWithInput(index: number) {
   openShoppingListShow(index)
 }
 
-function deleteList(index: number) {
-  console.log('Delete list number: ' + index)
+function deleteList(index: number, shoppingList: ShoppingList) {
+  console.log('Delete list number: ' + shoppingList.ID)
+  console.log('ShoppingLists:', shoppingLists);
   shoppingLists.value.splice(index, 1)
   // TODO: Update the shopping list in the backend
+  fetch (BASE_URL + '/shoppinglist/' + shoppingList.ID, {
+    method: 'DELETE',
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Data:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }
 
-interface Product {
-  ID: number;
-  Name: string;
-  Quantity: string;
-  ShoppingListID: number;
-}
-
-interface ShoppingList {
-  ID: number;
-  Name: string;
-  Description: string;
-  Date: string;
-  Products: Product[];
-}
-
-const shoppingLists = ref<ShoppingList[]>([]);
-
-// Fetch the shopping lists from the backend
 onMounted(() => {
   loadLists();
 });
 
 function loadLists() {
+  console.log('Load shopping lists');
   fetch(BASE_URL + '/shoppinglist/')
     .then(response => response.json())
     .then(data => {
       console.log(data);
-      for (let i = 0; i < data.length; i++) {
-        shoppingLists.value.push(data[i]);
-        lastListId.value = data[i].id; // gibt die richtige ID aus
-        console.log('LastID:', lastListId.value);
-      }
-      console.log('Shoppinglist:', shoppingLists.value);
+      shoppingLists.value = data.map((list: ShoppingList) => ({
+        ID: list.ID,
+        Name: list.Name,
+        Description: list.Description,
+        Date: list.Date,
+        Products: Array.isArray(list.Products) ? list.Products.map((product: Product) => ({
+          ID: product.ID,
+          Name: product.Name,
+          Quantity: product.Quantity,
+          ShoppingListID: product.ShoppingListID
+        })) : []
+      }));
     })
     .catch(error => {
       console.error('Error fetching shopping lists:', error);
@@ -89,16 +104,16 @@ function loadLists() {
       <div class="shopping-list__lists">
         <div v-if="shoppingLists.length > 0" class="shopping-list__list" v-for="(shoppingList, index) in shoppingLists" :key="shoppingList.Name">
           <div class="shopping-list__date-name" @click="openShoppingListShow(index)">
-            <p><strong>{{ format(new Date(shoppingList.Name), 'dd.MM.yyyy') }}</strong> - {{ shoppingList.Name }}</p>
+            <p><strong>{{ format(new Date(shoppingList.Date), 'dd.MM.yyyy') }}</strong> - {{ shoppingList.Name }}</p>
           </div>
           <div class="shopping-list__add-to-list--icon" v-html="plusSvg" @click="openAddArticleWithInput(index)"></div>
-          <div class="shopping-list__delete-list--icon" v-html="trashSvg" @click="deleteList(index)"></div>
+          <div class="shopping-list__delete-list--icon" v-html="trashSvg" @click="deleteList(index, shoppingList)"></div>
         </div>
         <p v-else style="text-align: center;">Keine Einkaufslisten vorhanden</p>
       </div>
     </div>
-    <ShoppingListNew v-if="showNewShoppingList==true" @close="toggleShoppingListNew" :shoppingLists="shoppingLists" :lastId="lastListId"/>
-    <ShoppingListShow v-if="showAddShoppingList==true" @close="closeShoppingListShow" :shoppingLists="shoppingLists" :lastId="lastListId" :selectedListIndex="selectedListIndex" :addArticleInput="openWithInput"/>
+    <ShoppingListNew v-if="showNewShoppingList==true" @close="toggleShoppingListNew" :shoppingLists="shoppingLists"/>
+    <ShoppingListShow v-if="showAddShoppingList==true" @close="closeShoppingListShow" :shoppingLists="shoppingLists" :selectedListIndex="selectedListIndex" :addArticleInput="openWithInput"/>
   </div>
 </template>
 

@@ -20,7 +20,7 @@ interface ShoppingList {
 
 const props = defineProps<{
   shoppingLists: ShoppingList[]
-  lastId: number
+  // lastId: number
   selectedListIndex: number
   addArticleInput: boolean
 }>()

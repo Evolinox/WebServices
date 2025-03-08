@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue'
 import plusSvg from '../assets/plus.svg?raw'
 import { format } from 'date-fns';
 import BASE_URL from '../baseUrl';
@@ -18,21 +19,25 @@ interface ShoppingList {
   Products: Product[];
 }
 
-const props = defineProps<{ shoppingLists: ShoppingList[]; lastId: number }>()
-
+const props = defineProps<{ shoppingLists: ShoppingList[] }>();
+let localLastId = ref<number>(0);
 const emit = defineEmits(['close']);
+
+onMounted(() => {
+  localLastId.value = props.shoppingLists.length > 0 ? props.shoppingLists[props.shoppingLists.length - 1].ID : 0;
+  console.log('local -', localLastId.value);
+})
 
 function submitNewList(event: Event) {
   event.preventDefault();
   const name = (document.getElementById('name') as HTMLInputElement).value;
   const dateInput = (document.getElementById('date') as HTMLInputElement).value;
   if (name === '' || dateInput === '') {
-    console.log('Name or date is empty');
+    console.error('Name or date is empty');
     return;
   }
   const date = format(new Date(dateInput), 'yyyy-MM-dd').toString();
-  console.log('Name: ' + name + ' Date: ' + date);
-  const newList: ShoppingList = { ID: props.lastId + 1, Name: name, Description: '', Date: date, Products: [] };
+  const newList: ShoppingList = { ID: localLastId.value + 1, Name: name, Description: '', Date: date, Products: [] };
   console.log('New list: ' + JSON.stringify(newList));
   
   props.shoppingLists.push(newList);
@@ -46,13 +51,12 @@ function submitNewList(event: Event) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Data:', data);
+      data.Products = [];
       emit('close');
     })
     .catch((error) => {
       console.error('Error:', error);
     });
-  emit('close');
 }
 </script>
 
