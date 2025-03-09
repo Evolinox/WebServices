@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import plusSvg from '../assets/plus.svg?raw'
 import trashSvg from '../assets/trash.svg?raw'
 import BASE_URL from '../baseUrl';
 
 interface Product {
-  // ID: number;
+  ID: number;
   Name: string;
   Quantity: string;
   ShoppingListID: number;
@@ -20,19 +20,24 @@ interface ShoppingList {
 }
 
 const props = defineProps<{
-  shoppingLists: ShoppingList[]
-  // lastId: number
-  selectedListIndex: number
+  shoppingLists: ShoppingList[],
+  selectedListIndex: number,
   addArticleInput: boolean
 }>()  
-const listId = ref(props.shoppingLists[props.selectedListIndex].ID)
+const listId = ref(props.shoppingLists[props.selectedListIndex].ID);
+const localLastProductId = ref(0);
+let currentList = props.shoppingLists[props.selectedListIndex];
+
+onMounted(() => {
+  let lengthProducts = currentList.Products.length;
+  localLastProductId.value = lengthProducts > 0 ? currentList.Products[lengthProducts - 1].ID : 0;
+})
 
 const addArticleInput = ref(props.addArticleInput)
 watch(() => props.addArticleInput, (newValue) => {
   addArticleInput.value = newValue
 })
 function openAddArticle() {
-  console.log('Open add article to list ' + props.shoppingLists[props.selectedListIndex].Name)
   addArticleInput.value = true
 }
 
@@ -41,10 +46,12 @@ function addArticle(div: HTMLElement) {
   const articleName = (div.querySelector('#article') as HTMLInputElement).value
   const articleQuantity = (div.querySelector('#quantity') as HTMLInputElement).value
   if (articleName === '' || articleQuantity === '') {
-    console.log('Article name or quantity is empty')
+    console.error('Article name or quantity is empty')
     return
   }
-  props.shoppingLists[props.selectedListIndex].Products.push({Name: articleName, Quantity: articleQuantity, ShoppingListID: props.shoppingLists[props.selectedListIndex].ID})
+  const newProduct: Product = {ID: localLastProductId.value + 1, Name: articleName, Quantity: articleQuantity, ShoppingListID: currentList.ID}
+  currentList.Products.push(newProduct)
+
   // Update the shopping list in the backend
   fetch (BASE_URL + '/shoppinglist/' + listId.value, {
     method: 'POST',
@@ -52,10 +59,27 @@ function addArticle(div: HTMLElement) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      Name: articleName,
-      Quantity: articleQuantity,
-      ShoppingListID: props.shoppingLists[props.selectedListIndex].ID
+      ID: newProduct.ID,
+      Name: newProduct.Name,
+      Quantity: newProduct.Quantity,
+      ShoppingListID: newProduct.ShoppingListID
     })
+  })
+  .then(response => response.json())
+  .then(data => {
+      localLastProductId.value += 1;
+      console.log('Success:', data)
+    })
+    .catch((error) => {
+      console.error('Error:', error)
+    })
+}
+
+function deleteProduct(index: number, productId: number) {
+  // Update the shopping list in the backend
+  currentList.Products.splice(index, 1)
+  fetch (BASE_URL + '/shoppinglist/' + listId.value + '/products/' + productId, {
+    method: 'DELETE',
   })
     .then(response => response.json())
     .then(data => {
@@ -64,12 +88,6 @@ function addArticle(div: HTMLElement) {
     .catch((error) => {
       console.error('Error:', error)
     })
-}
-
-function deleteProduct(index: number) {
-  console.log('Delete product')
-  props.shoppingLists[props.selectedListIndex].Products.splice(index, 1)
-  // Update the shopping list in the backend
 }
 </script>
 
@@ -84,7 +102,7 @@ function deleteProduct(index: number) {
             <ul v-if="props.shoppingLists[selectedListIndex].Products.length > 0">
               <li v-for="(product, index) in props.shoppingLists[selectedListIndex].Products">
                 <span>{{ product.Name }}:</span> <span class="product__quantity"> {{ product.Quantity }} </span>
-                <div class="product__trash-icon" v-html="trashSvg" @click="deleteProduct(index)"></div>
+                <div class="product__trash-icon" v-html="trashSvg" @click="deleteProduct(index, product.ID)"></div>
               </li>
             </ul>
             <p v-else style="text-align: center;">Keine Artikel vorhanden</p>
