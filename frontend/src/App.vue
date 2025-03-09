@@ -6,6 +6,7 @@ import DayCalender from './components/DayCalender.vue'
 import { RouterView } from 'vue-router'
 import { theme } from './themes'
 import { useRoute } from 'vue-router'
+import { loadSettings } from './settings'
 
 // Router
 const route = useRoute()
@@ -21,6 +22,7 @@ watch(
 
 onMounted(() => {
   document.documentElement.setAttribute('data-theme', theme.value)
+  loadSettings()
 })
 
 // AddComponent

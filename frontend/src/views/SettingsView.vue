@@ -1,10 +1,32 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { theme, toggleTheme } from '../themes'
+import { settings, loadSettings } from '../settings';
+import BASE_URL from '../baseUrl';
 
-const gender = ref('divers');
-const weight = ref<number | null>(null);
-const dailyCalories = ref<number | null>(null);
+const gender = ref(settings.value.Gender);
+const weight = ref(settings.value.WeightInKg);
+
+const dailyCalories = ref(settings.value.PlannedCalories);
+const dailyFats = ref(settings.value.FatsInGrams);
+const dailyCarbs = ref(settings.value.CarbsInGrams);
+const dailyProteins = ref(settings.value.ProteinsInGrams);
+
+onMounted(() => {
+  reloadSettings();
+})
+
+function reloadSettings() {
+  loadSettings().then(() => {
+    gender.value = settings.value.Gender;
+    weight.value = settings.value.WeightInKg;
+    
+    dailyCalories.value = settings.value.PlannedCalories;
+    dailyFats.value = settings.value.FatsInGrams;
+    dailyCarbs.value = settings.value.CarbsInGrams;
+    dailyProteins.value = settings.value.ProteinsInGrams;
+  });
+}
 
 function handleGenderInput(event: Event) {
   const select = event.target as HTMLSelectElement;
@@ -16,7 +38,7 @@ const handleWeightInput = (event: Event) => {
   if (input?.value == "") {
     input.value = weight.value ? weight.value.toString() : "";
   } else {
-    weight.value = input.value ? parseFloat(input.value) : null;
+    weight.value = input.value ? parseFloat(input.value) : 0;
   }
 }
 
@@ -25,14 +47,31 @@ const handleCaloriesInput = (event: Event) => {
   if (input?.value == "") {
     input.value = dailyCalories.value ? dailyCalories.value.toString() : "";
   } else {
-    dailyCalories.value = input.value? parseFloat(input.value) : null;
+    dailyCalories.value = input.value? parseFloat(input.value) : 0;
   }
 }
 
 function storeSettings() {
   console.log('Store settings: ', gender.value, " weight:", weight.value, "calories: ", dailyCalories.value);
-  console.log('TODO: Store settings in backend');
-  
+  fetch(BASE_URL + '/settings/', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      PlannedCalories: dailyCalories.value,
+      Gender: gender.value,
+      WeightInKg: weight.value,
+    }),
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('Success:', data);
+    reloadSettings();
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
 }
 </script>
 
@@ -52,7 +91,7 @@ function storeSettings() {
     <div class="settings-view__content">
       <div class="settings-view__item">
         <span class="settings-view__label">Geschlecht</span>
-        <select class="settings-view__select" @change="handleGenderInput($event)">
+        <select class="settings-view__select" @change="handleGenderInput($event)" v-model="gender">
           <option value="männlich">männlich</option>
           <option value="weiblich">weiblich</option>
           <option value="divers">divers</option>
@@ -60,14 +99,30 @@ function storeSettings() {
       </div>
       <div class="settings-view__item">
         <span class="settings-view__label">Gewicht [kg]</span>
-        <input type="number" class="settings-view__input" min="0" @input="handleWeightInput"/>
+        <input type="number" class="settings-view__input" :value="weight" min="0" @input="handleWeightInput"/>
       </div>
       <div class="settings-view__item">
         <span class="settings-view__label">Kalorientagesziel [kcal]</span>
-        <input type="number" class="settings-view__input" min="0" @input="handleCaloriesInput"/>
+        <input type="number" class="settings-view__input" :value="dailyCalories" min="0" @input="handleCaloriesInput"/>
       </div>
       <div class="settings-view__footer">
         <button class="settings-footer__store-button" @click="storeSettings">Speichern</button>
+      </div>
+    </div>
+    <br>
+    <div class="settings-view__content">
+      <h2 class="settings-view__content-header">Berechnete Nährstoffe</h2>
+      <div class="settings-view__item">
+        <span class="settings-view__label">Fette [g]</span>
+        <input type="number" class="settings-view__input" :value="dailyFats" disabled />
+      </div>
+      <div class="settings-view__item">
+        <span class="settings-view__label">Kohlenhydrate [g]</span>
+        <input type="number" class="settings-view__input" :value="dailyCarbs" disabled />
+      </div>
+      <div class="settings-view__item">
+        <span class="settings-view__label">Protein [g]</span>
+        <input type="number" class="settings-view__input" :value="dailyProteins" disabled />
       </div>
     </div>
   </div>
@@ -101,6 +156,10 @@ select, input {
   padding: 20px;
   background-color: var(--background-color--secondary);
   border-radius: var(--border-radius__secondary-background);
+}
+.settings-view__content-header {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
 }
 .settings-view__item:last-child {
   margin-bottom: 0px;
