@@ -28,7 +28,7 @@ const appointments = ref([
 </script>
 
 <template>
-  <div class="calendar-view">
+  <div class="calendar-view" :class="$attrs.class">
     <div class="calendar-container">
       <div class="calendar-title">Tages Kalender</div>
       <div class="calendar-header">
