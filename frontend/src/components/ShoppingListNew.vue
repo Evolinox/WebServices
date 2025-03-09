@@ -45,7 +45,13 @@ function submitNewList(event: Event) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newList),
+      body: JSON.stringify({
+        ID: newList.ID,
+        Name: newList.Name,
+        Description: newList.Description,
+        Date: newList.Date,
+        Products: [],
+      }),
     })
     .then(response => response.json())
     .then(data => {
