@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { watch, computed } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import dashboardSvg from '../assets/dashboard.svg?raw'
@@ -12,13 +12,6 @@ const route = useRoute()
 const router = useRouter()
 
 const isActive = (path: string) => computed(() => route.name?.toString().includes(path))
-
-watch(
-  () => route.name,
-  (newPath) => {
-    console.log('Route changed to: ', newPath)
-  }
-)
 </script>
 
 <template>

@@ -19,14 +19,13 @@ interface ShoppingList {
   Products: Product[];
 }
 
+onMounted(() => {
+  localLastId.value = props.shoppingLists.length > 0 ? props.shoppingLists[props.shoppingLists.length - 1].ID : 0;
+})
+
 const props = defineProps<{ shoppingLists: ShoppingList[] }>();
 let localLastId = ref<number>(0);
 const emit = defineEmits(['close']);
-
-onMounted(() => {
-  localLastId.value = props.shoppingLists.length > 0 ? props.shoppingLists[props.shoppingLists.length - 1].ID : 0;
-  console.log('local -', localLastId.value);
-})
 
 function submitNewList(event: Event) {
   event.preventDefault();
@@ -38,7 +37,6 @@ function submitNewList(event: Event) {
   }
   const date = format(new Date(dateInput), 'yyyy-MM-dd').toString();
   const newList: ShoppingList = { ID: localLastId.value + 1, Name: name, Description: '', Date: date, Products: [] };
-  console.log('New list: ' + JSON.stringify(newList));
   
   props.shoppingLists.push(newList);
 

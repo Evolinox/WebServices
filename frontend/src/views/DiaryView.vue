@@ -52,13 +52,11 @@ onMounted(() => {
 })
 
 watch(currentDay, () => {
-  console.log('Diary: Day changed');
   loadDay()
 })
 
 function openAddToMeal(newMeal: string) {
   meal.value = newMeal;
-  console.log('Diary: Meal: ', meal.value);
   openAddToMealBoolean.value = true;
 }
 function closeAddToMeal() {
@@ -66,11 +64,10 @@ function closeAddToMeal() {
 }
 
 function loadDay() {
-  console.log('Load day')
   fetch(BASE_URL + '/diary/date/' + currentDayBackend.value)
     .then(response => response.json())
     .then(data => {
-      console.log(data)
+      console.log('Success:', data)
       breakfastProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Frühstück');
       lunchProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Mittagessen');
       dinnerProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Abendessen');
@@ -79,18 +76,15 @@ function loadDay() {
 }
 
 function loadProducts() {
-  const url = BASE_URL + '/products/';
-  console.log('Load products from ', url)
   fetch(BASE_URL + '/products/')
     .then(response => response.json())
     .then(data => {
-      console.log(data)
+      console.log('Success:', data)
       allProducts.value = data;
     })
 }
 
 function deleteMeal(productID: number) {
-  console.log('Delete meal: ', productID);
   fetch(BASE_URL + '/diary/date/'+ currentDayBackend.value + '/' + productID.toString(), {
     method: 'DELETE',
     headers: {

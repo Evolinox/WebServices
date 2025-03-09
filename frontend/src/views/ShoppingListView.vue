@@ -26,9 +26,12 @@ const showAddShoppingList = ref(false);
 const selectedListIndex = ref<number>(0);
 const shoppingLists = ref<ShoppingList[]>([]);
 
+onMounted(() => {
+  loadLists();
+});
+
 function openShoppingListShow(index: number) {
   showAddShoppingList.value = !showAddShoppingList.value;
-  console.log('toggle shopping list show ' + showAddShoppingList.value + ' index: ' + index + ' input?: ' + openWithInput.value)
   selectedListIndex.value = index;
 }
 function closeShoppingListShow() {
@@ -44,13 +47,10 @@ function toggleShoppingListNew() {
 const openWithInput = ref(false);
 function openAddArticleWithInput(index: number) {
   openWithInput.value = true;
-  console.log('open with input?: ' + openWithInput.value)
   openShoppingListShow(index)
 }
 
 function deleteList(index: number, shoppingList: ShoppingList) {
-  console.log('Delete list number: ' + shoppingList.ID)
-  console.log('ShoppingLists:', shoppingLists);
   shoppingLists.value.splice(index, 1)
   // TODO: Update the shopping list in the backend
   fetch (BASE_URL + '/shoppinglist/' + shoppingList.ID, {
@@ -58,23 +58,18 @@ function deleteList(index: number, shoppingList: ShoppingList) {
   })
     .then(response => response.json())
     .then(data => {
-      console.log('Data:', data);
+      console.log('Success:', data);
     })
     .catch((error) => {
       console.error('Error:', error);
     });
 }
 
-onMounted(() => {
-  loadLists();
-});
-
 function loadLists() {
-  console.log('Load shopping lists');
   fetch(BASE_URL + '/shoppinglist/')
     .then(response => response.json())
     .then(data => {
-      console.log(data);
+      console.log('Success:', data);
       shoppingLists.value = data.map((list: ShoppingList) => ({
         ID: list.ID,
         Name: list.Name,
