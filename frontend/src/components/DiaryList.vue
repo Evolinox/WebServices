@@ -7,6 +7,7 @@ interface ProductDiary {
   DailyProductsConsumedID: number;
   ProductID: number;
   ProductName: string;
+  Brand: string;
   Category: string;
   WeightInGrams: number;
   Calories: number;
@@ -38,7 +39,7 @@ function showMacroInfo(event: MouseEvent,macro: string) {
         <div class="item-list__description">
           <div class="item-list__product">
             <p class="product__name-and-calories">{{ product.ProductName }} - {{ product.Calories }} kcal</p>
-            <p class="product__brand-and-weight">Brand - {{ product.WeightInGrams }}g</p>
+            <p class="product__brand-and-weight">{{ product.Brand }} - {{ product.WeightInGrams }}g</p>
           </div>
           <div class="item-list__product-carbs">
             <span class="item-list__product-fats" @click="showMacroInfo($event, 'Fette')">{{ product.FatsInGrams.toFixed(2) }} g</span>

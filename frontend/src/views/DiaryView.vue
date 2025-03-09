@@ -16,6 +16,7 @@ interface ProductDiary {
   DailyProductsConsumedID: number;
   ProductID: number;
   ProductName: string;
+  Brand: string;
   Category: string;
   WeightInGrams: number;
   Calories: number;
