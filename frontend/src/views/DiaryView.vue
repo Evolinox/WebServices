@@ -9,7 +9,7 @@ import plusSvg from '../assets/plus.svg?raw';
 import currentDay from '../day';
 import BASE_URL from '../baseUrl';
 import DiaryList from '../components/DiaryList.vue';
-import AddMeal from '../components/AddToMeal.vue';
+import AddMeal from '../components/DiaryAddToMeal.vue';
 
 interface ProductDiary {
   ID: number;
