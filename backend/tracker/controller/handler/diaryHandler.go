@@ -22,7 +22,7 @@ func (h *DiaryHandler) GetDiaryByDate(c *gin.Context) {
 	dateStr := c.Param("date") // e.g., "2024-02-09"
 
 	if !helper.IsValidDateFormat(dateStr) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format. Use YYYY-MM-DD"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format in url. Use YYYY-MM-DD"})
 		return
 	}
 

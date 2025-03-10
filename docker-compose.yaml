@@ -5,7 +5,7 @@ services:
     container_name: tracker-db
     image: mariadb:10.7
     ports:
-      - "3406:3306"
+      - "3401:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_PASSWORD=password
@@ -27,7 +27,7 @@ services:
     container_name: product-db
     image: mariadb:10.7
     ports:
-      - "3405:3306"
+      - "3402:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_PASSWORD=password
@@ -86,9 +86,9 @@ services:
     working_dir: /app
     volumes:
       - ./backend/productApi:/app
-    command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
+    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
     ports:
-      - "8081:8081"
+      - "9402:9402"
     depends_on:
       product-db:
         condition: service_healthy
@@ -101,9 +101,9 @@ services:
     working_dir: /app
     volumes:
       - ./backend/calendarApi:/app
-    command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
+    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
     ports:
-      - "8083:8083"
+      - "9403:9403"
     depends_on:
       calendar-db:
         condition: service_healthy
@@ -116,9 +116,9 @@ services:
     working_dir: /app
     volumes:
       - ./backend/shoppingListApi:/app
-    command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
+    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
     ports:
-      - "8084:8084"
+      - "9404:9404"
     depends_on:
       shoppingList-db:
         condition: service_healthy
@@ -131,9 +131,9 @@ services:
     working_dir: /app
     volumes:
       - ./backend/tracker:/app
-    command: sh -c "go mod tidy && go build -o main ./api/cmd/main.go && ./main"
+    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
     ports:
-      - "8082:8082"
+      - "9401:9401"
     depends_on:
       product-db:
         condition: service_healthy

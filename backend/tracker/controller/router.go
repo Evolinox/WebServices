@@ -53,7 +53,7 @@ func RouteController(
 	shopListRouter.DELETE("/:id", shopListHandler.DeleteShoppingList)
 	shopListRouter.DELETE("/:id/products/:entryID", shopListHandler.DeleteShoppingListEntry)
 
-	err := router.Run(":8082")
+	err := router.Run(":9401")
 	if err != nil {
 		return
 	}

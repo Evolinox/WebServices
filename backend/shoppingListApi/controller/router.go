@@ -14,12 +14,12 @@ func RouteController(shoppingListHandler *handler.ShoppingListHandler) {
 	shoppingList.GET("/:id", shoppingListHandler.GetShoppingListById)
 
 	shoppingList.POST("/", shoppingListHandler.CreateShoppingList)
-	shoppingList.POST("/:id", shoppingListHandler.CreateShoppingListEntry) // Muss noch auf Funktion getestet werden :)
+	shoppingList.POST("/:id", shoppingListHandler.CreateShoppingListEntry)
 
 	shoppingList.DELETE("/:id", shoppingListHandler.DeleteShoppingList)
-	shoppingList.DELETE("/:id/products/:entryId", shoppingListHandler.DeleteShoppingListEntry) // Muss noch auf Funktion getestet werden :)
+	shoppingList.DELETE("/:id/products/:entryId", shoppingListHandler.DeleteShoppingListEntry)
 
-	err := router.Run(":8084")
+	err := router.Run(":9404")
 	if err != nil {
 		return
 	}

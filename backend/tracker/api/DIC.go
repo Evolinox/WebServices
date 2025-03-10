@@ -58,21 +58,21 @@ func (d *DIC) GetSettingsRepository() *repositories.SettingsRepository {
 
 func (d *DIC) GetProductAPIRepository() *repositories.ProductAPIRepository {
 	if d.productAPIRepo == nil {
-		d.productAPIRepo = repositories.NewProductAPIRepository("http://product-api:8081")
+		d.productAPIRepo = repositories.NewProductAPIRepository("http://product-api:9402")
 	}
 	return d.productAPIRepo
 }
 
 func (d *DIC) GetCalendarAPIRepository() *repositories.CalendarAPIRepository {
 	if d.calendarAPIRepo == nil {
-		d.calendarAPIRepo = repositories.NewCalendarAPIRepository("http://calendar-api:8083")
+		d.calendarAPIRepo = repositories.NewCalendarAPIRepository("http://calendar-api:9403")
 	}
 	return d.calendarAPIRepo
 }
 
 func (d *DIC) GetShopListAPIRepository() *repositories.ShopListAPIRepository {
 	if d.shopListAPIRepo == nil {
-		d.shopListAPIRepo = repositories.NewShopListAPIRepository("http://shoppingList-api:8084")
+		d.shopListAPIRepo = repositories.NewShopListAPIRepository("http://shoppingList-api:9404")
 	}
 	return d.shopListAPIRepo
 }
