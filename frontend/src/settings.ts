@@ -26,10 +26,9 @@ export async function loadSettings() {
     });
     if (response.status === 401) {
       window.location.href = '/login';
-    } else {
+    } else if (response.status === 200) {
       const data = await response.json();
       settings.value = data;
-      console.log('Settings loaded:', settings.value);
     }
   } catch (error) {
     console.error('Error fetching settings:', error);

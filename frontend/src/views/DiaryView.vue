@@ -66,23 +66,27 @@ function closeAddToMeal() {
 
 function loadDay() {
   fetch(BASE_URL + '/diary/date/' + currentDayBackend.value)
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data)
-      breakfastProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Frühstück');
-      lunchProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Mittagessen');
-      dinnerProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Abendessen');
-      snackProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Snack');
-    }) 
+  .then(response => response.json())
+  .then(data => {
+    breakfastProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Frühstück');
+    lunchProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Mittagessen');
+    dinnerProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Abendessen');
+    snackProducts.value = data.products.filter((product: ProductDiary) => product.Category === 'Snack');
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  })
 }
 
 function loadProducts() {
   fetch(BASE_URL + '/products/')
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data)
-      allProducts.value = data;
-    })
+  .then(response => response.json())
+  .then(data => {
+    allProducts.value = data;
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  })
 }
 
 function deleteMeal(productID: number) {
@@ -92,14 +96,13 @@ function deleteMeal(productID: number) {
       'accept': 'application/json',
     },
   })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    loadDay();
+  .then(response => {
+    if(response.status === 200) {
+      loadDay();
+    } else {
+      console.error('Error:', response);
+    }
   })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
 }
 </script>
 

@@ -52,7 +52,6 @@ const handleCaloriesInput = (event: Event) => {
 }
 
 function storeSettings() {
-  console.log('Store settings: ', gender.value, " weight:", weight.value, "calories: ", dailyCalories.value);
   fetch(BASE_URL + '/settings/', {
     method: 'PATCH',
     headers: {
@@ -64,14 +63,13 @@ function storeSettings() {
       WeightInKg: weight.value,
     }),
   })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log('Success:', data);
-    reloadSettings();
+  .then(response => {
+    if(response.status === 200) {
+      reloadSettings();
+    } else {
+      console.error('Error:', response);
+    }
   })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
 }
 </script>
 

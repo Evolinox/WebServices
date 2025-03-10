@@ -52,24 +52,20 @@ function openAddArticleWithInput(index: number) {
 
 function deleteList(index: number, shoppingList: ShoppingList) {
   shoppingLists.value.splice(index, 1)
-  // TODO: Update the shopping list in the backend
   fetch (BASE_URL + '/shoppinglist/' + shoppingList.ID, {
     method: 'DELETE',
   })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+  .then(response => {
+    if(response.status != 200) {
+      console.error('Error:', response);
+    }
+  })
 }
 
 function loadLists() {
   fetch(BASE_URL + '/shoppinglist/')
     .then(response => response.json())
     .then(data => {
-      console.log('Success:', data);
       shoppingLists.value = data.map((list: ShoppingList) => ({
         ID: list.ID,
         Name: list.Name,

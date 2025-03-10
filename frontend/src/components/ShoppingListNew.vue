@@ -30,26 +30,25 @@ function submitNewList(event: Event) {
   const newList: ShoppingListSend = { Name: name, Description: '', Date: date, Products: [] };
 
   fetch(BASE_URL + '/shoppinglist/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        Name: newList.Name,
-        Description: newList.Description,
-        Date: newList.Date,
-        Products: [],
-      }),
-    })
-    .then(response => {
-      if(response.status === 201) {
-        emit('reload')
-        emit('close');
-      }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      Name: newList.Name,
+      Description: newList.Description,
+      Date: newList.Date,
+      Products: [],
+    }),
+  })
+  .then(response => {
+    if(response.status === 201) {
+      emit('reload')
+      emit('close');
+    } else {
+      console.error('Error:', response);
+    }
+  })
 }
 </script>
 

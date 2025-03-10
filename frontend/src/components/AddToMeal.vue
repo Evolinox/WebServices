@@ -44,15 +44,14 @@ function addProduct(id: number) {
       Category: selectedMeal.value,
     }),
   })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    emit('loadDay');
-    emit('close');
+  .then(response => {
+    if(response.status === 201) {
+      emit('loadDay');
+      emit('close');
+    } else {
+      console.error('Error:', response);
+    }
   })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
 }
 
 const weight = ref<number | null>(null);

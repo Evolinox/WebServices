@@ -15,7 +15,7 @@ const description = ref('')
 // Funktion: Termin hinzufügen
 function addAppointment() {
   if (!date.value || !description.value) {
-    console.log('Datum oder Beschreibung ist leer')
+    console.error('Date or description is empty')
     return
   }
   
@@ -28,7 +28,6 @@ function addAppointment() {
 
 // Termin löschen
 function deleteAppointment(index: number) {
-  console.log('Termin löschen');
   props.appointments.splice(index, 1);
 }
 </script>

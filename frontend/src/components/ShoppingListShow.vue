@@ -65,12 +65,11 @@ function addArticle(div: HTMLElement) {
     })
   })
   .then(response => {
-      if(response.status === 201) {
-        emit('reload')
-      }
-    })
-  .catch((error) => {
-    console.error('Error:', error)
+    if(response.status === 201) {
+      emit('reload')
+    } else {
+      console.error('Error:', response);
+    }
   })
 }
 
@@ -81,12 +80,11 @@ function deleteProduct(index: number, productId: number) {
     method: 'DELETE',
   })
   .then(response => {
-    if(response.status === 20) {
+    if(response.status === 200) {
       emit('reload')
+    } else {
+      console.error('Error:', response);
     }
-  })
-  .catch((error) => {
-    console.error('Error:', error)
   })
 }
 </script>
