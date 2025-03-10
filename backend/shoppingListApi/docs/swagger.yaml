@@ -21,9 +21,9 @@ externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
 servers:
-  - url: http://localhost:9403/shoppinglist
+  - url: http://localhost:9404/shoppinglist
     description: "standard url"
-  - url: http://shoppinglist-api:9403/shoppinglist
+  - url: http://shoppingList-api:9404/shoppinglist
     description: "url when fetching data from this api inside a docker network"
 paths:
   /:

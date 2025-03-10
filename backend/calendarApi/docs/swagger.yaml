@@ -23,9 +23,9 @@ externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
 servers:
-  - url: http://localhost:9401/calendar
+  - url: http://localhost:9403/calendar
     description: "standard url"
-  - url: http://calendar-api:9401/calendar
+  - url: http://calendar-api:9403/calendar
     description: "url when fetching data from this api inside a docker network"
 paths:
   /:
