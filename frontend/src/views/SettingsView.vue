@@ -113,7 +113,7 @@ function storeSettings() {
     <div class="settings-view__content">
       <h2 class="settings-view__content-header">Berechnete Nährstoffe</h2>
       <div class="settings-view__item">
-        <span class="settings-view__label">Fette [g]</span>
+        <span class="settings-view__label">Fett [g]</span>
         <input type="number" class="settings-view__input" :value="dailyFats" disabled />
       </div>
       <div class="settings-view__item">
