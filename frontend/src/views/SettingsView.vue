@@ -189,6 +189,9 @@ select, input {
   background-color: var(--background-color--tertiary);
   color: var(--text-color--primary);
 }
+.settings-view__input:disabled {
+  color: var(--text-color--secondary);
+}
 
 /* Schalter-Stil */
 .switch {
