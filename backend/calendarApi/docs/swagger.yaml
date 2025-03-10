@@ -1,0 +1,223 @@
+openapi: 3.0.0
+info:
+  title: Calendar API
+  description: |
+    The Calendar API allows users to manage calendar entries efficiently through a RESTful interface. 
+    It supports creating, retrieving, updating, and deleting calendar events by date or ID.
+    
+    ### Key Features:
+    - **Add Entries**: Create new calendar entries with date, time, name, and description.
+    - **View Entries by Date**: Retrieve all calendar entries for a specific day.
+    - **Update Entries**: Modify existing calendar entries using their unique ID.
+    - **Delete Entries**: Remove entries from the calendar by ID.
+    
+    This API is designed to support both local development and containerized environments 
+    (such as Docker) with appropriate server URLs provided.
+    
+    Ideal for scheduling apps, personal organizers, or systems requiring date/time-based planning functionality.
+  version: 1.0.0
+  contact:
+    name: Pascal Jedicke
+    email: pas.jedicke.23@lehre.mosbach.dhbw.de
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+servers:
+  - url: http://localhost:9401/calendar
+    description: "standard url"
+  - url: http://calendar-api:9401/calendar
+    description: "url when fetching data from this api inside a docker network"
+paths:
+  /:
+    post:
+      summary: Add a new calendar entry.
+      description: Creates a new calendar entry with date and time details.
+      operationId: addCalendarEntry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalendarDTO'
+      responses:
+        201:
+          description: Successfully added calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Calendar entry added successfully."
+        400:
+          description: Invalid input data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid request payload."
+        500:
+          description: Internal server error while adding calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to add calendar entry."
+  /{date}:
+    get:
+      summary: Retrieve calendar entries for a specific date.
+      description: Fetches calendar entries for a given date.
+      operationId: getCalendarByDate
+      parameters:
+        - name: date
+          in: path
+          required: true
+          description: The date for which to retrieve calendar entries (format YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: Successfully retrieved calendar entries.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CalendarDTO'
+        400:
+          description: Invalid date format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid date format. Use YYYY-MM-DD."
+        500:
+          description: Internal server error while fetching calendar entries.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to fetch calendar entries."
+  /{id}:
+    patch:
+      summary: Update an existing calendar entry.
+      description: Modifies details of a calendar entry by ID.
+      operationId: updateCalendarEntry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the calendar entry to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalendarDTO'
+      responses:
+        200:
+          description: Successfully updated the calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Calendar entry updated successfully."
+        400:
+          description: Invalid input data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid request payload."
+        500:
+          description: Internal server error while updating calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to update calendar entry."
+
+    delete:
+      summary: Delete a calendar entry.
+      description: Removes a calendar entry by ID.
+      operationId: deleteCalendarEntry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the calendar entry to delete.
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Successfully deleted the calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Calendar entry deleted successfully."
+        404:
+          description: Calendar entry not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Calendar entry not found."
+        500:
+          description: Internal server error while deleting calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to delete calendar entry."
+components:
+  schemas:
+    CalendarDTO:
+      type: object
+      properties:
+        ID:
+          type: integer
+        Date:
+          type: string
+        BeginTime:
+          type: string
+        EndTime:
+          type: string
+        Name:
+          type: string
+        Description:
+          type: string
