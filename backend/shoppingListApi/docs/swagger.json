@@ -1,0 +1,496 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Shopping list API",
+    "description": "The Shopping List API provides functionality to manage shopping lists and their associated entries.\nIt enables users to create, retrieve, update, and delete entire shopping lists, as well as add or remove specific items from those lists.\n\n### Key Features:\n- **List Management**: Create new shopping lists, retrieve all lists or individual lists by ID, and delete existing ones.\n- **Entry Management**: Add products to a shopping list and remove individual entries by ID.\n- **Structured Data Handling**: Each shopping list contains metadata such as name, description, and date, along with an array of product entries.\n- **RESTful Design**: Built with a RESTful approach, making it easy to integrate with frontend apps or other services.\n- **Docker-Friendly**: Multiple server URLs are provided to support both local development and Docker-based environments.\n\nThis API is ideal for applications requiring shopping or task list features, collaborative list sharing, or inventory tracking systems.\n",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Pascal Jedicke",
+      "email": "pas.jedicke.23@lehre.mosbach.dhbw.de"
+    }
+  },
+  "externalDocs": {
+    "description": "OpenAPI",
+    "url": "https://swagger.io/resources/open-api/"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9403/shoppinglist",
+      "description": "standard url"
+    },
+    {
+      "url": "http://shoppinglist-api:9403/shoppinglist",
+      "description": "url when fetching data from this api inside a docker network"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Get all shopping lists",
+        "operationId": "getShoppingLists",
+        "tags": [
+          "shoppinglist"
+        ],
+        "description": "Retrieve a list of all shopping lists.",
+        "responses": {
+          "200": {
+            "description": "A list of shopping lists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShoppingListDTO"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error while fetching shopping lists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Failed to fetch shopping lists."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new shopping list",
+        "operationId": "createShoppingList",
+        "tags": [
+          "shoppinglist"
+        ],
+        "description": "Create a new shopping list.",
+        "requestBody": {
+          "description": "Shopping list to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShoppingListDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Shopping list created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Shopping list created successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request due to invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Invalid date format. Use YYYY-MM-DD"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error while creating shopping list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "summary": "Get a shopping list by ID",
+        "operationId": "getShoppingListByID",
+        "tags": [
+          "shoppinglist"
+        ],
+        "description": "Retrieve a specific shopping list by its ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A shopping list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShoppingListDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Shopping list not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Shopping list not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error while fetching shopping list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Failed to fetch shopping lists"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add an entry to a shopping list",
+        "operationId": "createShoppingListEntry",
+        "tags": [
+          "shoppinglist"
+        ],
+        "description": "Add a new item to an existing shopping list.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Shopping list entry to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShoppingListEntryDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Shopping list entry created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Shopping list entry created successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request due to invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Product name is required"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error while creating shopping list entry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Failed to create shopping list entry"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a shopping list",
+        "operationId": "deleteShoppingList",
+        "tags": [
+          "shoppinglist"
+        ],
+        "description": "Delete a shopping list by its ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shopping list deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Shopping list deleted successfully"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Shopping list not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Shopping list not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error while deleting a shopping list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Failed to delete shopping list"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{id}/products/{entryID}": {
+      "delete": {
+        "summary": "Delete a shopping list entry",
+        "operationId": "deleteShoppingListEntry",
+        "tags": [
+          "shoppinglist"
+        ],
+        "description": "Remove an entry from a shopping list by its entry ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "entryID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shopping list entry deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Shopping list entry deleted successfully"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Shopping list entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Shopping list entry not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error while deleting a shopping list entry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Failed to delete shopping list entry"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ShoppingListDTO": {
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "Date": {
+            "type": "string"
+          },
+          "Products": {
+            "$ref": "#/components/schemas/ShoppingListEntryDTO"
+          }
+        }
+      },
+      "ShoppingListEntryDTO": {
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Quantity": {
+            "type": "string"
+          },
+          "ShoppingListID": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}
