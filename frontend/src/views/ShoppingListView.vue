@@ -107,8 +107,8 @@ function loadLists() {
         <p v-else style="text-align: center;">Keine Einkaufslisten vorhanden</p>
       </div>
     </div>
-    <ShoppingListNew v-if="showNewShoppingList==true" @close="toggleShoppingListNew" :shoppingLists="shoppingLists"/>
-    <ShoppingListShow v-if="showAddShoppingList==true" @close="closeShoppingListShow" :shoppingLists="shoppingLists" :selectedListIndex="selectedListIndex" :addArticleInput="openWithInput"/>
+    <ShoppingListNew v-if="showNewShoppingList==true" @close="toggleShoppingListNew" @reload="loadLists" />
+    <ShoppingListShow v-if="showAddShoppingList==true" @close="closeShoppingListShow" @reload="loadLists" :shoppingLists="shoppingLists" :selectedListIndex="selectedListIndex" :addArticleInput="openWithInput" />
   </div>
 </template>
 

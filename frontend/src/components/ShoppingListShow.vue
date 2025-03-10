@@ -1,37 +1,38 @@
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import plusSvg from '../assets/plus.svg?raw'
 import trashSvg from '../assets/trash.svg?raw'
 import BASE_URL from '../baseUrl';
 
-interface Product {
+interface ProductGet {
   ID: number;
   Name: string;
   Quantity: string;
   ShoppingListID: number;
 }
 
-interface ShoppingList {
+interface ShoppingListGet {
   ID: number;
   Name: string;
   Description: string;
   Date: string;
-  Products: Product[];
+  Products: ProductGet[];
+}
+
+interface ProductSend {
+  Name: string;
+  Quantity: string;
+  ShoppingListID: number;
 }
 
 const props = defineProps<{
-  shoppingLists: ShoppingList[],
+  shoppingLists: ShoppingListGet[],
   selectedListIndex: number,
   addArticleInput: boolean
-}>()  
+}>()
 const listId = ref(props.shoppingLists[props.selectedListIndex].ID);
-const localLastProductId = ref(0);
 let currentList = props.shoppingLists[props.selectedListIndex];
-
-onMounted(() => {
-  let lengthProducts = currentList.Products.length;
-  localLastProductId.value = lengthProducts > 0 ? currentList.Products[lengthProducts - 1].ID : 0;
-})
+const emit = defineEmits(['close', 'reload'])
 
 const addArticleInput = ref(props.addArticleInput)
 watch(() => props.addArticleInput, (newValue) => {
@@ -49,8 +50,7 @@ function addArticle(div: HTMLElement) {
     console.error('Article name or quantity is empty')
     return
   }
-  const newProduct: Product = {ID: localLastProductId.value + 1, Name: articleName, Quantity: articleQuantity, ShoppingListID: currentList.ID}
-  currentList.Products.push(newProduct)
+  const newProduct: ProductSend = {Name: articleName, Quantity: articleQuantity, ShoppingListID: currentList.ID}
 
   // Update the shopping list in the backend
   fetch (BASE_URL + '/shoppinglist/' + listId.value, {
@@ -59,20 +59,19 @@ function addArticle(div: HTMLElement) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      ID: newProduct.ID,
       Name: newProduct.Name,
       Quantity: newProduct.Quantity,
       ShoppingListID: newProduct.ShoppingListID
     })
   })
-  .then(response => response.json())
-  .then(data => {
-      localLastProductId.value += 1;
-      console.log('Success:', data)
+  .then(response => {
+      if(response.status === 201) {
+        emit('reload')
+      }
     })
-    .catch((error) => {
-      console.error('Error:', error)
-    })
+  .catch((error) => {
+    console.error('Error:', error)
+  })
 }
 
 function deleteProduct(index: number, productId: number) {
@@ -81,13 +80,14 @@ function deleteProduct(index: number, productId: number) {
   fetch (BASE_URL + '/shoppinglist/' + listId.value + '/products/' + productId, {
     method: 'DELETE',
   })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data)
-    })
-    .catch((error) => {
-      console.error('Error:', error)
-    })
+  .then(response => {
+    if(response.status === 20) {
+      emit('reload')
+    }
+  })
+  .catch((error) => {
+    console.error('Error:', error)
+  })
 }
 </script>
 

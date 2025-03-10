@@ -1,31 +1,22 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
 import plusSvg from '../assets/plus.svg?raw'
 import { format } from 'date-fns';
 import BASE_URL from '../baseUrl';
 
-interface Product {
-  ID: number;
+interface ProductSend {
   Name: string;
   Quantity: string;
   ShoppingListID: number;
 }
 
-interface ShoppingList {
-  ID: number;
+interface ShoppingListSend {
   Name: string;
   Description: string;
   Date: string;
-  Products: Product[];
+  Products: ProductSend[];
 }
 
-onMounted(() => {
-  localLastId.value = props.shoppingLists.length > 0 ? props.shoppingLists[props.shoppingLists.length - 1].ID : 0;
-})
-
-const props = defineProps<{ shoppingLists: ShoppingList[] }>();
-let localLastId = ref<number>(0);
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'reload']);
 
 function submitNewList(event: Event) {
   event.preventDefault();
@@ -36,9 +27,7 @@ function submitNewList(event: Event) {
     return;
   }
   const date = format(new Date(dateInput), 'yyyy-MM-dd').toString();
-  const newList: ShoppingList = { ID: localLastId.value + 1, Name: name, Description: '', Date: date, Products: [] };
-  
-  props.shoppingLists.push(newList);
+  const newList: ShoppingListSend = { Name: name, Description: '', Date: date, Products: [] };
 
   fetch(BASE_URL + '/shoppinglist/', {
       method: 'POST',
@@ -46,17 +35,17 @@ function submitNewList(event: Event) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        ID: newList.ID,
         Name: newList.Name,
         Description: newList.Description,
         Date: newList.Date,
         Products: [],
       }),
     })
-    .then(response => response.json())
-    .then(data => {
-      data.Products = [];
-      emit('close');
+    .then(response => {
+      if(response.status === 201) {
+        emit('reload')
+        emit('close');
+      }
     })
     .catch((error) => {
       console.error('Error:', error);
