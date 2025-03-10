@@ -86,10 +86,10 @@ function patchStats() {
   })
   .then(response => response.json())
   .then((data) => {
-    consumedCalories.value = data.ConsumedCalories;
-    fat.value = data.ConsumedFats;
-    carbs.value = data.ConsumedCarbs;
-    protein.value = data.ConsumedProteins;
+    consumedCalories.value = data.ConsumedCalories.toFixed(2);
+    fat.value = data.ConsumedFats.toFixed(2);
+    carbs.value = data.ConsumedCarbs.toFixed(2);
+    protein.value = data.ConsumedProteins.toFixed(2);
     loadSettings();
   })
   .catch((error) => {
