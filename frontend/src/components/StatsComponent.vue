@@ -1,8 +1,21 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { DoughnutChart, BarChart } from "vue-chart-3";
 import { Chart, registerables } from "chart.js";
+import BASE_URL from "../baseUrl";
+import currentDay from "../day.ts";
+import { format } from "date-fns";
+import { loadSettings, settings } from "../settings";
 
+// interface Nutrition {
+//   ID: number,
+//   Date: string,
+//   ConsumedCalories: number,
+//   ConsumedProteins: number,
+//   ConsumedFats: number,
+//   ConsumedCarbs: number
+// }
+  
 Chart.register(...registerables);
 
 // Beispielwerte (später mit Backend ersetzen)
@@ -14,6 +27,20 @@ const carbs = ref(106);
 const carbsGoal = ref(287);
 const protein = ref(28);
 const proteinGoal = ref(201);
+let date = ref("1900-01-01");
+
+onMounted (() => {
+  patchGoals();
+  patchStats();
+})
+
+watch(currentDay, () => {
+  patchStats();
+})
+
+watch(settings, () => {
+  patchGoals();
+})
 
 // Berechnung der verbleibenden Kalorien
 const remainingCalories = computed(() => calorieGoal.value - consumedCalories.value);
@@ -46,11 +73,36 @@ const caloriesChartData = computed(() => ({
   ],
 }));
 
-const macros = computed(() => [
+let macros = computed(() => [
   { name: "Fette", value: fat.value, goal: fatGoal.value, color: "red" },
   { name: "Kohlenhydrate", value: carbs.value, goal: carbsGoal.value, color: "orange" },
   { name: "Proteine", value: protein.value, goal: proteinGoal.value, color: "green" },
 ]);
+
+function patchStats() {
+  date = format(currentDay.value, "yyyy-MM-dd");
+  fetch(BASE_URL + '/nutrition/' + date, {
+    method: 'GET',
+  })
+  .then(response => response.json())
+  .then((data) => {
+    consumedCalories.value = data.ConsumedCalories;
+    fat.value = data.ConsumedFats;
+    carbs.value = data.ConsumedCarbs;
+    protein.value = data.ConsumedProteins;
+    loadSettings();
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
+
+function patchGoals() {
+  calorieGoal.value = settings.value.PlannedCalories;
+  fatGoal.value = settings.value.FatsInGrams;
+  carbsGoal.value = settings.value.CarbsInGrams;
+  proteinGoal.value = settings.value.ProteinsInGrams;
+}
 </script>
 
 <template>
