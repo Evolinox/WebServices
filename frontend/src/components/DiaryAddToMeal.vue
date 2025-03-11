@@ -23,7 +23,7 @@ function addProduct(id: number) {
     console.error('No weight given');
     return;
   }
-  const addedProduct: Product = products.value[id - 1];
+  const addedProduct: Product = products.value[id];
   fetch(BASE_URL+'/consume/', {
     method: 'POST',
     headers: {
@@ -80,12 +80,12 @@ const handleWeightInput = (event: Event) => {
           <option value="Snack">Snack</option>
         </select>
         <div class="add-meal__product-list">
-          <div v-for="product in products" class="add-meal__product">
+          <div v-for="(product, index) in products" class="add-meal__product">
             <div class="product__description">
               <p>{{ product.Name }} - {{ product.Brand }}</p>
               <p style="color: var(--text-color--secondary);">{{ product.CaloriesPer100Grams }} kcal / 100 g</p>
             </div>
-            <div class="product-list__icon--add" v-html="plusSvg" @click="addProduct(product.ID)"></div>
+            <div class="product-list__icon--add" v-html="plusSvg" @click="addProduct(index)"></div>
           </div>
         </div>
         <input type="text" placeholder="Menge in Gramm" inputmode="numeric" pattern="[0-9]*" @input="handleWeightInput"/>

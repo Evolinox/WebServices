@@ -82,7 +82,7 @@ function loadProducts() {
   fetch(BASE_URL + '/products/')
   .then(response => response.json())
   .then(data => {
-    allProducts.value = data;
+    allProducts.value = data.sort((a: Product, b: Product) => a.Name.localeCompare(b.Name));
   })
   .catch(error => {
     console.error('Error:', error);
