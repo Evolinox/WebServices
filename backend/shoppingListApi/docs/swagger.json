@@ -3,11 +3,7 @@
   "info": {
     "title": "Shopping list API",
     "description": "The Shopping List API provides functionality to manage shopping lists and their associated entries.\nIt enables users to create, retrieve, update, and delete entire shopping lists, as well as add or remove specific items from those lists.\n\n### Key Features:\n- **List Management**: Create new shopping lists, retrieve all lists or individual lists by ID, and delete existing ones.\n- **Entry Management**: Add products to a shopping list and remove individual entries by ID.\n- **Structured Data Handling**: Each shopping list contains metadata such as name, description, and date, along with an array of product entries.\n- **RESTful Design**: Built with a RESTful approach, making it easy to integrate with frontend apps or other services.\n- **Docker-Friendly**: Multiple server URLs are provided to support both local development and Docker-based environments.\n\nThis API is ideal for applications requiring shopping or task list features, collaborative list sharing, or inventory tracking systems.\n",
-    "version": "1.0.0",
-    "contact": {
-      "name": "Pascal Jedicke",
-      "email": "pas.jedicke.23@lehre.mosbach.dhbw.de"
-    }
+    "version": "1.0.0"
   },
   "externalDocs": {
     "description": "OpenAPI",

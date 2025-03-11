@@ -14,9 +14,6 @@ info:
 
     This API is ideal for applications requiring shopping or task list features, collaborative list sharing, or inventory tracking systems.
   version: 1.0.0
-  contact:
-    name: Pascal Jedicke
-    email: pas.jedicke.23@lehre.mosbach.dhbw.de
 externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/

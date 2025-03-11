@@ -3,11 +3,7 @@
   "info": {
     "title": "Calendar API",
     "description": "The Calendar API allows users to manage calendar entries efficiently through a RESTful interface. \nIt supports creating, retrieving, updating, and deleting calendar events by date or ID.\n\n### Key Features:\n- **Add Entries**: Create new calendar entries with date, time, name, and description.\n- **View Entries by Date**: Retrieve all calendar entries for a specific day.\n- **Update Entries**: Modify existing calendar entries using their unique ID.\n- **Delete Entries**: Remove entries from the calendar by ID.\n\nThis API is designed to support both local development and containerized environments \n(such as Docker) with appropriate server URLs provided.\n\nIdeal for scheduling apps, personal organizers, or systems requiring date/time-based planning functionality.\n",
-    "version": "1.0.0",
-    "contact": {
-      "name": "Pascal Jedicke",
-      "email": "pas.jedicke.23@lehre.mosbach.dhbw.de"
-    }
+    "version": "1.0.0"
   },
   "externalDocs": {
     "description": "OpenAPI",

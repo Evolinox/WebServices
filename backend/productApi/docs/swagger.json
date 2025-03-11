@@ -3,11 +3,7 @@
   "info": {
     "title": "Product API",
     "description": "The Product API provides access to nutritional and branding information about products, allowing clients to retrieve and search product data based on ID or name.\n\n### Key Features:\n- **Product Listing**: Retrieve a full list of available products.\n- **Search by ID or Name**: Get detailed information about a single product using its ID or find products by a partial or full name match.\n- **Nutritional Details**: Each product includes comprehensive nutritional values such as calories, protein, fat, and carbohydrate content per 100 grams.\n- **RESTful Endpoints**: Designed with REST principles for ease of use and integration.\n- **Docker-Ready**: Supports both local development and deployment within containerized environments.\n\nIdeal for use in shopping apps, nutritional tracking tools, or food database services that require detailed product-level insights.\n",
-    "version": "1.0.0",
-    "contact": {
-      "name": "Pascal Jedicke",
-      "email": "pas.jedicke.23@lehre.mosbach.dhbw.de"
-    }
+    "version": "1.0.0"
   },
   "externalDocs": {
     "description": "OpenAPI",

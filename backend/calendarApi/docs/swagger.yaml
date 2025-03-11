@@ -16,9 +16,6 @@ info:
     
     Ideal for scheduling apps, personal organizers, or systems requiring date/time-based planning functionality.
   version: 1.0.0
-  contact:
-    name: Pascal Jedicke
-    email: pas.jedicke.23@lehre.mosbach.dhbw.de
 externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
