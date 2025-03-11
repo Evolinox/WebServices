@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: Product API
+  description: |
+    The Product API provides access to nutritional and branding information about products, allowing clients to retrieve and search product data based on ID or name.
+
+    ### Key Features:
+    - **Product Listing**: Retrieve a full list of available products.
+    - **Search by ID or Name**: Get detailed information about a single product using its ID or find products by a partial or full name match.
+    - **Nutritional Details**: Each product includes comprehensive nutritional values such as calories, protein, fat, and carbohydrate content per 100 grams.
+    - **RESTful Endpoints**: Designed with REST principles for ease of use and integration.
+    - **Docker-Ready**: Supports both local development and deployment within containerized environments.
+
+    Ideal for use in shopping apps, nutritional tracking tools, or food database services that require detailed product-level insights.
+  version: 1.0.0
+  contact:
+    name: Pascal Jedicke
+    email: pas.jedicke.23@lehre.mosbach.dhbw.de
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+servers:
+  - url: http://localhost:9402/products
+    description: "standard url"
+  - url: http://product-api:9402/products
+    description: "url when fetching data from this api inside a docker network"
+paths:
+  /:
+    get:
+      summary: List all products
+      description: Retrieves a list of all available products.
+      tags:
+        - products
+      operationId: getProducts
+      responses:
+        '200':
+          description: A list of products.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+                  example: "Failed to retrieve product."
+  /{id}:
+    get:
+      summary: Get a product by ID
+      description: Retrieves details of a specific product using its ID.
+      tags:
+        - products
+      operationId: getProductByID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+                  example: "Product not found."
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+                  example: "Failed to retrieve product."
+  /name/{name}:
+    get:
+      summary: Search products by name
+      description: Retrieves a list of products matching a given name.
+      tags:
+        - products
+      operationId: getProductByName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of matching products.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDTO'
+        '404':
+          description: No products found with the given name
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+                  example: "Product not found."
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+                  example: "Failed to retrieve product."
+components:
+  schemas:
+    ProductDTO:
+      type: object
+      properties:
+        ID:
+          type: integer
+          format: uint
+        Name:
+          type: string
+        Brand:
+          type: string
+        CaloriesPer100Grams:
+          type: integer
+        ProteinsInGrams:
+          type: number
+          format: float
+        FatsInGrams:
+          type: number
+          format: float
+        CarbsInGrams:
+          type: number
+          format: float
