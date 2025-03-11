@@ -36,7 +36,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProductDTO"
+                    "$ref": "#/components/schemas/Product"
                   }
                 }
               }
@@ -83,7 +83,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductDTO"
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -145,7 +145,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProductDTO"
+                    "$ref": "#/components/schemas/Product"
                   }
                 }
               }
@@ -185,7 +185,7 @@
   },
   "components": {
     "schemas": {
-      "ProductDTO": {
+      "Product": {
         "type": "object",
         "properties": {
           "ID": {

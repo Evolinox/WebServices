@@ -36,7 +36,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ShoppingListDTO"
+                    "$ref": "#/components/schemas/ShoppingList"
                   }
                 }
               }
@@ -74,7 +74,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ShoppingListDTO"
+                "$ref": "#/components/schemas/ShoppingList"
               }
             }
           }
@@ -161,7 +161,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ShoppingListDTO"
+                  "$ref": "#/components/schemas/ShoppingList"
                 }
               }
             }
@@ -226,7 +226,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ShoppingListEntryDTO"
+                "$ref": "#/components/schemas/Product"
               }
             }
           }
@@ -450,7 +450,7 @@
   },
   "components": {
     "schemas": {
-      "ShoppingListDTO": {
+      "ShoppingList": {
         "type": "object",
         "properties": {
           "ID": {
@@ -466,11 +466,11 @@
             "type": "string"
           },
           "Products": {
-            "$ref": "#/components/schemas/ShoppingListEntryDTO"
+            "$ref": "#/components/schemas/Product"
           }
         }
       },
-      "ShoppingListEntryDTO": {
+      "Product": {
         "type": "object",
         "properties": {
           "ID": {
