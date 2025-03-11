@@ -14,7 +14,9 @@
       {
         "title": "Nutrition tracker",
         "width": 450,
-        "height": 772
+        "height": 772,
+        "min-width": 450,
+        "min-height": 580
       }
     ],
     "security": {
