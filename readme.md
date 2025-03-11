@@ -15,4 +15,4 @@ make down
 ## Folder structure
 
 - `frontend/` - Contains the Tauri App with Vue Frontend.
-- `backend/` - Contains the Quarkus Backend.
+- `backend/` - Contains the Go Backend.
