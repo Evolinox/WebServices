@@ -73,12 +73,15 @@ const handleWeightInput = (event: Event) => {
         <div class="add-meal__close-button" v-html="plusSvg" @click="$emit('close')"></div>
       </div>
       <div class="add-meal__card-content">
-        <select name="meal-select" v-model="selectedMeal">
-          <option value="Frühstück">Frühstück</option>
-          <option value="Mittagessen">Mittagessen</option>
-          <option value="Abendessen">Abendessen</option>
-          <option value="Snack">Snack</option>
-        </select>
+        <div class="add-meal__meal-and-weight">
+          <select class="add-meal__select" v-model="selectedMeal">
+            <option value="Frühstück">Frühstück</option>
+            <option value="Mittagessen">Mittagessen</option>
+            <option value="Abendessen">Abendessen</option>
+            <option value="Snack">Snack</option>
+          </select>
+          <input type="text" placeholder="Menge in Gramm" inputmode="numeric" pattern="[0-9]*" @input="handleWeightInput"/>
+        </div>
         <div class="add-meal__product-list">
           <div v-for="(product, index) in products" class="add-meal__product">
             <div class="product__description">
@@ -88,7 +91,6 @@ const handleWeightInput = (event: Event) => {
             <div class="product-list__icon--add" v-html="plusSvg" @click="addProduct(index)"></div>
           </div>
         </div>
-        <input type="text" placeholder="Menge in Gramm" inputmode="numeric" pattern="[0-9]*" @input="handleWeightInput"/>
       </div>
     </div>
   </div>
@@ -121,6 +123,7 @@ const handleWeightInput = (event: Event) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-block-end: 25px;
 }
 
 .add-meal__card-header h2 {
@@ -138,8 +141,29 @@ const handleWeightInput = (event: Event) => {
 }
 
 .add-meal__card-content {
-  padding: 0px 35px;
+  padding: 0px 23px;
   text-align: center;
+}
+
+.add-meal__meal-and-weight {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 12px;
+  margin-block-end: 15px;
+}
+.add-meal__select {
+  padding: 5px;
+  border-radius: 6px;
+  border: solid var(--text-color--secondary);
+  background-color: var(--background-color--tertiary);
+  color: var(--text-color--primary);
+}
+
+.add-meal__product-list {
+  max-height: 364px;
+  max-height: 300px;
+  overflow-y: scroll;
+  padding: 0px 12px;
 }
 
 .add-meal__product {
