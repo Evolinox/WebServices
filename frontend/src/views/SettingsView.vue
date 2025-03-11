@@ -35,20 +35,18 @@ function handleGenderInput(event: Event) {
 
 const handleWeightInput = (event: Event) => {
   const input = event.target as HTMLInputElement
-  if (input?.value == "") {
-    input.value = weight.value ? weight.value.toString() : "";
-  } else {
-    weight.value = input.value ? parseFloat(input.value) : 0;
+  if (input.value.length > 5) {
+    input.value = input.value.slice(0, 5);
   }
+  weight.value = input.value ? parseFloat(input.value) : 0;
 }
 
 const handleCaloriesInput = (event: Event) => {
   const input = event.target as HTMLInputElement
-  if (input?.value == "") {
-    input.value = dailyCalories.value ? dailyCalories.value.toString() : "";
-  } else {
-    dailyCalories.value = input.value? parseFloat(input.value) : 0;
+  if (input.value.length > 5) {
+    input.value = input.value.slice(0, 5);
   }
+  dailyCalories.value = input.value? parseFloat(input.value) : 0;
 }
 
 function storeSettings() {
