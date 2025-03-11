@@ -126,4 +126,7 @@ input {
   background-color: var(--background-color--tertiary);
   color: var(--text-color--primary);
 }
+select:focus-visible, input:focus-visible, button:focus-visible {
+  outline: none;
+}
 </style>
