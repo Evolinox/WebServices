@@ -1,9 +1,19 @@
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { format, addDays, subDays } from "date-fns";
 import leftArrow from '../assets/left-arrow.svg?raw';
 import currentDay from "../day";
 import DayAppointments from "./DayAppointments.vue";
+import BASE_URL from "../baseUrl";
+
+interface Appointment {
+  ID: number;
+  Date: string;
+  BeginTime: string;
+  EndTime: string;
+  Name: string;
+  Description: string;
+}
 
 // Berechnet das Datum des aktuellen Tages
 const formattedDay = computed(() => {
@@ -19,12 +29,34 @@ const prevDay = () => {
 };
 
 const openDayAppointments = ref(false);
-const addAppointmentInput = ref(false);
 
 // Beispielhafte Terminliste
-const appointments = ref([
-  { date: "01.05.2025", description: "Tag der Arbeit" },
+const dayAppointments = ref<Appointment[]>([
+  { ID: 999, Date: "01.05.2025", BeginTime: "15:00 Uhr", EndTime: "16:00 Uhr", Name: "Tag der Arbeit", Description: "Beschreibung" },
 ]);
+
+onMounted(() => {
+  loadAppointments();
+});
+
+watch(currentDay, () => {
+  loadAppointments();
+});
+
+function loadAppointments() {
+  fetch( BASE_URL + '/calendar/' + format(currentDay.value, 'yyyy-MM-dd') )
+  .then(response => {
+    if(response.status === 200) {
+      return response.json();
+    } else {
+      console.error('Error:', response);
+    }
+  })
+  .then(data => {
+    console.log(data)
+    dayAppointments.value = data
+  })
+}
 </script>
 
 <template>
@@ -43,10 +75,9 @@ const appointments = ref([
   </div>
   <DayAppointments
     v-if="openDayAppointments"
-    :appointments="appointments"
-    :selectedDateIndex="0"
-    :addAppointmentInput="addAppointmentInput"
+    :appointments="dayAppointments"
     @close="openDayAppointments = false"
+    @reload="loadAppointments"
   />
 </template>
 
