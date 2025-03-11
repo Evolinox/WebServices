@@ -14,9 +14,6 @@ info:
 
     This API is ideal for applications requiring shopping or task list features, collaborative list sharing, or inventory tracking systems.
   version: 1.0.0
-  contact:
-    name: Pascal Jedicke
-    email: pas.jedicke.23@lehre.mosbach.dhbw.de
 externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
@@ -41,7 +38,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ShoppingListDTO'
+                  $ref: '#/components/schemas/ShoppingList'
         '500':
           description: Internal server error while fetching shopping lists
           content:
@@ -64,7 +61,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ShoppingListDTO'
+              $ref: '#/components/schemas/ShoppingList'
       responses:
         '201':
           description: Shopping list created successfully
@@ -118,7 +115,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ShoppingListDTO'
+                $ref: '#/components/schemas/ShoppingList'
         '404':
           description: Shopping list not found
           content:
@@ -158,7 +155,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ShoppingListEntryDTO'
+              $ref: '#/components/schemas/Product'
       responses:
         '201':
           description: Shopping list entry created successfully
@@ -293,7 +290,7 @@ paths:
                 error: "Failed to delete shopping list entry"
 components:
   schemas:
-    ShoppingListDTO:
+    ShoppingList:
       type: object
       properties:
         ID:
@@ -305,8 +302,8 @@ components:
         Date:
           type: string
         Products:
-          $ref: '#/components/schemas/ShoppingListEntryDTO'
-    ShoppingListEntryDTO:
+          $ref: '#/components/schemas/Product'
+    Product:
       type: object
       properties:
         ID:

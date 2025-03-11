@@ -16,9 +16,6 @@ info:
     
     Ideal for scheduling apps, personal organizers, or systems requiring date/time-based planning functionality.
   version: 1.0.0
-  contact:
-    name: Pascal Jedicke
-    email: pas.jedicke.23@lehre.mosbach.dhbw.de
 externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
@@ -38,7 +35,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CalendarDTO'
+              $ref: '#/components/schemas/Calendar'
       responses:
         201:
           description: Successfully added calendar entry.
@@ -91,7 +88,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CalendarDTO'
+                  $ref: '#/components/schemas/Calendar'
         400:
           description: Invalid date format.
           content:
@@ -129,7 +126,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CalendarDTO'
+              $ref: '#/components/schemas/Calendar'
       responses:
         200:
           description: Successfully updated the calendar entry.
@@ -206,7 +203,7 @@ paths:
                     example: "Failed to delete calendar entry."
 components:
   schemas:
-    CalendarDTO:
+    Calendar:
       type: object
       properties:
         ID:

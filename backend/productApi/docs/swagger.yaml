@@ -13,9 +13,6 @@ info:
 
     Ideal for use in shopping apps, nutritional tracking tools, or food database services that require detailed product-level insights.
   version: 1.0.0
-  contact:
-    name: Pascal Jedicke
-    email: pas.jedicke.23@lehre.mosbach.dhbw.de
 externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
@@ -40,7 +37,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ProductDTO'
+                  $ref: '#/components/schemas/Product'
         '500':
           description: Internal Server Error
           content:
@@ -69,7 +66,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductDTO'
+                $ref: '#/components/schemas/Product'
         '404':
           description: Product not found
           content:
@@ -109,7 +106,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ProductDTO'
+                  $ref: '#/components/schemas/Product'
         '404':
           description: No products found with the given name
           content:
@@ -130,7 +127,7 @@ paths:
                   example: "Failed to retrieve product."
 components:
   schemas:
-    ProductDTO:
+    Product:
       type: object
       properties:
         ID:
