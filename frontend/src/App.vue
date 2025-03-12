@@ -45,8 +45,8 @@ onMounted(() => {
   --text-color--primary: #37474f;
   --text-color--secondary: #747c80;
 
-  --accent-color--primary: #0489d7; /* Mehr */
-  --accent-color--secondary: #58bdf6; /* Statistik */
+  --accent-color--primary: #0787d4; /* Mehr */
+  --accent-color--secondary: #58bdf9; /* Statistik */
 
   --nav__background-color: #fefeff;
 

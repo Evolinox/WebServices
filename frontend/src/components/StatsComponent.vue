@@ -57,7 +57,7 @@ const caloriesChartData = computed(() => ({
   datasets: [
     {
       data: [consumedCalories.value, remainingCalories.value],
-      backgroundColor: ["#4A90E2", "#E0E0E0"],
+      backgroundColor: ["#0787d4", "#E0E0E0"],
     },
   ],
 }));
