@@ -6,19 +6,9 @@ import BASE_URL from "../baseUrl";
 import currentDay from "../day.ts";
 import { format } from "date-fns";
 import { loadSettings, settings } from "../settings";
-
-// interface Nutrition {
-//   ID: number,
-//   Date: string,
-//   ConsumedCalories: number,
-//   ConsumedProteins: number,
-//   ConsumedFats: number,
-//   ConsumedCarbs: number
-// }
   
 Chart.register(...registerables);
 
-// Beispielwerte (später mit Backend ersetzen)
 const consumedCalories = ref(577);
 const calorieGoal = ref(2500);
 const fat = ref(3);
@@ -42,13 +32,11 @@ watch(settings, () => {
   patchGoals();
 })
 
-// Berechnung der verbleibenden Kalorien
 const remainingCalories = computed(() => calorieGoal.value - consumedCalories.value);
 
-// Chart-Key für Neuladen der Diagramme
+// Chart-Key for reload of diagramm
 const chartKey = ref(0);
 
-// Chart-Optionen
 const chartOptions = ref({
   responsive: true,
   maintainAspectRatio: false,
@@ -62,7 +50,7 @@ const chartOptions = ref({
   },
 });
 
-// Chart-Daten für Kalorienübersicht
+// Chart-Data for calories chart
 const caloriesChartData = computed(() => ({
   labels: ["Gegessen", "Übrig"],
   datasets: [
@@ -107,7 +95,6 @@ function patchGoals() {
 
 <template>
   <div class="stats-container">
-    <!-- Kalorienübersicht mit Kreisdiagramm -->
     <div class="calories-overview">
       <h2>Kalorienübersicht</h2>
       <div class="calories-flex">
@@ -126,7 +113,6 @@ function patchGoals() {
       </div>
     </div>
   
-    <!-- Makronährstoffe mit Balkendiagramm -->      
     <div class="macros">
       <h2>Makronährstoffe</h2>
       <div class="macros-row">
@@ -152,7 +138,7 @@ function patchGoals() {
   box-sizing: border-box;
 }
 
-/* Kalorienübersicht */
+/* calories overview */
 .calories-overview h2 {
   margin-top: 0px;
   margin-bottom: 15px;
@@ -177,7 +163,7 @@ function patchGoals() {
   color: white;
 }
   
-/* Makronährstoffe */
+/* makro nutrition */
 .macros {
   margin-top: 30px;
   max-width: 400px;
@@ -199,7 +185,7 @@ function patchGoals() {
 }
 
 .macro-bar {
-    flex: 1;
+  flex: 1;
   margin-bottom: 10px;
   min-width: 80px;
 }

@@ -130,7 +130,7 @@ select, input {
   box-shadow: none;
   border: solid var(--text-color--secondary);
 }
-/* Container für die Einstellungen */
+/* Container for the settings */
 .settings-view {
   height: calc(100vh - var(--nav-bar__height));
   width: 100vw;
@@ -141,7 +141,7 @@ select, input {
   box-sizing: border-box;
 }
 
-/* Stil für die Überschrift */
+/* Style for the title */
 .settings-view__title {
   font-size: 1.2rem;
   margin-bottom: 20px;
@@ -161,7 +161,7 @@ select, input {
   margin-bottom: 0px;
 }
 
-/* Stil für die einzelnen Einstellungselemente */
+/* Style for the individual setting items */
 .settings-view__item {
   display: flex;
   flex-direction: row;
@@ -171,14 +171,14 @@ select, input {
   margin-bottom: 20px;
 }
 
-/* Stil für die Labels */
+/* Style for the labels */
 .settings-view__label {
   font-size: 1rem;
   margin-right: 10px;
   flex: 1;
 }
 
-/* Stil für die Select-Elemente */
+/* Style for the select elements */
 .settings-view__select, .settings-view__input {
   font-size: 1rem;
   padding: 5px;
@@ -191,7 +191,7 @@ select, input {
   color: var(--text-color--secondary);
 }
 
-/* Schalter-Stil */
+/* Switch style */
 .switch {
   position: relative;
   display: inline-block;
@@ -200,14 +200,14 @@ select, input {
   margin-left: 10px;
 }
 
-/* Verstecke das eigentliche Kontrollkästchen */
+/* Hide the actual checkbox */
 .switch input { 
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* Slider-Stil */
+/* Slider style */
 .switch__slider {
   position: absolute;
   cursor: pointer;
@@ -220,7 +220,7 @@ select, input {
   border-radius: 34px;
 }
 
-/* Stil für den Schieberegler */
+/* Style for the slider */
 .switch__slider:before {
   position: absolute;
   content: "";
@@ -233,22 +233,22 @@ select, input {
   border-radius: 50%;
 }
 
-/* Stil für den Schalter, wenn er aktiviert ist */
+/* Style for the switch when it is checked */
 input:checked + .switch__slider {
   background-color: #2196F3;
 }
 
-/* Stil für den Schalter, wenn er fokussiert ist */
+/* Style for the switch when it is focused */
 input:focus + .switch__slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-/* Stil für den Schieberegler, wenn der Schalter aktiviert ist */
+/* Style for the slider when the switch is checked */
 input:checked + .switch__slider:before {
   transform: translateX(26px);
 }
 
-/* Modifikator für runde Slider */
+/* Modifier for round sliders */
 .switch__slider--round {
   border-radius: 34px;
 }
