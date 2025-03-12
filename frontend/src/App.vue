@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
-import AddComponent from './components/AddComponent.vue'
+import { watch, onMounted } from 'vue'
 import NavBar from './components/NavBar.vue'
 import DayCalender from './components/DayCalender.vue'
 import { RouterView } from 'vue-router'
@@ -24,20 +23,12 @@ onMounted(() => {
   document.documentElement.setAttribute('data-theme', theme.value)
   loadSettings()
 })
-
-// AddComponent
-const showAddComponent = ref(false)
-function toggleAddComponent() {
-  showAddComponent.value = !showAddComponent.value
-}
-
 </script>
 
 <template>
   <DayCalender class="day-calender" v-if="route.name == 'dashboard' || route.name == 'diary' || route.name=='shoppingList'" />
   <RouterView class="view"/>
-  <NavBar class="nav-bar" @toggle-add-component="toggleAddComponent"/>
-  <AddComponent v-if="showAddComponent" @close="toggleAddComponent" />
+  <NavBar class="nav-bar"/>
 </template>
 
 <style>
