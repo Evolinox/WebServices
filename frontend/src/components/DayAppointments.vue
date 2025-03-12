@@ -146,6 +146,17 @@ function deleteAppointment(index: number) {
   fill: var(--icon-color);
 }
 
+.day-appointments__list {
+  padding: 0px 15px;
+}
+.day-appointments__list-item {
+  display: flex;
+  align-items: center;
+}
+.appointment__name {
+  max-width: 175px;
+  overflow: scroll;
+}
 .appointment__begin-end {
   margin-left: auto;
   margin-right: 8px;

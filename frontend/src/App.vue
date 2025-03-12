@@ -43,7 +43,7 @@ function toggleAddComponent() {
 <style>
 :root {
   --nav-bar__height: 50px;
-  --day-calender__height: 200px;
+  --day-calender__height: 165px;
   --border-radius__secondary-background: 12px;
 
   
