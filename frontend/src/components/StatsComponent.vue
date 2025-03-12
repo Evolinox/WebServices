@@ -33,6 +33,7 @@ watch(settings, () => {
 })
 
 const remainingCalories = computed(() => Math.max(calorieGoal.value - consumedCalories.value, 0));
+const balanceCalories = computed(() => calorieGoal.value - consumedCalories.value);
 
 // Chart-Key for reload of diagramm
 const chartKey = ref(0);
@@ -108,7 +109,8 @@ function patchGoals() {
         <div class="calories-info">
           <p>Gegessen: <strong>{{ consumedCalories }}</strong> kcal</p>
           <p>Ziel: <strong>{{ calorieGoal }}</strong> kcal</p>
-          <p>Übrig: <strong>{{ remainingCalories }}</strong> kcal</p>
+          <p v-if="balanceCalories>=0">Übrig: <strong>{{ remainingCalories }}</strong> kcal</p>
+            <p v-else>Zuviel: <strong>{{ Math.abs(balanceCalories) }}</strong> kcal</p>
         </div>
       </div>
     </div>
