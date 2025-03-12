@@ -32,7 +32,7 @@ watch(settings, () => {
   patchGoals();
 })
 
-const remainingCalories = computed(() => calorieGoal.value - consumedCalories.value);
+const remainingCalories = computed(() => Math.max(calorieGoal.value - consumedCalories.value, 0));
 
 // Chart-Key for reload of diagramm
 const chartKey = ref(0);
