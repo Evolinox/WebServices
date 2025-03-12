@@ -12,6 +12,12 @@ To stop the docker container run the following command:
 make down
 ```
 
+## Accessing the Frontend
+Once the Docker Container is running (It might take up to 10 minutes) you can access the Frontend with your Browser. Just browse to the following URL:
+```bash
+localhost:1420
+```
+
 ## Folder structure
 
 - `frontend/` - Contains the Tauri App with Vue Frontend.
