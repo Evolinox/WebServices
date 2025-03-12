@@ -165,7 +165,7 @@ select, input {
   flex-direction: column;
   background: transparent;
   position: relative;
-  top: -8px;
+  top: -5px;
   padding: 10px 15px;
   border-radius: 5px;
   border: none;
