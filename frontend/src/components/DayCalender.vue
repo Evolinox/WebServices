@@ -42,18 +42,21 @@ watch(currentDay, () => {
 });
 
 function loadAppointments() {
-  fetch( BASE_URL + '/calendar/' + format(currentDay.value, 'yyyy-MM-dd') )
+  fetch(BASE_URL + '/calendar/' + format(currentDay.value, 'yyyy-MM-dd'))
   .then(response => {
-    if(response.status === 200) {
+    if (response.status === 200) {
       return response.json();
     } else {
       console.error('Error:', response);
     }
   })
   .then(data => {
-    console.log(data)
-    dayAppointments.value = data
-  })
+    dayAppointments.value = data.sort((a: Appointment, b: Appointment) => {
+      const timeA = new Date(`1970-01-01T${a.BeginTime}:00`).getTime();
+      const timeB = new Date(`1970-01-01T${b.BeginTime}:00`).getTime();
+      return timeA - timeB;
+    });
+  });
 }
 </script>
 
