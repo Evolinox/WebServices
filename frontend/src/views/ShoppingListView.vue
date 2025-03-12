@@ -64,24 +64,24 @@ function deleteList(index: number, shoppingList: ShoppingList) {
 
 function loadLists() {
   fetch(BASE_URL + '/shoppinglist/')
-    .then(response => response.json())
-    .then(data => {
-      shoppingLists.value = data.map((list: ShoppingList) => ({
-        ID: list.ID,
-        Name: list.Name,
-        Description: list.Description,
-        Date: list.Date,
-        Products: Array.isArray(list.Products) ? list.Products.map((product: Product) => ({
-          ID: product.ID,
-          Name: product.Name,
-          Quantity: product.Quantity,
-          ShoppingListID: product.ShoppingListID
-        })) : []
-      }));
-    })
-    .catch(error => {
-      console.error('Error fetching shopping lists:', error);
-    });
+  .then(response => response.json())
+  .then(data => {
+    shoppingLists.value = data.map((list: ShoppingList) => ({
+      ID: list.ID,
+      Name: list.Name,
+      Description: list.Description,
+      Date: list.Date,
+      Products: Array.isArray(list.Products) ? list.Products.map((product: Product) => ({
+        ID: product.ID,
+        Name: product.Name,
+        Quantity: product.Quantity,
+        ShoppingListID: product.ShoppingListID
+      })) : []
+    })).sort((a: ShoppingList, b: ShoppingList) => new Date(a.Date).getTime() - new Date(b.Date).getTime());
+  })
+  .catch(error => {
+    console.error('Error fetching shopping lists:', error);
+  });
 }
 </script>
 
