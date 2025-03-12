@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
-import AddComponent from './components/AddComponent.vue'
+import { watch, onMounted } from 'vue'
 import NavBar from './components/NavBar.vue'
-import WeekCalender from './components/WeekCalender.vue'
+import DayCalender from './components/DayCalender.vue'
 import { RouterView } from 'vue-router'
 import { theme } from './themes'
 import { useRoute } from 'vue-router'
+import { loadSettings } from './settings'
 
 // Router
 const route = useRoute()
@@ -21,27 +21,20 @@ watch(
 
 onMounted(() => {
   document.documentElement.setAttribute('data-theme', theme.value)
+  loadSettings()
 })
-
-// AddComponent
-const showAddComponent = ref(false)
-function toggleAddComponent() {
-  showAddComponent.value = !showAddComponent.value
-}
-
 </script>
 
 <template>
-  <WeekCalender class="week-kalender" v-if="route.name == 'dashboard' || route.name=='diary' || route.name=='shoppingList'"/>
+  <DayCalender class="day-calender" v-if="route.name == 'dashboard' || route.name == 'diary' || route.name=='shoppingList'" />
   <RouterView class="view"/>
-  <NavBar class="nav-bar" @toggle-add-component="toggleAddComponent"/>
-  <AddComponent v-if="showAddComponent" @close="toggleAddComponent" />
+  <NavBar class="nav-bar"/>
 </template>
 
 <style>
 :root {
-  --nav-bar__height: 50px;
-  --week-kalender__height: 200px;
+  --nav-bar__height: 80px;
+  --day-calender__height: 170px;
   --border-radius__secondary-background: 12px;
 
   
@@ -52,8 +45,8 @@ function toggleAddComponent() {
   --text-color--primary: #37474f;
   --text-color--secondary: #747c80;
 
-  --accent-color--primary: #0489d7; /* Mehr */
-  --accent-color--secondary: #58bdf6; /* Statistik */
+  --accent-color--primary: #0787d4; /* Mehr */
+  --accent-color--secondary: #58bdf9; /* Statistik */
 
   --nav__background-color: #fefeff;
 
@@ -87,11 +80,11 @@ body {
   color: var(--text-color--primary);
 }
 
-.week-kalender {
-  height: var(--week-kalender__height);
+.day-calender {
+  height: var(--day-calender__height);
 }
 .view {
-  height: calc(100vh - var(--nav-bar__height) - var(--week-kalender__height));
+  height: calc(100vh - var(--nav-bar__height) - var(--day-calender__height));
   overflow-y: auto;
 }
 .nav-bar {
@@ -100,7 +93,7 @@ body {
 .view, .navBar {
   width: 100%;
 }
-.view > div, .week-kalender > div {
+.view > div, .day-calender > div {
   width: calc(100% - 40px);
 }
 
@@ -123,5 +116,21 @@ input {
   border: solid var(--text-color--secondary);
   background-color: var(--background-color--tertiary);
   color: var(--text-color--primary);
+}
+input, select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Remove stepper buttons from number inputs by default */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+select:focus-visible, input:focus-visible, button:focus-visible {
+  outline: none;
 }
 </style>

@@ -1,26 +1,54 @@
 <script lang="ts" setup>
 import plusSvg from '../assets/plus.svg?raw'
 import { format } from 'date-fns';
+import BASE_URL from '../baseUrl';
 
-const props = defineProps<{
-  shoppingLists: Array<{ name: string; date: string; products: Array<{ name: string; quantity: string | number }> }>
-}>()
+interface ProductSend {
+  Name: string;
+  Quantity: string;
+  ShoppingListID: number;
+}
 
-const emit = defineEmits(['close']);
+interface ShoppingListSend {
+  Name: string;
+  Description: string;
+  Date: string;
+  Products: ProductSend[];
+}
+
+const emit = defineEmits(['close', 'reload']);
 
 function submitNewList(event: Event) {
   event.preventDefault();
   const name = (document.getElementById('name') as HTMLInputElement).value;
   const dateInput = (document.getElementById('date') as HTMLInputElement).value;
   if (name === '' || dateInput === '') {
-    console.log('Name or date is empty');
+    console.error('Name or date is empty');
     return;
   }
-  const date = format(new Date(dateInput), 'dd.MM.yyyy');
-  console.log('Name: ' + name + ' Date: ' + date);
-  props.shoppingLists.push({ name: name, date: date, products: [] });
-  //TODO: Add the new shopping list to the backend
-  emit('close');
+  const date = format(new Date(dateInput), 'yyyy-MM-dd').toString();
+  const newList: ShoppingListSend = { Name: name, Description: '', Date: date, Products: [] };
+
+  fetch(BASE_URL + '/shoppinglist/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      Name: newList.Name,
+      Description: newList.Description,
+      Date: newList.Date,
+      Products: [],
+    }),
+  })
+  .then(response => {
+    if(response.status === 201) {
+      emit('reload')
+      emit('close');
+    } else {
+      console.error('Error:', response);
+    }
+  })
 }
 </script>
 

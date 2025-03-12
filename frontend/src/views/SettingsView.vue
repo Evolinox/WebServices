@@ -1,24 +1,73 @@
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue'
 import { theme, toggleTheme } from '../themes'
+import { settings, loadSettings } from '../settings';
+import BASE_URL from '../baseUrl';
 
-var weight = "";
-const handleWeightInput = (event: Event) => {
-  const input = event.target as HTMLInputElement
-  if (input?.value == "") {
-    input.value = weight;
-  } else {
-    weight = input.value;
-  }
+const gender = ref(settings.value.Gender);
+const weight = ref(settings.value.WeightInKg);
+
+const dailyCalories = ref(settings.value.PlannedCalories);
+const dailyFats = ref(settings.value.FatsInGrams);
+const dailyCarbs = ref(settings.value.CarbsInGrams);
+const dailyProteins = ref(settings.value.ProteinsInGrams);
+
+onMounted(() => {
+  reloadSettings();
+})
+
+function reloadSettings() {
+  loadSettings().then(() => {
+    gender.value = settings.value.Gender;
+    weight.value = settings.value.WeightInKg;
+    
+    dailyCalories.value = settings.value.PlannedCalories;
+    dailyFats.value = settings.value.FatsInGrams;
+    dailyCarbs.value = settings.value.CarbsInGrams;
+    dailyProteins.value = settings.value.ProteinsInGrams;
+  });
 }
 
-var dailyCalories = "";
+function handleGenderInput(event: Event) {
+  const select = event.target as HTMLSelectElement;
+  gender.value = select.value;
+}
+
+const handleWeightInput = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  if (input.value.length > 5) {
+    input.value = input.value.slice(0, 5);
+  }
+  weight.value = input.value ? parseFloat(input.value) : 0;
+}
+
 const handleCaloriesInput = (event: Event) => {
   const input = event.target as HTMLInputElement
-  if (input?.value == "") {
-    input.value = dailyCalories;
-  } else {
-    dailyCalories = input.value;
+  if (input.value.length > 5) {
+    input.value = input.value.slice(0, 5);
   }
+  dailyCalories.value = input.value? parseFloat(input.value) : 0;
+}
+
+function storeSettings() {
+  fetch(BASE_URL + '/settings/', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      PlannedCalories: dailyCalories.value,
+      Gender: gender.value,
+      WeightInKg: weight.value,
+    }),
+  })
+  .then(response => {
+    if(response.status === 200) {
+      reloadSettings();
+    } else {
+      console.error('Error:', response);
+    }
+  })
 }
 </script>
 
@@ -38,20 +87,39 @@ const handleCaloriesInput = (event: Event) => {
     <div class="settings-view__content">
       <div class="settings-view__item">
         <span class="settings-view__label">Geschlecht</span>
-        <select class="settings-view__select">
-          <option>männlich</option>
-          <option>weiblich</option>
+        <select class="settings-view__select" @change="handleGenderInput($event)" v-model="gender">
+          <option value="männlich">männlich</option>
+          <option value="weiblich">weiblich</option>
+          <option value="divers">divers</option>
         </select>
       </div>
       <div class="settings-view__item">
         <span class="settings-view__label">Gewicht [kg]</span>
-        <input type="number" class="settings-view__input" min="0" @input="handleWeightInput"/>
+        <input type="number" class="settings-view__input" :value="weight" min="0" @input="handleWeightInput"/>
       </div>
       <div class="settings-view__item">
         <span class="settings-view__label">Kalorientagesziel [kcal]</span>
-        <input type="number" class="settings-view__input" min="0" @input="handleCaloriesInput"/>
+        <input type="number" class="settings-view__input" :value="dailyCalories" min="0" @input="handleCaloriesInput"/>
       </div>
-      
+      <div class="settings-view__footer">
+        <button class="settings-footer__store-button" @click="storeSettings">Speichern</button>
+      </div>
+    </div>
+    <br>
+    <div class="settings-view__content">
+      <h2 class="settings-view__content-header">Berechnete Nährstoffe</h2>
+      <div class="settings-view__item">
+        <span class="settings-view__label">Fett [g]</span>
+        <input type="number" class="settings-view__input" :value="dailyFats" disabled />
+      </div>
+      <div class="settings-view__item">
+        <span class="settings-view__label">Kohlenhydrate [g]</span>
+        <input type="number" class="settings-view__input" :value="dailyCarbs" disabled />
+      </div>
+      <div class="settings-view__item">
+        <span class="settings-view__label">Protein [g]</span>
+        <input type="number" class="settings-view__input" :value="dailyProteins" disabled />
+      </div>
     </div>
   </div>
 </template>
@@ -62,7 +130,7 @@ select, input {
   box-shadow: none;
   border: solid var(--text-color--secondary);
 }
-/* Container für die Einstellungen */
+/* Container for the settings */
 .settings-view {
   height: calc(100vh - var(--nav-bar__height));
   width: 100vw;
@@ -73,7 +141,7 @@ select, input {
   box-sizing: border-box;
 }
 
-/* Stil für die Überschrift */
+/* Style for the title */
 .settings-view__title {
   font-size: 1.2rem;
   margin-bottom: 20px;
@@ -85,11 +153,15 @@ select, input {
   background-color: var(--background-color--secondary);
   border-radius: var(--border-radius__secondary-background);
 }
+.settings-view__content-header {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
 .settings-view__item:last-child {
   margin-bottom: 0px;
 }
 
-/* Stil für die einzelnen Einstellungselemente */
+/* Style for the individual setting items */
 .settings-view__item {
   display: flex;
   flex-direction: row;
@@ -99,14 +171,14 @@ select, input {
   margin-bottom: 20px;
 }
 
-/* Stil für die Labels */
+/* Style for the labels */
 .settings-view__label {
   font-size: 1rem;
   margin-right: 10px;
   flex: 1;
 }
 
-/* Stil für die Select-Elemente */
+/* Style for the select elements */
 .settings-view__select, .settings-view__input {
   font-size: 1rem;
   padding: 5px;
@@ -115,8 +187,11 @@ select, input {
   background-color: var(--background-color--tertiary);
   color: var(--text-color--primary);
 }
+.settings-view__input:disabled {
+  color: var(--text-color--secondary);
+}
 
-/* Schalter-Stil */
+/* Switch style */
 .switch {
   position: relative;
   display: inline-block;
@@ -125,14 +200,14 @@ select, input {
   margin-left: 10px;
 }
 
-/* Verstecke das eigentliche Kontrollkästchen */
+/* Hide the actual checkbox */
 .switch input { 
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* Slider-Stil */
+/* Slider style */
 .switch__slider {
   position: absolute;
   cursor: pointer;
@@ -145,7 +220,7 @@ select, input {
   border-radius: 34px;
 }
 
-/* Stil für den Schieberegler */
+/* Style for the slider */
 .switch__slider:before {
   position: absolute;
   content: "";
@@ -158,26 +233,34 @@ select, input {
   border-radius: 50%;
 }
 
-/* Stil für den Schalter, wenn er aktiviert ist */
+/* Style for the switch when it is checked */
 input:checked + .switch__slider {
   background-color: #2196F3;
 }
 
-/* Stil für den Schalter, wenn er fokussiert ist */
+/* Style for the switch when it is focused */
 input:focus + .switch__slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-/* Stil für den Schieberegler, wenn der Schalter aktiviert ist */
+/* Style for the slider when the switch is checked */
 input:checked + .switch__slider:before {
   transform: translateX(26px);
 }
 
-/* Modifikator für runde Slider */
+/* Modifier for round sliders */
 .switch__slider--round {
   border-radius: 34px;
 }
 .switch__slider--round:before {
   border-radius: 50%;
+}
+
+.settings-view__footer {
+  text-align: center;
+}
+.settings-footer__store-button {
+  padding: 10px 20px;
+  color: var(--button__text-color);
 }
 </style>

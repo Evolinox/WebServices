@@ -1,20 +1,44 @@
 <script lang="ts" setup>
-import { ref, defineProps, watch } from 'vue'
+import { ref, watch } from 'vue'
 import plusSvg from '../assets/plus.svg?raw'
 import trashSvg from '../assets/trash.svg?raw'
+import BASE_URL from '../baseUrl';
+
+interface ProductGet {
+  ID: number;
+  Name: string;
+  Quantity: string;
+  ShoppingListID: number;
+}
+
+interface ShoppingListGet {
+  ID: number;
+  Name: string;
+  Description: string;
+  Date: string;
+  Products: ProductGet[];
+}
+
+interface ProductSend {
+  Name: string;
+  Quantity: string;
+  ShoppingListID: number;
+}
 
 const props = defineProps<{
-  shoppingLists: Array<{ name: string; date: string; products: Array<{ name: string; quantity: string | number }> }>
-  selectedListIndex: number
+  shoppingLists: ShoppingListGet[],
+  selectedListIndex: number,
   addArticleInput: boolean
 }>()
+const listId = ref(props.shoppingLists[props.selectedListIndex].ID);
+let currentList = props.shoppingLists[props.selectedListIndex];
+const emit = defineEmits(['close', 'reload'])
 
 const addArticleInput = ref(props.addArticleInput)
 watch(() => props.addArticleInput, (newValue) => {
   addArticleInput.value = newValue
 })
 function openAddArticle() {
-  console.log('Open add article to list ' + props.shoppingLists[props.selectedListIndex].name)
   addArticleInput.value = true
 }
 
@@ -23,17 +47,45 @@ function addArticle(div: HTMLElement) {
   const articleName = (div.querySelector('#article') as HTMLInputElement).value
   const articleQuantity = (div.querySelector('#quantity') as HTMLInputElement).value
   if (articleName === '' || articleQuantity === '') {
-    console.log('Article name or quantity is empty')
+    console.error('Article name or quantity is empty')
     return
   }
-  props.shoppingLists[props.selectedListIndex].products.push({ name: articleName, quantity: articleQuantity })
+  const newProduct: ProductSend = {Name: articleName, Quantity: articleQuantity, ShoppingListID: currentList.ID}
+
   // Update the shopping list in the backend
+  fetch (BASE_URL + '/shoppinglist/' + listId.value, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      Name: newProduct.Name,
+      Quantity: newProduct.Quantity,
+      ShoppingListID: newProduct.ShoppingListID
+    })
+  })
+  .then(response => {
+    if(response.status === 201) {
+      emit('reload')
+    } else {
+      console.error('Error:', response);
+    }
+  })
 }
 
-function deleteProduct(index: number) {
-  console.log('Delete product')
-  props.shoppingLists[props.selectedListIndex].products.splice(index, 1)
+function deleteProduct(index: number, productId: number) {
   // Update the shopping list in the backend
+  currentList.Products.splice(index, 1)
+  fetch (BASE_URL + '/shoppinglist/' + listId.value + '/products/' + productId, {
+    method: 'DELETE',
+  })
+  .then(response => {
+    if(response.status === 200) {
+      emit('reload')
+    } else {
+      console.error('Error:', response);
+    }
+  })
 }
 </script>
 
@@ -41,25 +93,25 @@ function deleteProduct(index: number) {
     <div class="shopping-list-show__overlay" @click.self="$emit('close')" style="width: 100%;">
         <div class="shopping-list-show__card">
           <div class="shopping-list-show__card-header">
-            <h2>{{ props.shoppingLists[selectedListIndex].name }}</h2>
+            <h2>{{ props.shoppingLists[selectedListIndex].Name }}</h2>
             <div class="shopping-list-show__close-button" v-html="plusSvg" @click="$emit('close')"></div>
           </div>
           <div class="shopping-list-show__card-content">
-            <ul v-if="props.shoppingLists[selectedListIndex].products.length > 0">
-              <li v-for="(product, index) in props.shoppingLists[selectedListIndex].products">
-                <span>{{ product.name }}:</span> <span class="product__quantity"> {{ product.quantity }} </span>
-                <div class="product__trash-icon" v-html="trashSvg" @click="deleteProduct(index)"></div>
+            <ul v-if="props.shoppingLists[selectedListIndex].Products.length > 0">
+              <li v-for="(product, index) in props.shoppingLists[selectedListIndex].Products">
+                <span>{{ product.Name }}:</span> <span class="product__quantity"> {{ product.Quantity }} </span>
+                <div class="product__trash-icon" v-html="trashSvg" @click="deleteProduct(index, product.ID)"></div>
               </li>
             </ul>
             <p v-else style="text-align: center;">Keine Artikel vorhanden</p>
           </div>
           <div class="shopping-list-show__card-footer" v-if="!addArticleInput">
-            <button class="plus" v-html="plusSvg" @click="openAddArticle"></button>
+            <button class="shopping-list-show__open-add-article" v-html="plusSvg" @click="openAddArticle"></button>
           </div>
           <div class="shopping-list-show__add-article" v-if="addArticleInput">
             <input type="text" placeholder="Artikel" id="article">
             <input type="text" placeholder="Menge" id="quantity">
-            <button class="plus add-article__add-button" v-html="plusSvg" @click="addArticle($el)"></button>
+            <button class="add-article__add-button" v-html="plusSvg" @click="addArticle($el)"></button>
           </div>
         </div>
     </div>
@@ -134,15 +186,17 @@ li:last-child {
   width: 20px;
   fill: var(--icon-color);
 }
-.product__trash-icon:hover > svg {
-  fill: var(--accent-color--primary);
+@media (hover: hover) {
+  .product__trash-icon:hover > svg {
+    fill: var(--accent-color--primary);
+  }
 }
 
 .shopping-list-show__card-footer {
   display: flex;
   justify-content: center;
 }
-.plus {
+.shopping-list-show__open-add-article, .add-article__add-button {
   height: 35px;
   width: 35px;
   border-radius: 90px;
@@ -150,11 +204,10 @@ li:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: transparent;
   background-color: var(--button__background-color);
   scale: 0.9;
 }
-.plus > svg {
+.shopping-list-show__open-add-article > svg, .add-article__add-button > svg {
   height: 50px;
   width: 50px;
   scale: 0.8;

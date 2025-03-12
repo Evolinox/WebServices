@@ -26,7 +26,7 @@ Restart IDE
 
 npm run tauri dev
 
-### WeekCalender
+### DayCalender
 npm install date-fns
 
 ### Dashboard Charts

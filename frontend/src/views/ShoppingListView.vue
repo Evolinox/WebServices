@@ -1,15 +1,37 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
+import { format } from 'date-fns';
 import plusSvg from '../assets/plus.svg?raw';
 import trashSvg from '../assets/trash.svg?raw';
 import ShoppingListNew from '../components/ShoppingListNew.vue';
 import ShoppingListShow from '../components/ShoppingListShow.vue';
+import BASE_URL from '../baseUrl';
+
+interface Product {
+  ID: number;
+  Name: string;
+  Quantity: string;
+  ShoppingListID: number;
+}
+
+interface ShoppingList {
+  ID: number;
+  Name: string;
+  Description: string;
+  Date: string;
+  Products: Product[];
+}
 
 const showAddShoppingList = ref(false);
 const selectedListIndex = ref<number>(0);
+const shoppingLists = ref<ShoppingList[]>([]);
+
+onMounted(() => {
+  loadLists();
+});
+
 function openShoppingListShow(index: number) {
   showAddShoppingList.value = !showAddShoppingList.value;
-  console.log('toggle shopping list show ' + showAddShoppingList.value + ' index: ' + index + ' input?: ' + openWithInput.value)
   selectedListIndex.value = index;
 }
 function closeShoppingListShow() {
@@ -25,49 +47,42 @@ function toggleShoppingListNew() {
 const openWithInput = ref(false);
 function openAddArticleWithInput(index: number) {
   openWithInput.value = true;
-  console.log('open with input?: ' + openWithInput.value)
   openShoppingListShow(index)
 }
 
-function deleteList(index: number) {
-  console.log('Delete list number: ' + index)
+function deleteList(index: number, shoppingList: ShoppingList) {
   shoppingLists.value.splice(index, 1)
-  // TODO: Update the shopping list in the backend
+  fetch (BASE_URL + '/shoppinglist/' + shoppingList.ID, {
+    method: 'DELETE',
+  })
+  .then(response => {
+    if(response.status != 200) {
+      console.error('Error:', response);
+    }
+  })
 }
 
-onMounted(() => {
-  // TODO: Fetch the shopping lists from the backend
-})
-// Simulierte JSON-Daten
-const shoppingLists = ref([
-  {
-    name: "Wocheneinkauf",
-    date: "12.02.2025",
-    products: [
-      { name: "Äpfel", quantity: "500g" },
-      { name: "Bananen", quantity: "6 Stück" },
-      { name: "Milch", quantity: "2 Liter" }
-    ]
-  },
-  {
-    name: "Partyvorbereitung",
-    date: "15.02.2025",
-    products: [
-      { name: "Chips", quantity: "3 Tüten" },
-      { name: "Cola", quantity: "4 Flaschen" },
-      { name: "Bier", quantity: "10 Kästen" }
-    ]
-  },
-  {
-    name: "Grillabend",
-    date: "20.02.2025",
-    products: [
-      { name: "Steaks", quantity: "4 Stück"},
-      { name: "Würstchen", quantity: "12 Stück" },
-      { name: "Brot", quantity: "2 Leib" }
-    ]
-  }
-])
+function loadLists() {
+  fetch(BASE_URL + '/shoppinglist/')
+  .then(response => response.json())
+  .then(data => {
+    shoppingLists.value = data.map((list: ShoppingList) => ({
+      ID: list.ID,
+      Name: list.Name,
+      Description: list.Description,
+      Date: list.Date,
+      Products: Array.isArray(list.Products) ? list.Products.map((product: Product) => ({
+        ID: product.ID,
+        Name: product.Name,
+        Quantity: product.Quantity,
+        ShoppingListID: product.ShoppingListID
+      })) : []
+    })).sort((a: ShoppingList, b: ShoppingList) => new Date(a.Date).getTime() - new Date(b.Date).getTime());
+  })
+  .catch(error => {
+    console.error('Error fetching shopping lists:', error);
+  });
+}
 </script>
 
 <template>
@@ -78,18 +93,18 @@ const shoppingLists = ref([
         <button @click="toggleShoppingListNew()" v-html="plusSvg"></button>
       </div>
       <div class="shopping-list__lists">
-        <div v-if="shoppingLists.length > 0" class="shopping-list__list" v-for="(shoppingList, index) in shoppingLists" :key="shoppingList.name">
+        <div v-if="shoppingLists.length > 0" class="shopping-list__list" v-for="(shoppingList, index) in shoppingLists" :key="shoppingList.Name">
           <div class="shopping-list__date-name" @click="openShoppingListShow(index)">
-            <p><strong>{{ shoppingList.date }}</strong> - {{ shoppingList.name }}</p>
+            <p><strong>{{ format(new Date(shoppingList.Date), 'dd.MM.yyyy') }}</strong> - {{ shoppingList.Name }}</p>
           </div>
           <div class="shopping-list__add-to-list--icon" v-html="plusSvg" @click="openAddArticleWithInput(index)"></div>
-          <div class="shopping-list__delete-list--icon" v-html="trashSvg" @click="deleteList(index)"></div>
+          <div class="shopping-list__delete-list--icon" v-html="trashSvg" @click="deleteList(index, shoppingList)"></div>
         </div>
         <p v-else style="text-align: center;">Keine Einkaufslisten vorhanden</p>
       </div>
     </div>
-    <ShoppingListNew v-if="showNewShoppingList==true" @close="toggleShoppingListNew" :shoppingLists="shoppingLists"/>
-    <ShoppingListShow v-if="showAddShoppingList==true" @close="closeShoppingListShow" :shoppingLists="shoppingLists" :selectedListIndex="selectedListIndex" :addArticleInput="openWithInput"/>
+    <ShoppingListNew v-if="showNewShoppingList==true" @close="toggleShoppingListNew" @reload="loadLists" />
+    <ShoppingListShow v-if="showAddShoppingList==true" @close="closeShoppingListShow" @reload="loadLists" :shoppingLists="shoppingLists" :selectedListIndex="selectedListIndex" :addArticleInput="openWithInput" />
   </div>
 </template>
 
@@ -98,8 +113,6 @@ const shoppingLists = ref([
   display: flex;
   flex-direction: column;
   width: calc(100% - 40px);
-  padding: 20px;
-  
   border-radius: 4px;
 }
 .shopping-list__content {

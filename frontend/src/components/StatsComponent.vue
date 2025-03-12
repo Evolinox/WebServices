@@ -1,11 +1,14 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { DoughnutChart, BarChart } from "vue-chart-3";
 import { Chart, registerables } from "chart.js";
-
+import BASE_URL from "../baseUrl";
+import currentDay from "../day.ts";
+import { format } from "date-fns";
+import { loadSettings, settings } from "../settings";
+  
 Chart.register(...registerables);
 
-// Beispielwerte (später mit Backend ersetzen)
 const consumedCalories = ref(577);
 const calorieGoal = ref(2500);
 const fat = ref(3);
@@ -14,45 +17,85 @@ const carbs = ref(106);
 const carbsGoal = ref(287);
 const protein = ref(28);
 const proteinGoal = ref(201);
+let date = ref("1900-01-01");
 
-// Berechnung der verbleibenden Kalorien
-const remainingCalories = computed(() => calorieGoal.value - consumedCalories.value);
+onMounted (() => {
+  patchGoals();
+  patchStats();
+})
 
-// Chart-Key für Neuladen der Diagramme
+watch(currentDay, () => {
+  patchStats();
+})
+
+watch(settings, () => {
+  patchGoals();
+})
+
+const remainingCalories = computed(() => Math.max(calorieGoal.value - consumedCalories.value, 0));
+const balanceCalories = computed(() => calorieGoal.value - consumedCalories.value);
+
+// Chart-Key for reload of diagramm
 const chartKey = ref(0);
 
-// Chart-Optionen
 const chartOptions = ref({
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      display: false,
-    },
+      display: false,      
+    }, 
+    labels: {
+      color: "white",
+    },   
   },
 });
 
-// Chart-Daten für Kalorienübersicht
+// Chart-Data for calories chart
 const caloriesChartData = computed(() => ({
-  labels: ["Verbraucht", "Übrig"],
+  labels: ["Gegessen", "Übrig"],
   datasets: [
     {
       data: [consumedCalories.value, remainingCalories.value],
-      backgroundColor: ["#4A90E2", "#E0E0E0"],
+      backgroundColor: ["#0787d4", "#E0E0E0"],
     },
   ],
 }));
 
-const macros = computed(() => [
+let macros = computed(() => [
   { name: "Fette", value: fat.value, goal: fatGoal.value, color: "red" },
   { name: "Kohlenhydrate", value: carbs.value, goal: carbsGoal.value, color: "orange" },
   { name: "Proteine", value: protein.value, goal: proteinGoal.value, color: "green" },
 ]);
+
+function patchStats() {
+  date = format(currentDay.value, "yyyy-MM-dd");
+  fetch(BASE_URL + '/nutrition/' + date, {
+    method: 'GET',
+  })
+  .then(response => response.json())
+  .then((data) => {
+    consumedCalories.value = data.ConsumedCalories.toFixed(2);
+    fat.value = data.ConsumedFats.toFixed(2);
+    carbs.value = data.ConsumedCarbs.toFixed(2);
+    protein.value = data.ConsumedProteins.toFixed(2);
+    loadSettings();
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
+
+function patchGoals() {
+  calorieGoal.value = settings.value.PlannedCalories;
+  fatGoal.value = settings.value.FatsInGrams;
+  carbsGoal.value = settings.value.CarbsInGrams;
+  proteinGoal.value = settings.value.ProteinsInGrams;
+}
 </script>
 
 <template>
   <div class="stats-container">
-    <!-- Kalorienübersicht mit Kreisdiagramm -->
     <div class="calories-overview">
       <h2>Kalorienübersicht</h2>
       <div class="calories-flex">
@@ -66,12 +109,12 @@ const macros = computed(() => [
         <div class="calories-info">
           <p>Gegessen: <strong>{{ consumedCalories }}</strong> kcal</p>
           <p>Ziel: <strong>{{ calorieGoal }}</strong> kcal</p>
-          <p>Übrig: <strong>{{ remainingCalories }}</strong> kcal</p>
+          <p v-if="balanceCalories>=0">Übrig: <strong>{{ remainingCalories }}</strong> kcal</p>
+            <p v-else>Zuviel: <strong>{{ Math.abs(balanceCalories) }}</strong> kcal</p>
         </div>
       </div>
     </div>
   
-    <!-- Makronährstoffe mit Balkendiagramm -->      
     <div class="macros">
       <h2>Makronährstoffe</h2>
       <div class="macros-row">
@@ -97,9 +140,10 @@ const macros = computed(() => [
   box-sizing: border-box;
 }
 
-/* Kalorienübersicht */
+/* calories overview */
 .calories-overview h2 {
   margin-top: 0px;
+  margin-bottom: 15px;
 }
 
 .calories-flex {
@@ -116,10 +160,14 @@ const macros = computed(() => [
 .doughnut-chart {    
     height: 230px;
 }
+
+.legend-label {
+  color: white;
+}
   
-  /* Makronährstoffe */
-  .macros {
-  margin-top: 15px;
+/* makro nutrition */
+.macros {
+  margin-top: 30px;
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
@@ -127,8 +175,8 @@ const macros = computed(() => [
 }
 
 .macros h2 {
-    text-align: center;
-  margin-top: 20px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .macros-row {
@@ -139,7 +187,7 @@ const macros = computed(() => [
 }
 
 .macro-bar {
-    flex: 1;
+  flex: 1;
   margin-bottom: 10px;
   min-width: 80px;
 }
