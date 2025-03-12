@@ -97,7 +97,7 @@ select, input {
   align-items: center;
   box-sizing: border-box;  
   width: calc(100% - 40px);
-  margin-top: 5px;
+  margin-top: 20px;
   margin-bottom: 10px;
 
 }

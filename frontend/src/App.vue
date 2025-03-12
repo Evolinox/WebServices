@@ -33,8 +33,8 @@ onMounted(() => {
 
 <style>
 :root {
-  --nav-bar__height: 50px;
-  --day-calender__height: 165px;
+  --nav-bar__height: 80px;
+  --day-calender__height: 170px;
   --border-radius__secondary-background: 12px;
 
   
