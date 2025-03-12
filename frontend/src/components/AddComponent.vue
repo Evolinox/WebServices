@@ -46,8 +46,10 @@ li {
   padding: 0.5em;
   cursor: pointer;
 }
-li:hover {
-  color: var(--accent-color--primary);
+@media (hover: hover) {
+  li:hover {
+    color: var(--accent-color--primary);
+  }
 }
 .add-component__close-button, .add-component__close-button > svg {
   width: 20px;

@@ -170,8 +170,10 @@ function deleteAppointment(index: number) {
   width: 20px;
   fill: var(--icon-color);
 }
-.appointment__trash-icon:hover > svg {
-  fill: var(--accent-color--primary);
+@media (hover: hover) {
+  .appointment__trash-icon:hover > svg {
+    fill: var(--accent-color--primary);
+  }
 }
 
 /* Footer */

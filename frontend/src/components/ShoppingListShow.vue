@@ -186,8 +186,10 @@ li:last-child {
   width: 20px;
   fill: var(--icon-color);
 }
-.product__trash-icon:hover > svg {
-  fill: var(--accent-color--primary);
+@media (hover: hover) {
+  .product__trash-icon:hover > svg {
+    fill: var(--accent-color--primary);
+  }
 }
 
 .shopping-list-show__card-footer {
