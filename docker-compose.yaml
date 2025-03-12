@@ -151,7 +151,20 @@ services:
         condition: service_started
     networks:
       - backend-network
-
+  frontend:
+    container_name: frontend
+    image: node:18-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "1420:1420"
+    depends_on:
+      tracker-api:
+        condition: service_started
+    networks:
+      - backend-network
 networks:
   backend-network:
     driver: bridge
