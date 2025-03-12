@@ -138,6 +138,7 @@ const handleWeightInput = (event: Event) => {
   margin-top: 0px;
   scale: 1.2;
   fill: var(--icon-color);
+  rotate: 45deg;
 }
 
 .add-meal__card-content {
