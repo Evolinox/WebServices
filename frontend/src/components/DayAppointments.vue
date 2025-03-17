@@ -155,7 +155,6 @@ function deleteAppointment(index: number) {
 }
 .appointment__name {
   max-width: 175px;
-  overflow: scroll;
 }
 .appointment__begin-end {
   margin-left: auto;

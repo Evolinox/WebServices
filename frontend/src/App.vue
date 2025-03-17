@@ -117,18 +117,6 @@ input {
   background-color: var(--background-color--tertiary);
   color: var(--text-color--primary);
 }
-input, select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-/* Remove stepper buttons from number inputs by default */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
 
 select:focus-visible, input:focus-visible, button:focus-visible {
   outline: none;
