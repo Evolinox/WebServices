@@ -10,5 +10,5 @@ FROM alpine:latest
 WORKDIR /app
 COPY --from=builder /app/main /app/main
 
-EXPOSE 9402
+EXPOSE 9403
 CMD ["/app/main"]
