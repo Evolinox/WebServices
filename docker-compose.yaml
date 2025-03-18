@@ -14,8 +14,7 @@ services:
     networks:
       - backend-network
     depends_on:
-      product-db:
-        condition: service_healthy
+      - product-db
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 5s
@@ -90,8 +89,7 @@ services:
     ports:
       - "9402:9402"
     depends_on:
-      product-db:
-        condition: service_healthy
+      - product-db
     networks:
       - backend-network
 
@@ -105,8 +103,7 @@ services:
     ports:
       - "9403:9403"
     depends_on:
-      calendar-db:
-        condition: service_healthy
+      - calendar-db
     networks:
       - backend-network
 
@@ -120,8 +117,7 @@ services:
     ports:
       - "9404:9404"
     depends_on:
-      shoppingList-db:
-        condition: service_healthy
+      - shoppingList-db
     networks:
       - backend-network
 
@@ -135,20 +131,13 @@ services:
     ports:
       - "9401:9401"
     depends_on:
-      product-db:
-        condition: service_healthy
-      calendar-db:
-        condition: service_healthy
-      shoppingList-db:
-        condition: service_healthy
-      tracker-db:
-        condition: service_healthy
-      product-api:
-        condition: service_started
-      calendar-api:
-        condition: service_started
-      shoppingList-api:
-        condition: service_started
+      - product-db
+      - calendar-db
+      - shoppingList-db
+      - tracker-db
+      - product-api
+      - calendar-api
+      - shoppingList-api
     networks:
       - backend-network
   frontend:
@@ -161,8 +150,7 @@ services:
     ports:
       - "1420:1420"
     depends_on:
-      tracker-api:
-        condition: service_started
+      - tracker-api
     networks:
       - backend-network
 networks:
