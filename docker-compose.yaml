@@ -81,11 +81,9 @@ services:
 
   product-api:
     container_name: product-api
-    image: golang:1.20-alpine
-    working_dir: /app
-    volumes:
-      - ./backend/productApi:/app
-    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
+    build:
+      context: ./backend/productApi
+      dockerfile: Dockerfile
     ports:
       - "9402:9402"
     depends_on:
@@ -95,11 +93,9 @@ services:
 
   calendar-api:
     container_name: calendar-api
-    image: golang:1.20-alpine
-    working_dir: /app
-    volumes:
-      - ./backend/calendarApi:/app
-    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
+    build:
+      context: ./backend/calendarApi
+      dockerfile: Dockerfile
     ports:
       - "9403:9403"
     depends_on:
@@ -109,11 +105,9 @@ services:
 
   shoppingList-api:
     container_name: shoppingList-api
-    image: golang:1.20-alpine
-    working_dir: /app
-    volumes:
-      - ./backend/shoppingListApi:/app
-    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
+    build:
+      context: ./backend/shoppingListApi
+      dockerfile: Dockerfile
     ports:
       - "9404:9404"
     depends_on:
@@ -123,11 +117,9 @@ services:
 
   tracker-api:
     container_name: tracker-api
-    image: golang:1.20-alpine
-    working_dir: /app
-    volumes:
-      - ./backend/tracker:/app
-    command: sh -c "go mod tidy && go build -o /tmp/main ./api/cmd/main.go && /tmp/main"
+    build:
+      context: ./backend/tracker
+      dockerfile: Dockerfile
     ports:
       - "9401:9401"
     depends_on:
@@ -142,11 +134,8 @@ services:
       - backend-network
   frontend:
     container_name: frontend
-    image: node:18-alpine
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
-    command: sh -c "npm install && npm run dev"
+    build:
+      context: ./frontend
     ports:
       - "1420:1420"
     depends_on:
