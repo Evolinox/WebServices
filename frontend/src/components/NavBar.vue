@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 import dashboardSvg from '../assets/dashboard.svg?raw'
 import diarySvg from '../assets/diary.svg?raw'
-import shoppingListSvg from '../assets/shoppingList.svg?raw'
+import shoppingListSvg from '../assets/shoppinglist.svg?raw'
 import settingsSvg from '../assets/settings.svg?raw'
 
 const route = useRoute()

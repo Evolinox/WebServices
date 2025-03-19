@@ -1,14 +1,13 @@
-FROM golang:1.20-alpine AS builder
+FROM golang:1.20-alpine
 
 WORKDIR /app
+
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+
 COPY . .
-RUN go mod tidy
-RUN go build -o main ./api/cmd/main.go
 
-FROM alpine:latest
+RUN go build -o /app/main ./api/cmd/main.go
 
-WORKDIR /app
-COPY --from=builder /app/main /app/main
-
-EXPOSE 9401
 CMD ["/app/main"]

@@ -1,6 +1,18 @@
 version: "3.8"
-services:
 
+volumes:
+  product-api:
+    driver: local
+  shoppinglist-api:
+    driver: local
+  calendar-api:
+    driver: local
+  tracker:
+    driver: local
+  frontend:
+    driver: local
+
+services:
   tracker-db:
     container_name: tracker-db
     image: mariadb:10.7
@@ -60,8 +72,8 @@ services:
       start_period: 5s
       timeout: 2s
 
-  shoppingList-db:
-    container_name: shoppingList-db
+  shoppinglist-db:
+    container_name: shoppinglist-db
     image: mariadb:10.7
     ports:
       - "3404:3306"
@@ -81,9 +93,12 @@ services:
 
   product-api:
     container_name: product-api
+    restart: always
     build:
       context: ./backend/productApi
       dockerfile: Dockerfile
+    volumes:
+      - product-api:/var/lib/product-api/data
     ports:
       - "9402:9402"
     depends_on:
@@ -93,9 +108,12 @@ services:
 
   calendar-api:
     container_name: calendar-api
+    restart: always
     build:
       context: ./backend/calendarApi
       dockerfile: Dockerfile
+    volumes:
+      - calendar-api:/var/lib/calendar-api/data
     ports:
       - "9403:9403"
     depends_on:
@@ -103,45 +121,55 @@ services:
     networks:
       - backend-network
 
-  shoppingList-api:
-    container_name: shoppingList-api
+  shoppinglist-api:
+    container_name: shoppinglist-api
+    restart: always
     build:
       context: ./backend/shoppingListApi
       dockerfile: Dockerfile
+    volumes:
+      - shoppinglist-api:/var/lib/shoppinglist-api/data
     ports:
       - "9404:9404"
     depends_on:
-      - shoppingList-db
+      - shoppinglist-db
     networks:
       - backend-network
 
   tracker-api:
     container_name: tracker-api
+    restart: always
     build:
       context: ./backend/tracker
       dockerfile: Dockerfile
+    volumes:
+      - tracker:/var/lib/tracker/data
     ports:
       - "9401:9401"
     depends_on:
       - product-db
       - calendar-db
-      - shoppingList-db
+      - shoppinglist-db
       - tracker-db
       - product-api
       - calendar-api
-      - shoppingList-api
+      - shoppinglist-api
     networks:
       - backend-network
   frontend:
     container_name: frontend
     build:
       context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - frontend:/app
     ports:
       - "1420:1420"
     depends_on:
       - tracker-api
     networks:
       - backend-network
+
 networks:
   backend-network:
     driver: bridge
